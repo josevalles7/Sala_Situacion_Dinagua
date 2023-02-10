@@ -1,0 +1,18 @@
+# ------------------------------------------------------------------------------
+# Anchos de ventana a procesar (expresados en cantidad de pentadas)
+# ------------------------------------------------------------------------------
+anchos_ventana: [ 6 ]
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Politicas de datos faltantes (ancho de ventana en pentadas)
+# ------------------------------------------------------------------------------
+faltantes:
+  - { ancho_ventana: 6, max_faltantes: 1 }
+  - { ancho_ventana: 12, max_faltantes: 1 }
+  - { ancho_ventana: 18, max_faltantes: 2 }
+  - { ancho_ventana: 24, max_faltantes: 2 }
+  - { ancho_ventana: 36, max_faltantes: 4 }
+  - { ancho_ventana: 54, max_faltantes: 5 }
+  - { ancho_ventana: 72, max_faltantes: 7 }
+# ------------------------------------------------------------------------------
