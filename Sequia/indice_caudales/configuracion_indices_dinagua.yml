@@ -1,0 +1,30 @@
+# ------------------------------------------------------------------------------
+# Definición de período de referencia
+# ------------------------------------------------------------------------------
+periodo_referencia:
+  # Máxima proporcion de faltantes para período de referencia
+  maxima_proporcion_faltantes: 0.25
+  # Año inicial
+  desde: 1980
+  # Año final
+  hasta: 2019
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Selección de metodología de ajuste de funciones de distribución de caudales
+# ------------------------------------------------------------------------------
+
+# Valores aceptados: ML-SinRemuestreo o NoParametrico
+metodo_ajuste: 'ML-SinRemuestreo'
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# Parametros para cada método de ajuste
+# ------------------------------------------------------------------------------
+metodos_ajuste:
+  NoParametrico:
+    lbound: 0
+    mimima_tasa_positivos: 0.95
+  ML-SinRemuestreo:
+    mimima_tasa_positivos: 0.9
+# ------------------------------------------------------------------------------
