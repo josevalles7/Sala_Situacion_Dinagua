@@ -6,11 +6,11 @@ library(extrafont)
 loadfonts(device = "win")
 
 # Definir parametros de entrada
-name.station <- "santa lucia"
-codigo.station <- 133.0
-scale.sdi <- 2
+name.station <- "paso roldan"
+codigo.station <- 117
+scale.sdi <- 6
 
-filename <- paste0("output/",scale.sdi,"-month","_CompleteSDI_monthly_",gsub(" ","",name.station),".txt")
+filename <- paste0("output/",scale.sdi,"-month","_CompleteSDI_",gsub(" ","",name.station),".txt")
 
 # leer el archvio de salida del codigo
 d <- read.csv(filename,sep = ",",header = TRUE)
