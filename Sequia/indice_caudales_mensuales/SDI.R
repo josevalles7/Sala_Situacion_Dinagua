@@ -3,6 +3,11 @@
 ## @author: Jose Valles - DINAGUA ##
 ####################################
 
+# Libraries ---------------------------------------------------------------
+
+# Remove workspace object
+rm(list = ls())
+
 # Shut-down the warning of the NA gamma fit function
 defaultW <- getOption("warn") 
 options(warn = -1)
@@ -14,17 +19,20 @@ library(EnvStats)
 library(lfstat)
 library(reshape2)
 
+
+# Import data -------------------------------------------------------------
+
 #Importing and converting the csv input file
-filename = "input/monthly_fraymarcos.csv"
+codcuenca = "SL"
+filename = paste0("input/",codcuenca,"_monthly_pasopache.csv")
 data <- read.csv(filename,header = TRUE)
 data$Fecha <- as.Date(data$Fecha,format = "%d/%m/%Y")
 station_name <- tools::file_path_sans_ext(basename(filename))
 
-# Importing the reference period (scale)
-# Type the Time Scale (1 to 12)
-k <- 1
-# Define the month in which the Hydrological Year starts (1 to 12)
-m <- 4
+# Importing the reference period (scale). Type the Time Scale (1 to 12)
+k <- 6
+# Define the month in which the Hydrological Year starts (1 to 12). In Uruguay, starts in April (4)
+m <- 4 
 m <- month.abb[month(m)]
 
 data$StartMonth <- month.abb[month(data$Fecha - months(k-1))]
@@ -36,6 +44,9 @@ data$lnCaudal <- log(data$cumCaudal)
 iteration <- unique(data$ScaleMonth)
 statsOutput <- matrix(ncol = 4, nrow=length(iteration))
 rw = 1
+
+
+# Calculate the SDI  ------------------------------------------------------
 
 for (i in iteration){
   # extract the data based on the scale month column
@@ -63,7 +74,9 @@ colnames(statsOutput) <- c("ScaleMonth", "avgCumCaudal","stdCumCaudal","avgLnCum
 data$WYear <- year(as.Date(water_year(data$Fecha,origin = m),"%Y"))
 data$hydroYear <- paste0(data$WYear,"-",data$WYear+1)
 
-# Exporting to csv the complete results
+
+# Exporting to CSV the Complete Results -----------------------------------
+
 dataExport <- subset(data,select=-c(Caudal,StartMonth,EndMonth,cumCaudal,WYear,lnCaudal))
 dataExport <- dataExport[,c(1,6,2,3,4,5)]
 dataExport$SDI <- round(dataExport$SDI,digits = 2)
@@ -71,9 +84,12 @@ dataExport$log_SDI <- round(dataExport$log_SDI,digits = 2)
 dataExport$Gamma_SDI <- round(dataExport$Gamma_SDI,digits = 2)
 colnames(dataExport) <- c("Fecha", "Año_hidrologico","Escala","SDI","LogSDI","GammaSDI")
 
-SDI_Filename <- paste0("output/",k,"-month","_CompleteSDI_",station_name,".txt")
+SDI_Filename <- paste0("output/",k,"-month","_CompleteSDI_",sub(".*monthly_", "", station_name),".txt")
 write.table(dataExport,SDI_Filename,na = "",row.names = FALSE,sep=",")
 
+
+# # Exporting individual text file for different distribution ---------------
+# 
 # # SDI with no transformation
 # SDI <- dcast(dataExport, Año_hidrologico ~ factor(Escala, levels = unique(Escala)), value.var = "SDI")
 # # SDI Log-Normal transformation
@@ -92,11 +108,10 @@ write.table(dataExport,SDI_Filename,na = "",row.names = FALSE,sep=",")
 # 
 # options(warn = defaultW)
 # 
-# # Remove workspace object
-# # rm(list = ls())
+# # Test the gamma function -------------------------------------------------
 # 
 # # Testing the gamma function
 # 
-# # sw.gamma <- gofTest(extracted_data$cumCaudal,dist="gamma",data.name = "Discharge at Concordia. Scale:April")
-# # dev.new()
-# # plot(sw.gamma, digits = 3)
+# sw.gamma <- gofTest(extracted_data$cumCaudal,dist="gamma",data.name = "Discharge")
+# dev.new()
+# plot(sw.gamma, digits = 3)
