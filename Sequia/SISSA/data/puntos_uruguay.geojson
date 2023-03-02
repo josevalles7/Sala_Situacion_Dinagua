@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "puntos_uruguay",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "NOMBRE": "Florida" }, "geometry": { "type": "Point", "coordinates": [ -56.130720291340751, -34.194404944319849 ] } }
+]
+}
