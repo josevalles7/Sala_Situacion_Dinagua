@@ -16,17 +16,24 @@ ETP1(:,1:2)=[];
 
 for i=1:length(AD)
 
-[ETR1(:,i) QC1(:,i) I H(:,i) V Asup Asub]=TemezRegional(AD(i),P1(:,i),ETP1(:,i));
+[ETR1(:,i) QC1(:,i) I H(:,i) V Asup(:,i) Asub(:,i)]=TemezRegional(AD(i),P1(:,i),ETP1(:,i));
 
 end
 
 ETR1=[fechas ETR1];
 QC1=[fechas QC1];
 H=[fechas H];
+Asup = [fechas Asup];
+Asub = [fechas Asub];
 
 ETR1=[codigos ; ETR1];
 QC1=[codigos ; QC1];
 H=[codigos ; H];
+
+% Inicio: Agregados jvalles
+Asup = [codigos; Asup];
+Asub = [codigos;Asub];
+% fin: Agregados jvalles
 
 % save ETR.csv ETR1 -ascii
 csvwrite('ETR.csv',ETR1)

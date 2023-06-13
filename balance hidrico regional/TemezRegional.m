@@ -86,4 +86,7 @@ H=H';
 ETR(1:12)=[];
 QC(1:12)=[];
 H(1:12)=[];
-
+% Inicio: Agregados jvalles
+Asup(1:12)=[];
+Asub(1:12)=[];
+% fin: Agregados jvalles
