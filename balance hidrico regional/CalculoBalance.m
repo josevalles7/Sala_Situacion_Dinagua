@@ -38,9 +38,14 @@ Asub = [codigos;Asub];
 % save ETR.csv ETR1 -ascii
 csvwrite('ETR.csv',ETR1)
 % save Escorrentia.csv QC1 -ascii
-csvwrite('Escorrentia.csv',QC1)
+csvwrite('Escorrentia_total.csv',QC1)
 % save HumedadSuelo.csv H -ascii
 csvwrite('HumedadSuelo.csv',H)
+
+% Inicio: Agregados jvalles
+csvwrite('Escorrentia_sup.csv',Asup)
+csvwrite('Escorrentia_sub.csv',Asub)
+% fin: Agregados jvalles
 
 
 %clear
