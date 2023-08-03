@@ -23,8 +23,8 @@ library(reshape2)
 # Import data -------------------------------------------------------------
 
 #Importing and converting the csv input file
-codcuenca = "SL"
-filename = paste0("input/",codcuenca,"_monthly_pasopache.csv")
+codcuenca = "RN"
+filename = paste0("input/",codcuenca,"_monthly_durazno.csv")
 data <- read.csv(filename,header = TRUE)
 data$Fecha <- as.Date(data$Fecha,format = "%d/%m/%Y")
 station_name <- tools::file_path_sans_ext(basename(filename))
@@ -84,7 +84,7 @@ dataExport$log_SDI <- round(dataExport$log_SDI,digits = 2)
 dataExport$Gamma_SDI <- round(dataExport$Gamma_SDI,digits = 2)
 colnames(dataExport) <- c("Fecha", "Año_hidrologico","Escala","SDI","LogSDI","GammaSDI")
 
-SDI_Filename <- paste0("output/",k,"-month","_CompleteSDI_",sub(".*monthly_", "", station_name),".txt")
+SDI_Filename <- paste0("output/",k,"-month","_CompleteSDI_junio_",sub(".*monthly_", "", station_name),".txt")
 write.table(dataExport,SDI_Filename,na = "",row.names = FALSE,sep=",")
 
 
@@ -110,8 +110,8 @@ write.table(dataExport,SDI_Filename,na = "",row.names = FALSE,sep=",")
 # 
 # # Test the gamma function -------------------------------------------------
 # 
-# # Testing the gamma function
-# 
+# Testing the gamma function
+
 # sw.gamma <- gofTest(extracted_data$cumCaudal,dist="gamma",data.name = "Discharge")
 # dev.new()
 # plot(sw.gamma, digits = 3)
