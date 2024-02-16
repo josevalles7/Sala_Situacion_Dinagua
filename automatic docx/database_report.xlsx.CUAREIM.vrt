@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OGRVRTDataSource>
+    <OGRVRTLayer name="database_report-CUAREIM">
+        <SrcDataSource relativeToVRT="1">database_report.xlsx</SrcDataSource>
+        <!--Header=False-->
+        <SrcLayer>CUAREIM</SrcLayer>
+        <Field name="DESCRIPTION" src="DESCRIPTION" type="String"/>
+        <Field name="PLACEHOLDER" src="PLACEHOLDER" type="String"/>
+        <Field name="VALUE" src="VALUE" type="Real"/>
+        <Field name="Field4" src="Field4" type="String"/>
+        <Field name="Field5" src="Field5" type="String"/>
+        <Field name="Field6" src="Field6" type="String"/>
+        <Field name="Field7" src="Field7" type="String"/>
+        <Field name="Field8" src="Field8" type="String"/>
+        <Field name="Field9" src="Field9" type="String"/>
+        <Field name="Field10" src="Field10" type="String"/>
+        <Field name="Field11" src="Field11" type="String"/>
+    </OGRVRTLayer>
+</OGRVRTDataSource>
