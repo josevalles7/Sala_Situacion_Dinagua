@@ -1,0 +1,24 @@
+Río,Nro,Nombre,Nombre .csv,Desde,Hasta,Institucion,latitud,longitud,Tipo_estacion,Parametros_medidos,Resolucion_temporal,Comentraios
+Yí,2215,Sarandí del Yí,SarandiDelYi_UTE_2215,10/13/2009,8/20/2023,UTE,-33.33961,-55.61436,Convencional - Automatica,PHQ,Horaria,
+Yí,2257,Polanco del Yí,PolancoDelYi_UTE_2257,10/13/2009,8/20/2023,UTE,-33.47342,-56.16194,Convencional - Automatica,PHQ,Horaria,
+Yí,2206,Durazno Puente Ruta 5,DuraznoPuenteNuevo_UTE_2206,10/12/2009,4/7/2022,UTE,-33.37328,-56.51194,Convencional - Automatica,PHQ,Diaria y Horaria,Se está construyendo la ruta y la estación está fuera de servicio.
+Cuareim,A50079DA,Cuareim Río,Cuareim Río_CTM_A50079DA,5/19/2016,10/29/2022,CTM Salto Grande DINAGUA,-30.586,-56.23,Automática,PH, 15 min,
+Cuareim,A5006AAC,Catalán Grande,CatalanGrande_CTM_A5006AAC,5/19/2016,10/29/2022,CTM Salto Grande DINAGUA,-30.637,-56.327,Automática,PH, 15 min,Los datos hasta 12/18/2016 los saqué de la planilla NivelesCuareim (faltan datos entre 11/24/2016 y 12/18/2016)
+Cuareim,A50C65E2,Artigas ,Artigas_CTM_A50C65E2,5/19/2016,10/29/2022,CTM Salto Grande,-30.3928,-56.4567,Automática,PHQ, 15 min,
+Santa Lucía,44.0,Fray Marcos,FrayMarcos_44_0,4/7/1947,12/31/2022,DINAGUA,-34.21607,-55.74125,,,,
+Santa Lucía,59.1,Paso Pache,PasoPache_59_1,3/16/1983,12/31/2022,DINAGUA,-34.36463,-56.24917,,,,
+Santa Lucía,53.1,Florida,Florida_53_1,1/1/1971,12/31/2022,DINAGUA,-34.09114,-56.20339,,,,
+Santa Lucía,115.0,Picada de Varela,PicadaVarela_115_0,7/9/1969,12/31/2022,DINAGUA,-34.3187,-56.70968,,,,
+Santa Lucía,133.0,Santa Lucía,SantaLuciaR11_133_0,6/12/1972,12/31/2022,DINAGUA,-34.44966,-56.40119,,,,
+Uruguay,,Paso de los Libres (Ar),UY_PasoLibres_CTM,1/1/1993,28/11/2023,CTM Salto Grande DINAGUA,-29.71666,-57.08333,,HQ,Diaria 7:00,Planilla diaria enviada Gonzalo con datos desde 1898
+Uruguay,,Bella Unión (Uru) | Monte Caseros (Ar),UY_MonteCaseros_CTM,1/1/1993,28/11/2023,CTM Salto Grande DINAGUA,-30.26069517,-57.61110907,,HQ,Diaria 7:00,Planilla diaria enviada Gonzalo con datos desde 1898
+Uruguay,,Salto (Uru) | Concordia (Ar),UY_Concordia_CTM,1/1/1993,28/11/2023,CTM Salto Grande DINAGUA,-31.38583858,-57.97478007,,HQ,Diaria 7:00,Planilla diaria enviada Gonzalo con datos desde 1898
+Uruguay,,Paysandú (Uru),UY_Paysandu_DINAGUA,1/1/1993,4/21/2022,DINAGUA,-32.31455,-58.10395,Limnimetrica + T,HQ, 15 min,4 veces por día desde 1993 a 1994; cada 1 hora desde 1995; cada 30 min desde 2/15/2007; cada 15 min desde 3/17/2017 
+Uruguay,,Fray Bentos (Uru),UY_FrayBentos_DINAGUA,1/1/1993,4/21/2022,DINAGUA,-33.11184,-58.31191,Limnimetrica + T,HQ,1 hora,3 veces por día desde 1993; cada 1 hora desde 1994; cada 15 min desde 8/13/1999 ; cada 1 hora desde 5/21/2019
+Río Negro,1826,San Gregorio de Polanco,SanGregorioPolanco_UTE_1826,11/3/2009,8/20/2023,UTE,-32.62069,-55.8295,Convencional - Automatica,PH,Diaria y Horaria,
+Río Negro,2145,Puente Mercedes,PuenteMercedes_UTE_2145,7/27/2009,8/20/2023,UTE,-33.24247,-58.01814,Convencional - Automatica,PHQ,Diaria y Horaria,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
