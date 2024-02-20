@@ -83,7 +83,12 @@ context.update(context_negro)
 print(context)
 
 # %%
-doc.replace_pic('placeholder_1.png','pronostico_hidro.png')
+doc.replace_pic('Placeholder.png','Imagenes/pronostico_hidro.png')
+doc.replace_pic('Placeholder_1.png','Imagenes/output_3.png')
+doc.replace_pic('Placeholder_2.png','Imagenes/output_1.png')
+doc.replace_pic('Placeholder_3.png','Imagenes/output_2.png')
+doc.replace_pic('Placeholder_4.png','Imagenes/output_5.png')
+doc.replace_pic('Placeholder_5.png','Imagenes/output_4.png')
 
 # %%
 # Renderiza la plantilla con el formato adecuado
