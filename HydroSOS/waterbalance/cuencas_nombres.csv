@@ -1,0 +1,48 @@
+codcuenca,nombre
+10,RÍO CUAREIM
+11,RÍO URUGUAY entre Río Cuareim y Río Arapey
+12,RÍO ARAPEY CHICO
+13,RÍO ARAPEY GRANDE
+14,RÍO URUGUAY entre Río Arapey y Río Dayman
+15,RÍO DAYMAN
+16,RÍO URUGUAY entre Río Dayman y Río Queguay
+17,RÍO QUEGUAY GRANDE
+18,RÍO URUGUAY entre Río Queguay y Río Negro
+19,RÍO URUGUAY entre Río Negro y Río de la Plata
+20,RÍO DE LA PLATA entre Río Uruguay y Río San Juan
+21,RÍO SAN JUAN
+22,RÍO DE LA PLATA entre Río San Juan y Río Rosario
+23,RÍO ROSARIO
+24,RÍO DE LA PLATA entre Río Rosario y Río Santa Lucía
+26,RÍO DE LA PLATA entre Río Santa Lucía y Ao. Pando
+27,RÍO DE LA PLATA entre Ao. Pando y Ao. Solis Gde.
+28,Ao. SOLIS GRANDE
+29,RÍO DE LA PLATA entre Ao. Solis Gde. y O. Atlántico
+30,OCEANO ATLANTICO hasta Ao. Maldonado
+31,OCEANO ATLANTICO entre Ao. Maldonado y L. de Rocha
+32,OCEANO ATLANTICO entre L. de Rocha y Ao. Valizas
+33,OCEANO ATLANTICO entre Ao. Valizas y Ao. Chuy
+40,LAGUNA MERÍN entre Río Yaguarón y Río Tacuarí
+41,RÍO TACUARÍ
+42,LAGUNA MERÍN entre Río Tacuarí y Río Cebollatí
+43,RÍO OLIMAR GRANDE
+44,RÍO CEBOLLATÍ
+45,LAGUNA MERÍN entre Río Cebollatí y Ao. San Miguel
+50,RÍO NEGRO hasta Río Tacuarembo
+51,RÍO TACUAREMBO
+52,Ao. TACUAREMBO CHICO
+53,RÍO TACUAREMBO
+54,RÍO NEGRO entre Río Tacuarembo y Rincón del Bonete
+55,RÍO NEGRO entre Rincón del Bonete y Río Yí
+56,RÍO YÍ
+57,RÍO NEGRO entre Río Yí y Rincon de Palmar
+58,RÍO NEGRO entre Rincón de Palmar y Río Uruguay
+60,RÍO SANTA LUCÍA hasta Río Santa Lucía Chico
+61,RÍO SANTA LUCÍA CHICO
+62,RÍO SANTA LUCÍA entre Río S.Lucía Ch. y Ao. Canelon Gde
+63,Ao. CANELÓN GRANDE
+64,RÍO SANTA LUCÍA entre Ao. Canelón Gde. y Río San José
+65,RÍO SAN JOSÉ
+66,RÍO SANTA LUCÍA entre Río San José y Ao. Colorado
+67,Ao. COLORADO
+68,RÍO SANTA LUCÍA entre Ao. Colorado y Río de la Plata
