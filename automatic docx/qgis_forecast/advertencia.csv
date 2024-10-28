@@ -1,48 +1,48 @@
 Nombre,codcuenca_n1,codcuenca_n2,Advertencia
-RÍO CUAREIM,1,10,MEDIO
-RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,MEDIO
-RÍO ARAPEY CHICO,1,12,MEDIO
-RÍO ARAPEY GRANDE,1,13,MEDIO
+RÍO CUAREIM,1,10,BAJA
+RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,BAJA
+RÍO ARAPEY CHICO,1,12,BAJA
+RÍO ARAPEY GRANDE,1,13,BAJA
 RÍO URUGUAY entre Río Arapey Grande y Río Daymán,1,14,MEDIO
-RÍO DAYMÁN,1,15,MEDIO
+RÍO DAYMÁN,1,15,BAJA
 RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,MEDIO
-RÍO QUEGUAY GRANDE,1,17,MEDIO
+RÍO QUEGUAY GRANDE,1,17,BAJA
 RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,MEDIO
-RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,MEDIO
-RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,ALTO
-RÍO SAN JUAN,2,21,ALTO
-RÍO DE LA PLATA entre Río San Juan y Río Rosario,2,22,ALTO
-RÍO ROSARIO,2,23,ALTO
-RÍO DE LA PLATA entre Río Rosario y Río Santa Lucía,2,24,ALTO
-RÍO DE LA PLATA entre Río Santa Lucía y Ao. PANDO,2,26,ALTO
-RÍO DE LA PLATA entre Ao. Pando y Ao. Solís Grande,2,27,ALTO
-Ao. SOLÍS GRANDE,2,28,ALTO
-RÍO DE LA PLATA entre Ao. Solís Grande y Punta Del Este,2,29,ALTO
+RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,BAJA
+RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,BAJA
+RÍO SAN JUAN,2,21,BAJA
+RÍO DE LA PLATA entre Río San Juan y Río Rosario,2,22,BAJA
+RÍO ROSARIO,2,23,BAJA
+RÍO DE LA PLATA entre Río Rosario y Río Santa Lucía,2,24,BAJA
+RÍO DE LA PLATA entre Río Santa Lucía y Ao. PANDO,2,26,BAJA
+RÍO DE LA PLATA entre Ao. Pando y Ao. Solís Grande,2,27,BAJA
+Ao. SOLÍS GRANDE,2,28,BAJA
+RÍO DE LA PLATA entre Ao. Solís Grande y Punta Del Este,2,29,BAJA
 OCÉANO ATLÁNTICO entre Punta del Este y Ao. MALDONADO,3,30,BAJA
 OCÉANO ATLÁNTICO entre Ao. Maldonado y LAGUNA DE ROCHA,3,31,BAJA
-OCÉANO ATLÁNTICO entre Laguna de Rocha y Ao. VALIZAS,3,32,BAJA
-OCÉANO ATLÁNTICO entre Ao. Valizas y Ao. CHUY,3,33,BAJA
-LAGUNA MERÍN entre Río Yaguarón y Río Tacuarí,4,40,BAJA
-RÍO TACUARÍ,4,41,BAJA
-LAGUNA MERÍN entre Río Tacuarí y Río Cebollatí,4,42,BAJA
-RÍO OLIMAR GRANDE,4,43,BAJA
-RÍO CEBOLLATÍ,4,44,BAJA
-LAGUNA MERÍN entre Río Cebollatí y Ao. SAN MIGUEL,4,45,BAJA
+OCÉANO ATLÁNTICO entre Laguna de Rocha y Ao. VALIZAS,3,32,ALTO
+OCÉANO ATLÁNTICO entre Ao. Valizas y Ao. CHUY,3,33,ALTO
+LAGUNA MERÍN entre Río Yaguarón y Río Tacuarí,4,40,ALTO
+RÍO TACUARÍ,4,41,ALTO
+LAGUNA MERÍN entre Río Tacuarí y Río Cebollatí,4,42,ALTO
+RÍO OLIMAR GRANDE,4,43,ALTO
+RÍO CEBOLLATÍ,4,44,ALTO
+LAGUNA MERÍN entre Río Cebollatí y Ao. SAN MIGUEL,4,45,ALTO
 RÍO NEGRO entre nacientes y Río Tacuarembó,5,50,BAJA
 RÍO TACUAREMBÓ entre nacientes y Ao. Tacuarembó Chico,5,51,BAJA
 Ao. TACUAREMBÓ CHICO,5,52,BAJA
 RÍO TACUAREMBÓ entre Ao. Tacuarembó Chico y Río Negro,5,53,BAJA
 RÍO NEGRO entre Río Tacuarembó y Rincón del Bonete,5,54,BAJA
 RÍO NEGRO entre Rincón del Bonete y Río Yí,5,55,BAJA
-RÍO YÍ,5,56,MEDIO
+RÍO YÍ,5,56,ALTO
 RÍO NEGRO entre Río Yí y Rincón de Palmar,5,57,MEDIO
 RÍO NEGRO entre Rincón de Palmar y Río Uruguay,5,58,MEDIO
-RÍO SANTA LUCÍA entre nacientes y Río Santa Lucía Chico,6,60,ALTO
-RÍO SANTA LUCÍA CHICO,6,61,ALTO
-RÍO SANTA LUCÍA entre Río Santa Lucía Chico y Ao. Canelón Grande,6,62,ALTO
-Ao. CANELÓN GRANDE,6,63,ALTO
-RÍO SANTA LUCÍA entre Ao. Canelón Grande y Río San José,6,64,ALTO
-RÍO SAN JOSÉ,6,65,ALTO
-RÍO SANTA LUCÍA entre Río San José y Ao. Colorado,6,66,ALTO
-Ao. COLORADO,6,67,ALTO
-RÍO SANTA LUCÍA entre Ao. Colorado y Río de la Plata,6,68,ALTO
+RÍO SANTA LUCÍA entre nacientes y Río Santa Lucía Chico,6,60,MEDIO
+RÍO SANTA LUCÍA CHICO,6,61,MEDIO
+RÍO SANTA LUCÍA entre Río Santa Lucía Chico y Ao. Canelón Grande,6,62,MEDIO
+Ao. CANELÓN GRANDE,6,63,MEDIO
+RÍO SANTA LUCÍA entre Ao. Canelón Grande y Río San José,6,64,MEDIO
+RÍO SAN JOSÉ,6,65,MEDIO
+RÍO SANTA LUCÍA entre Río San José y Ao. Colorado,6,66,MEDIO
+Ao. COLORADO,6,67,MEDIO
+RÍO SANTA LUCÍA entre Ao. Colorado y Río de la Plata,6,68,MEDIO

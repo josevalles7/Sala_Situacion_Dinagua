@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OGRVRTDataSource>
+    <OGRVRTLayer name="database_report-OLIMAR">
+        <SrcDataSource relativeToVRT="1">database_report.xlsx</SrcDataSource>
+        <!--Header=False-->
+        <SrcLayer>OLIMAR</SrcLayer>
+        <Field name="DESCRIPTION" src="DESCRIPTION" type="String"/>
+        <Field name="PLACEHOLDER" src="PLACEHOLDER" type="String"/>
+        <Field name="VALUE" src="VALUE" type="Real"/>
+    </OGRVRTLayer>
+</OGRVRTDataSource>

@@ -63,6 +63,9 @@ context_uy = sheet_uy.range('B2').options(dict,expand='table',numbers=float).val
 # Río Negro
 sheet_negro = wb.sheets['NEGRO']
 context_negro = sheet_negro.range('B2').options(dict,expand='table',numbers=float).value
+# Río Olimar Grande
+sheet_olimar = wb.sheets['OLIMAR']
+context_olimar = sheet_olimar.range('B2').options(dict,expand='table',numbers=float).value
 
 # %%
 context = {
@@ -80,15 +83,25 @@ context.update(context_cuareim)
 context.update(context_lucia)
 context.update(context_uy)
 context.update(context_negro)
+context.update(context_olimar)
 print(context)
 
 # %%
+# Cambiar imagenes
+# Pronostico cuenca pais
 doc.replace_pic('Placeholder.png','Imagenes/pronostico_hidro.png')
-doc.replace_pic('Placeholder_1.png','Imagenes/output_3.png')
-doc.replace_pic('Placeholder_2.png','Imagenes/output_1.png')
-doc.replace_pic('Placeholder_3.png','Imagenes/output_2.png')
-doc.replace_pic('Placeholder_4.png','Imagenes/output_5.png')
-doc.replace_pic('Placeholder_5.png','Imagenes/output_4.png')
+# Rio Yí
+doc.replace_pic('Placeholder_1.png','Imagenes/output_4.png')
+# Río Cuareim
+doc.replace_pic('Placeholder_2.png','Imagenes/output_2.png')
+# Rio Santa Lucia
+doc.replace_pic('Placeholder_3.png','Imagenes/output_3.png')
+# Rio Uruguay
+doc.replace_pic('Placeholder_4.png','Imagenes/output_6.png')
+# Río Negro
+doc.replace_pic('Placeholder_5.png','Imagenes/output_5.png')
+# Rio Olimar
+doc.replace_pic('Placeholder_6.png','Imagenes/output_1.png')
 
 # %%
 # Renderiza la plantilla con el formato adecuado
@@ -97,7 +110,7 @@ env.filters['strftime'] = lambda dt, fmt: dt.strftime(fmt)
 doc.render(context, jinja_env=env)
 
 # %%
-output_file = f'Informe_Situacion_Pronostico_{entero}.docx'
+output_file = f'INFORME_SITUACION_PRONOSTICO_{entero}.docx'
 print(output_file)
 
 # %%
