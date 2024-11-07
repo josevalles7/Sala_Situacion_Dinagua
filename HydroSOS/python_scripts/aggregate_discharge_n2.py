@@ -16,7 +16,7 @@ class WaterBalanceModel:
         self.model_variable = model_variable
 
     def importmodelvariable(self):
-        df_runoff = pd.read_csv(f'../output_modelo/{self.model_variable}.csv', usecols=lambda col: col.startswith((str(self.codcuenca_n2), '-1')))
+        df_runoff = pd.read_csv(f'../balance_hidrico_regional/output_modelo/{self.model_variable}.csv', usecols=lambda col: col.startswith((str(self.codcuenca_n2), '-1')))
         df_runoff = df_runoff.rename(columns={'-1': 'year', '-1.1':'month'})
         df_runoff['date'] = pd.to_datetime(dict(year=df_runoff['year'], month=df_runoff['month'], day=1))
         df_runoff = df_runoff.set_index('date')
@@ -24,8 +24,8 @@ class WaterBalanceModel:
         return df_runoff
 
     def convertRunoff2Discharge(self, df_runoff):
-        basin_level3 = pd.read_csv(f'../output_modelo/cuenca_nivel3.csv',usecols=lambda col: col.startswith(str(self.codcuenca_n2)))
-        basin_level2 = pd.read_csv(f'../output_modelo/cuenca_nivel2.csv',usecols=lambda col: col.startswith(str(self.codcuenca_n2)))
+        basin_level3 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',usecols=lambda col: col.startswith(str(self.codcuenca_n2)))
+        basin_level2 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',usecols=lambda col: col.startswith(str(self.codcuenca_n2)))
         df_runoff_selected = df_runoff.drop(['year', 'month', 'days_in_month'], axis=1)
         df_discharge = pd.DataFrame(df_runoff_selected.values * 1000 * basin_level3.values, columns=df_runoff_selected.columns)
         df_discharge['days_in_month'] = df_runoff['days_in_month'].values
@@ -47,15 +47,11 @@ class WaterBalanceModel:
         DISCHARGE_N2 = DISCHARGE_N2.set_index('date')
         return DISCHARGE_N2
 
-# %%
-# exportar csv
-# result.to_csv(f'd:\Documentos\Python Scripts\SDI\input_modelo\{codcuenca_n2}_monthly.csv', index=False, date_format='%d/%m/%Y', columns=['Fecha', 'Caudal'])
-
 # %% [markdown]
 # ### Ejemplo usando todas las cuencas
 
 # %%
-ALL_BASIN = pd.read_csv(f'../output_modelo/cuenca_nivel2.csv',index_col="Codigo")
+ALL_BASIN = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
 
 # %%
 for columna, datos in ALL_BASIN.iteritems():
@@ -70,6 +66,6 @@ for columna, datos in ALL_BASIN.iteritems():
     result = model_instance.AggregateDischarge(df_discharge_data)
     result = result.reset_index()
     result = result[['date', 'discharge']].rename(columns={'date': 'Fecha', 'discharge': 'Caudal'})
-    result.to_csv(f'd:\GitHub\Sala_Situacion_Dinagua\HydroSOS\waterbalance\input\{columna}.csv', index=False, date_format='%d/%m/%Y', columns=['Fecha', 'Caudal'])
+    result.to_csv(f'./waterbalance/input/{columna}.csv', index=False, date_format='%d/%m/%Y', columns=['Fecha', 'Caudal'])
 
 
