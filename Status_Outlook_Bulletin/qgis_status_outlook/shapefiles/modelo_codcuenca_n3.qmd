@@ -1,0 +1,45 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.26.1-Buenos Aires">
+  <identifier>subcuencas3_r_URU</identifier>
+  <parentidentifier></parentidentifier>
+  <language>ES</language>
+  <type>dataset</type>
+  <title>subcuencas3_r_URU</title>
+  <abstract></abstract>
+  <contact>
+    <name></name>
+    <organization></organization>
+    <position></position>
+    <voice></voice>
+    <fax></fax>
+    <email></email>
+    <role></role>
+  </contact>
+  <links>
+    <link size="" url="file://\\Dinagua-108\SIG-AGUA\drh\hidrol\3aGeneracion\codcuencas3" format="" description="" type="Local Area Network" name="" mimeType=""/>
+  </links>
+  <fees></fees>
+  <encoding></encoding>
+  <crs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt></wkt>
+      <proj4></proj4>
+      <srsid>0</srsid>
+      <srid>0</srid>
+      <authid></authid>
+      <description></description>
+      <projectionacronym></projectionacronym>
+      <ellipsoidacronym></ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial miny="0" maxy="0" minx="0" maxx="0" dimensions="2" minz="0" crs="" maxz="0"/>
+    <temporal>
+      <period>
+        <start></start>
+        <end></end>
+      </period>
+    </temporal>
+  </extent>
+</qgis>

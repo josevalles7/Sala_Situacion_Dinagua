@@ -1,0 +1,8 @@
+# QGIS Generated Color Map Export File
+INTERPOLATION:DISCRETE
+2,115,0,0,255,Sequía excepcional
+5,230,0,0,255,Sequía extrema
+10,253,170,0,255,Sequía Severa
+20,252,211,127,255,Sequía moderada
+30,255,255,0,255,Anormalmente seco
+100,255,255,255,255,No seco

@@ -1,0 +1,7 @@
+# QGIS Generated Color Map Export File
+INTERPOLATION:DISCRETE
+13,205,35,63,255,Severamente seco
+28,255,168,133,255,Moderadamente seco
+72,231,226,188,255,Normal
+87,142,206,238,255,Moderamente húmedo
+100,44,125,205,255,Severamente húmedo
