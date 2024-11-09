@@ -33,12 +33,12 @@ args = parser.parse_args()
 # Import basin level code 2 and 3
 
 # %%
-BASIN_LEVEL3 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',index_col="Codigo")
-BASIN_LEVEL2 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
+BASIN_LEVEL3 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',index_col="Codigo")
+BASIN_LEVEL2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
 
 # %%
 def importmodelvariable(model_variable):
-    df = pd.read_csv(f'../balance_hidrico_regional/output_modelo/{model_variable}.csv')
+    df = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/{model_variable}.csv')
     df = df.rename(columns={'-1': 'year','-1.1':'month'})
     df['date'] = pd.to_datetime(dict(year=df['year'],month=df['month'],day=1))
     df = df.set_index('date')
@@ -178,7 +178,7 @@ for basin in BASIN_LEVEL2.columns:
     #AVERAGE_PERCENTAGE.loc[AVERAGE_PERCENTAGE.eval('codigo==@basin'),'percentile'] = hydroSOS.query('month == @month_analyis & year == @year_analysis')['percentile'].item()
 
 # %%
-AVERAGE_PERCENTAGE.to_csv('d:/Documentos/Python Scripts/Balance Hidrico/forplotting/modelling_result_codcuenca_2.csv',index=False)
+AVERAGE_PERCENTAGE.to_csv('./qgis_status_outlook/csvtables/modelling_result_codcuenca_2.csv',index=False)
 
 # %%
 # Contar las ocurrencias de cada categoría

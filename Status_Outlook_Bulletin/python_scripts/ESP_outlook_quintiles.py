@@ -36,17 +36,17 @@ start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
 
 # %%
-allbasins_n2 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
+allbasins_n2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
 
 # %% [markdown]
 # Importar codigos de cuenca nivel 2 y 3
 
 # %%
 def importmodelensemble(codcuenca_n2):
-    basin_level3 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
-    basin_level2 = pd.read_csv(f'../balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
+    basin_level3 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
+    basin_level2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
     # Insert the folder path 
-    folder_path = '../balance_hidrico_regional/output_modelo/esp/'
+    folder_path = './waterbalance/balance_hidrico_regional/output_modelo/esp/'
     # get a list of all CSV file in the folder
     file_list = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
     # Initialize an empty list to store dataframes
@@ -204,6 +204,6 @@ for basin in allbasins_n2.columns:
 month_outlook
 
 # %%
-ENSEMBLE_PERCENTAGE.to_csv(f'd:/Documentos/Python Scripts/Balance Hidrico/forplotting/{forecast_leadtime}_month_outlook.csv',index=False)
+ENSEMBLE_PERCENTAGE.to_csv(f'./qgis_status_outlook/csvtables/{forecast_leadtime}_month_outlook.csv',index=False)
 print('Archivo exportado correctamente')
 
