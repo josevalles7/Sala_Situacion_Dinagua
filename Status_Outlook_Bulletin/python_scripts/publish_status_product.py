@@ -45,6 +45,7 @@ headers = {"Authorization" : "Bearer " + token}
 # Locate the corresponding json file
 json_directory = args.input_json_directory
 filename = args.filename_json
+filename = filename + '.json'
 json_file = os.path.join(json_directory, filename)
 # Define Parameters
 date_name = json_file.split('/')[-1].split('.')[0]
