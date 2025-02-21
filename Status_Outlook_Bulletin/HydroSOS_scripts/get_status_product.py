@@ -46,12 +46,12 @@ def monthly_status(DISCHARGE_MONTHLY):
 
     DISCHARGE_STATUS['weibell_rank'] = DISCHARGE_STATUS['rank_average']/(DISCHARGE_STATUS['complete%']+1)
 
-    criteria = [DISCHARGE_STATUS['weibell_rank'].between(percentile[3],1.00),
-        DISCHARGE_STATUS['weibell_rank'].between(percentile[2],percentile[3]),
-        DISCHARGE_STATUS['weibell_rank'].between(percentile[1],percentile[2]),
-        DISCHARGE_STATUS['weibell_rank'].between(percentile[0],percentile[1]),
-        DISCHARGE_STATUS['weibell_rank'].between(0.00,percentile[0])]
-
+    criteria = [(DISCHARGE_STATUS['weibell_rank'] > percentile[3]) & (DISCHARGE_STATUS['weibell_rank'] <= 1.00),
+                (DISCHARGE_STATUS['weibell_rank'] > percentile[2]) & (DISCHARGE_STATUS['weibell_rank'] <= percentile[3]),
+                (DISCHARGE_STATUS['weibell_rank'] >= percentile[1]) & (DISCHARGE_STATUS['weibell_rank'] <= percentile[2]),
+                (DISCHARGE_STATUS['weibell_rank'] >= percentile[0]) & (DISCHARGE_STATUS['weibell_rank'] < percentile[1]),
+                (DISCHARGE_STATUS['weibell_rank'] >= 0.00) & (DISCHARGE_STATUS['weibell_rank'] < percentile[0])]
+    
     DISCHARGE_STATUS['percentile_range'] = np.select(criteria,values,None)
     DISCHARGE_STATUS['flowcat'] = np.select(criteria,flow_cat,pd.NA)
 
@@ -78,13 +78,13 @@ def quarterly_status(DISCHARGE_THREE_MONTHS):
         DISCHARGE_QUATERLY.loc[DISCHARGE_QUATERLY.eval('startMonth==@m & year==@y'),'percentage_flow'] = (DISCHARGE_QUATERLY['mean_flow'][i] - DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["mean_flow"].item()) / DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["mean_flow"].item()
 
     DISCHARGE_QUATERLY['weibell_rank'] = DISCHARGE_QUATERLY['rank_average']/(DISCHARGE_QUATERLY['complete%']+1)
-   
-    criteria_three_months = [DISCHARGE_QUATERLY['weibell_rank'].between(percentile[3],1.00),
-        DISCHARGE_QUATERLY['weibell_rank'].between(percentile[2],percentile[3]),
-        DISCHARGE_QUATERLY['weibell_rank'].between(percentile[1],percentile[2]),
-        DISCHARGE_QUATERLY['weibell_rank'].between(percentile[0],percentile[1]),
-        DISCHARGE_QUATERLY['weibell_rank'].between(0.00,percentile[0])]
 
+    criteria_three_months = [(DISCHARGE_QUATERLY['weibell_rank'] > percentile[3]) & (DISCHARGE_QUATERLY['weibell_rank'] <= 1.00),
+                (DISCHARGE_QUATERLY['weibell_rank'] > percentile[2]) & (DISCHARGE_QUATERLY['weibell_rank'] <= percentile[3]),
+                (DISCHARGE_QUATERLY['weibell_rank'] >= percentile[1]) & (DISCHARGE_QUATERLY['weibell_rank'] <= percentile[2]),
+                (DISCHARGE_QUATERLY['weibell_rank'] >= percentile[0]) & (DISCHARGE_QUATERLY['weibell_rank'] < percentile[1]),
+                (DISCHARGE_QUATERLY['weibell_rank'] >= 0.00) & (DISCHARGE_QUATERLY['weibell_rank'] < percentile[0])]   
+    
     DISCHARGE_QUATERLY['percentile_range'] = np.select(criteria_three_months,values,None)
     DISCHARGE_QUATERLY['flowcat'] = np.select(criteria_three_months,flow_cat,pd.NA)
 
@@ -125,11 +125,11 @@ def annualy_status(DISCHARGE_TWELVE_MONTHS):
 
     DISCHARGE_ANNUALY['weibull_rank'] = DISCHARGE_ANNUALY['rank_average']/(DISCHARGE_ANNUALY['complete%']+1)
     
-    criteria_twelve_months = [DISCHARGE_ANNUALY['weibull_rank'].between(percentile[3], 1.00),
-                          DISCHARGE_ANNUALY['weibull_rank'].between(percentile[2], percentile[3]),
-                          DISCHARGE_ANNUALY['weibull_rank'].between(percentile[1], percentile[2]),
-                          DISCHARGE_ANNUALY['weibull_rank'].between(percentile[0], percentile[1]),
-                          DISCHARGE_ANNUALY['weibull_rank'].between(0.00, percentile[0])]
+    criteria_twelve_months = [(DISCHARGE_ANNUALY['weibell_rank'] > percentile[3]) & (DISCHARGE_ANNUALY['weibell_rank'] <= 1.00),
+                (DISCHARGE_ANNUALY['weibell_rank'] > percentile[2]) & (DISCHARGE_ANNUALY['weibell_rank'] <= percentile[3]),
+                (DISCHARGE_ANNUALY['weibell_rank'] >= percentile[1]) & (DISCHARGE_ANNUALY['weibell_rank'] <= percentile[2]),
+                (DISCHARGE_ANNUALY['weibell_rank'] >= percentile[0]) & (DISCHARGE_ANNUALY['weibell_rank'] < percentile[1]),
+                (DISCHARGE_ANNUALY['weibell_rank'] >= 0.00) & (DISCHARGE_ANNUALY['weibell_rank'] < percentile[0])]
         
     DISCHARGE_ANNUALY['percentile_range'] = np.select(criteria_twelve_months,values,None)
     DISCHARGE_ANNUALY['flowcat'] = np.select(criteria_twelve_months,flow_cat,pd.NA)

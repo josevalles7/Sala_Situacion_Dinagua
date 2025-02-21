@@ -75,11 +75,12 @@ def defineHydroSOScategory(VARIABLE_MENSUAL,VARIABLE_AVERAGE,VARIABLE):
         VARIABLE_MENSUAL.loc[VARIABLE_MENSUAL.eval('month==@m & year==@y'),'average_percentage'] = (VARIABLE_MENSUAL[VARIABLE][i] - VARIABLE_AVERAGE.query('month == @m')[VARIABLE].item()) / VARIABLE_AVERAGE.query('month == @m')[VARIABLE].item()
 
     VARIABLE_MENSUAL['percentile'] = VARIABLE_MENSUAL['rank_average']/(VARIABLE_MENSUAL['non_missing']+1)
-    criteria = [VARIABLE_MENSUAL['percentile'].between(0.90,1.00),
-            VARIABLE_MENSUAL['percentile'].between(0.75,0.90),
-            VARIABLE_MENSUAL['percentile'].between(0.25,0.75),
-            VARIABLE_MENSUAL['percentile'].between(0.10,0.25),
-            VARIABLE_MENSUAL['percentile'].between(0.00,0.10)]
+
+    criteria = [(VARIABLE_MENSUAL['percentile'] > 0.90) & (VARIABLE_MENSUAL['percentile'] <= 1.00),
+                (VARIABLE_MENSUAL['percentile'] > 0.75) & (VARIABLE_MENSUAL['percentile'] <= 0.90),
+                (VARIABLE_MENSUAL['percentile'] >= 0.25) & (VARIABLE_MENSUAL['percentile'] <= 0.75),
+                (VARIABLE_MENSUAL['percentile'] >= 0.10) & (VARIABLE_MENSUAL['percentile'] < 0.25),
+                (VARIABLE_MENSUAL['percentile'] >= 0.00) & (VARIABLE_MENSUAL['percentile'] < 0.10)]
 
     values = ['High flow','Above normal','Normal range','Below normal','Low flow']
 
@@ -179,6 +180,10 @@ for basin in BASIN_LEVEL2.columns:
 
 # %%
 AVERAGE_PERCENTAGE.to_csv('./qgis_status_outlook/csvtables/modelling_result_codcuenca_2.csv',index=False)
+
+# Exportar a JSON
+
+AVERAGE_PERCENTAGE.to_json(f'./waterbalance/output_json/output_variables/{args.year_analysis}-{args.month_analysis}.json', orient='records', lines=False)
 
 # %%
 # Contar las ocurrencias de cada categoría
