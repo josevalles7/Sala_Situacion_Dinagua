@@ -315,7 +315,7 @@ plt.close()
 # A continuación seleccionaremos algunos años similares
 
 # %%
-selected_years = [1995, 1998, 2006, 2009, 2018]
+selected_years = [1982, 2008, 1993]
 concat_df['year_analogue'] = concat_df['year_analogue'].astype(int)
 years_to_select = [int(year) for year in selected_years]
 
