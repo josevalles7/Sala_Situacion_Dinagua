@@ -1,7 +1,0 @@
-(sacramento_model) C:\Users\Usuario>C:/Users/Usuario/anaconda3/envs/sacramento_model/python.exe c:/Tiago/1_Cuenca_Tacuari/4_python/Sacramento_automatico_param_iniciales/sacramento_automatico_set_prametros_iniciales.py
-Convergencia alcanzada en la iteración 10.
-Mejor conjunto de parámetros: [1.50000000e+02 6.52510533e+01 4.00842796e-01 1.44838448e-02
- 4.00000000e-01 1.00000000e+01 4.10418191e+00 4.21449314e+02
- 1.00000000e+01 7.88045966e+02 5.00000000e-01 2.30888522e-02
- 1.79315901e-02 4.56154777e-01 1.18012306e-01]
-Mejor NSE obtenido: 0.8914355497746415
