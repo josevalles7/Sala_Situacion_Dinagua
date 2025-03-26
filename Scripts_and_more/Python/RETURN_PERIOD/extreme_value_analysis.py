@@ -116,4 +116,4 @@ ax.set_title(f"Station {station_name}");
 ax.set_ylabel("Discharge [m3/s]");
 ax.set_xlabel("Return period [years]");
 
-plt.show()  # <-- Esta línea es la clave para ver la gráfica al correr el script
+plt.show()  
