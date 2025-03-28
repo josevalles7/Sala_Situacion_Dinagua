@@ -49,7 +49,7 @@ def evolucionar_complejo(complejo, func_objetivo, bl, bu, extra, n_evol):
     
     return complejo
 # --- 5. Implementación de SCE-UA ---
-def sceua(func_objetivo, bl, bu, extra, n_poblacion=600, n_complex=10, n_evol=6, max_iter=50, kstop=30, peps=1e-7):
+def sceua(func_objetivo, bl, bu, extra, n_poblacion, n_complex, n_evol, max_iter, kstop, peps):
     poblacion = inicializar_poblacion(bl, bu, n_poblacion)
     historico_mejor = []
 
