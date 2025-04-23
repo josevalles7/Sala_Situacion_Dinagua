@@ -3,7 +3,6 @@ import numpy as np
 import HydroErr as he
 import json
 import matplotlib.pyplot as plt
-from matplotlib.dates import AutoDateLocator, AutoDateFormatter
 from one_step_chat import one_step  # Importar la función one_step previamente creada
 
 
@@ -15,6 +14,16 @@ parametros = {
     'lzfsm': 40.0773827, 'lzfpm': 100.0, 'lzsk': 0.5, 'lzpk': 0.0097500564,
     'pfree': 0.150733005, 'side': 0.5, 'rserv': 0.0
 }
+
+parametros2 = {
+    'uztwm': 97.8271, 'uzfwm': 5.0, 'uzk': 0.6618, 'pctim': 0.0,
+    'adimp': 0.3984, 'zperc': 39.1498, 'rexp': 5.0, 'lztwm': 313.5992,
+    'lzfsm': 39.1387, 'lzfpm': 100.0063, 'lzsk': 0.3579, 'lzpk': 0.0336,
+    'pfree': 0.6, 'side': 0.5, 'rserv': 0.1087
+}
+
+parametros3 = None  # Eliminar el set de parámetros 3
+
 
 estados_iniciales = {
     'uztwc': 85, 'uzfwc': 60, 'lztwc': 110,
@@ -109,56 +118,55 @@ def exportar_caudal_simulado(fechas, caudales_simulados, filepath):
 if __name__ == "__main__":
     # Convertir 'Fecha' a formato datetime y filtrar el DataFrame
     df['Fecha'] = pd.to_datetime(df['Fecha'])
-    df_filtrado = df[(df['Fecha'] >= '2005-01-01') & (df['Fecha'] <= '2025-01-31')]
+    df_filtrado = df[(df['Fecha'] >= '2000-06-01') & (df['Fecha'] <= '2025-01-31')]
 
-    caudales_simulados = simular_sacramento(parametros, estados_iniciales, df, parametros_cuenca)
+    # Simular caudales con los dos conjuntos de parámetros
+    caudales_simulados_set1 = simular_sacramento(parametros, estados_iniciales, df, parametros_cuenca)
+    caudales_simulados_set2 = simular_sacramento(parametros2, estados_iniciales, df, parametros_cuenca)
 
     # Filtrar resultados para el período específico
-    caudal_simulado_filtrado = caudales_simulados[df_filtrado.index[0]:df_filtrado.index[-1] + 1]
+    caudal_simulado_filtrado_set1 = caudales_simulados_set1[df_filtrado.index[0]:df_filtrado.index[-1] + 1]
+    caudal_simulado_filtrado_set2 = caudales_simulados_set2[df_filtrado.index[0]:df_filtrado.index[-1] + 1]
     caudal_observado_filtrado = df_filtrado['QM'].values
 
-    resultados = pd.DataFrame({
-        'Fecha': df['Fecha'],
-        'Caudal Observado': df['QM'],
-        'Simulado Set 2': caudales_simulados,
-    })
-
-    # Exportar resultados a CSV
-    resultados.to_csv(r'C:\Tiago\1_Cuenca_Tacuari\4_python\resultados_simulados_2.csv', index=False)
-
-    # Exportar resultados de caudal simulado a CSV
-    exportar_caudal_simulado(df['Fecha'], caudales_simulados, r'C:\Tiago\1_Cuenca_Tacuari\4_python\resultados_caudal_simulado.csv')
-
-    # Calcular metricas
-    nse = calcular_nse(caudal_observado_filtrado, caudal_simulado_filtrado)
-    rve = calcular_error_volumetrico(caudal_observado_filtrado, caudal_simulado_filtrado)
-    nrmse = calcular_nrmse(caudal_observado_filtrado, caudal_simulado_filtrado)
+    # Calcular métricas para cada conjunto de parámetros
+    nse_set1 = calcular_nse(caudal_observado_filtrado, caudal_simulado_filtrado_set1)
+    nse_set2 = calcular_nse(caudal_observado_filtrado, caudal_simulado_filtrado_set2)
+    rve_set1 = calcular_error_volumetrico(caudal_observado_filtrado, caudal_simulado_filtrado_set1)
+    rve_set2 = calcular_error_volumetrico(caudal_observado_filtrado, caudal_simulado_filtrado_set2)
+    nrmse_set1 = calcular_nrmse(caudal_observado_filtrado, caudal_simulado_filtrado_set1)
+    nrmse_set2 = calcular_nrmse(caudal_observado_filtrado, caudal_simulado_filtrado_set2)
 
     # Crear gráfico comparativo
     fig, ax1 = plt.subplots(figsize=(12, 6))
 
     # Eje principal: Caudal observado y simulado para cada set de parámetros
     ax1.plot(df_filtrado['Fecha'], caudal_observado_filtrado, label='Caudal Observado', color='blue', linewidth=1.2)
-    #ax1.plot(df_filtrado['Fecha'], caudal_simulado_filtrado_set1, label=f'Set 1 (NSE={nse_set1:.2f})', color='red')
-    ax1.plot(df_filtrado['Fecha'], caudal_simulado_filtrado, label=f'Caudal Simulado ', color='orange') #(NSE={nse:.2f})
-    #ax1.plot(df_filtrado['Fecha'], caudal_simulado_filtrado_set3, label=f'Set 3 (NSE={nse_set3:.2f})', color='green')
+    ax1.plot(df_filtrado['Fecha'], caudal_simulado_filtrado_set1, label=f'Set 1 (NSE={nse_set1:.2f})', color='red')
+    ax1.plot(df_filtrado['Fecha'], caudal_simulado_filtrado_set2, label=f'Set 2 (NSE={nse_set2:.2f})', color='orange')
 
     ax1.set_xlabel('Fecha')
     ax1.set_ylabel('Caudal (m³/s)', color='black')
     ax1.legend(loc='upper left')
 
-    # Ajustar los ticks del eje x para evitar superposición
-    locator = AutoDateLocator()
-    formatter = AutoDateFormatter(locator)
-    ax1.xaxis.set_major_locator(locator)
-    ax1.xaxis.set_major_formatter(formatter)
-    fig.autofmt_xdate()  # Rotar las etiquetas de fecha automáticamente
-
     # Eje secundario: Precipitación
     ax2 = ax1.twinx()
     precip_filtrada = df_filtrado['Precip'].values
-    ax2.bar(df_filtrado['Fecha'], precip_filtrada, color='gray', alpha=0.5)
+    ax2.bar(df_filtrado['Fecha'], precip_filtrada, width=1, color='gray', alpha=0.5)
     ax2.set_ylabel('Precipitación (mm)', color='gray')
 
-    plt.title('Caudal Observado y Simulado')
+    plt.title('Comparación de Caudal Observado y Simulado para Diferentes Calibraciones')
     plt.show()
+
+    # Exportar resultados a CSV
+    resultados = pd.DataFrame({
+        'Fecha': df['Fecha'],
+        'Caudal Observado': df['QM'],
+        'Simulado Set 1': caudales_simulados_set1,
+        'Simulado Set 2': caudales_simulados_set2,
+    })
+    resultados.to_csv(r'C:\Tiago\1_Cuenca_Tacuari\4_python\resultados_simulados_todos.csv', index=False)
+
+    # Imprimir métricas
+    print("Set 1 - NSE:", nse_set1, "RVE:", rve_set1, "NRMSE:", nrmse_set1)
+    print("Set 2 - NSE:", nse_set2, "RVE:", rve_set2, "NRMSE:", nrmse_set2)
