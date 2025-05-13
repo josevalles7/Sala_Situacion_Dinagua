@@ -1,21 +1,21 @@
 Nombre,codcuenca_n1,codcuenca_n2,Advertencia
-RÍO CUAREIM,1,10,NO
-RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,NO
-RÍO ARAPEY CHICO,1,12,NO
-RÍO ARAPEY GRANDE,1,13,NO
+RÍO CUAREIM,1,10,MEDIO
+RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,BAJA
+RÍO ARAPEY CHICO,1,12,BAJA
+RÍO ARAPEY GRANDE,1,13,BAJA
 RÍO URUGUAY entre Río Arapey Grande y Río Daymán,1,14,NO
 RÍO DAYMÁN,1,15,NO
 RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,NO
 RÍO QUEGUAY GRANDE,1,17,NO
-RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,MEDIO
-RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,MEDIO
-RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,MEDIO
-RÍO SAN JUAN,2,21,MEDIO
-RÍO DE LA PLATA entre Río San Juan y Río Rosario,2,22,MEDIO
-RÍO ROSARIO,2,23,MEDIO
-RÍO DE LA PLATA entre Río Rosario y Río Santa Lucía,2,24,MEDIO
-RÍO DE LA PLATA entre Río Santa Lucía y Ao. PANDO,2,26,MEDIO
-RÍO DE LA PLATA entre Ao. Pando y Ao. Solís Grande,2,27,MEDIO
+RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,NO
+RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,NO
+RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,NO
+RÍO SAN JUAN,2,21,NO
+RÍO DE LA PLATA entre Río San Juan y Río Rosario,2,22,NO
+RÍO ROSARIO,2,23,NO
+RÍO DE LA PLATA entre Río Rosario y Río Santa Lucía,2,24,NO
+RÍO DE LA PLATA entre Río Santa Lucía y Ao. PANDO,2,26,NO
+RÍO DE LA PLATA entre Ao. Pando y Ao. Solís Grande,2,27,NO
 Ao. SOLÍS GRANDE,2,28,NO
 RÍO DE LA PLATA entre Ao. Solís Grande y Punta Del Este,2,29,NO
 OCÉANO ATLÁNTICO entre Punta del Este y Ao. MALDONADO,3,30,NO
@@ -29,20 +29,20 @@ RÍO OLIMAR GRANDE,4,43,NO
 RÍO CEBOLLATÍ,4,44,NO
 LAGUNA MERÍN entre Río Cebollatí y Ao. SAN MIGUEL,4,45,NO
 RÍO NEGRO entre nacientes y Río Tacuarembó,5,50,NO
-RÍO TACUAREMBÓ entre nacientes y Ao. Tacuarembó Chico,5,51,NO
+RÍO TACUAREMBÓ entre nacientes y Ao. Tacuarembó Chico,5,51,BAJA
 Ao. TACUAREMBÓ CHICO,5,52,NO
 RÍO TACUAREMBÓ entre Ao. Tacuarembó Chico y Río Negro,5,53,NO
 RÍO NEGRO entre Río Tacuarembó y Rincón del Bonete,5,54,NO
 RÍO NEGRO entre Rincón del Bonete y Río Yí,5,55,NO
 RÍO YÍ,5,56,NO
-RÍO NEGRO entre Río Yí y Rincón de Palmar,5,57,MEDIO
-RÍO NEGRO entre Rincón de Palmar y Río Uruguay,5,58,MEDIO
+RÍO NEGRO entre Río Yí y Rincón de Palmar,5,57,NO
+RÍO NEGRO entre Rincón de Palmar y Río Uruguay,5,58,NO
 RÍO SANTA LUCÍA entre nacientes y Río Santa Lucía Chico,6,60,NO
-RÍO SANTA LUCÍA CHICO,6,61,MEDIO
-RÍO SANTA LUCÍA entre Río Santa Lucía Chico y Ao. Canelón Grande,6,62,MEDIO
+RÍO SANTA LUCÍA CHICO,6,61,NO
+RÍO SANTA LUCÍA entre Río Santa Lucía Chico y Ao. Canelón Grande,6,62,NO
 Ao. CANELÓN GRANDE,6,63,NO
-RÍO SANTA LUCÍA entre Ao. Canelón Grande y Río San José,6,64,MEDIO
-RÍO SAN JOSÉ,6,65,MEDIO
-RÍO SANTA LUCÍA entre Río San José y Ao. Colorado,6,66,MEDIO
-Ao. COLORADO,6,67,MEDIO
-RÍO SANTA LUCÍA entre Ao. Colorado y Río de la Plata,6,68,MEDIO
+RÍO SANTA LUCÍA entre Ao. Canelón Grande y Río San José,6,64,NO
+RÍO SAN JOSÉ,6,65,NO
+RÍO SANTA LUCÍA entre Río San José y Ao. Colorado,6,66,NO
+Ao. COLORADO,6,67,NO
+RÍO SANTA LUCÍA entre Ao. Colorado y Río de la Plata,6,68,NO
