@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 import time
 import random
 import pandas as pd
@@ -42,7 +42,6 @@ nombres_estaciones = [
     "Prado",
     "Cerrillos"
 ]
-
 
 fecha_inicio = "2024-12-01"
 fecha_fin = "2025-01-31"
@@ -100,7 +99,7 @@ for nombre_estacion in nombres_estaciones:
         try:
             timestamps = data["results"]["A"]["frames"][0]["data"]["values"][0]
             valores = data["results"]["A"]["frames"][0]["data"]["values"][1]
-            fechas = [datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d") for ts in timestamps]
+            fechas = [datetime.fromtimestamp(ts / 1000, timezone.utc).strftime("%Y-%m-%d") for ts in timestamps]
             df = pd.DataFrame({
                 "fecha": fechas,
                 "valor": valores
