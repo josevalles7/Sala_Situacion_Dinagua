@@ -12,7 +12,7 @@ session = requests.Session()
 # URL de login
 url_login = "https://sistemas.inumet.gub.uy/login"
 
-# Datos de login (rellená con tus credenciales)
+# Datos de login
 payload_login = {
     "user": "telepluvio",
     "password": "telepluvio"
@@ -32,32 +32,32 @@ response_login = session.post(url_login, json=payload_login, headers=headers)
 print("Login status:", response_login.status_code)
 
 #---------------------------------------------------------------------------------------------------------------
-#una pequeña pausa no sospechosa
-time.sleep(random.uniform(5, 8)) 
+# Una pequeña pausa no sospechosa
+time.sleep(random.uniform(8, 15)) 
 #---------------------------------------------------------------------------------------------------------------
 
-# === 2. Lista de estaciones ===
+# === Lista de estaciones ===
 nombres_estaciones = [
-    "18 de Julio",
-    "Prado",
-    "Cerrillos"
+    "25 de Agosto",
+    "Barriga Negra"
 ]
 
-fecha_inicio = "2024-12-01"
-fecha_fin = "2025-01-31"
+# === Elegir fechas y convertir a milisegundos y segundos epoch ===
 
-# === 3. Convertir fechas a milisegundos y segundos epoch ===
-def fecha_a_epoch_ms(fecha_str):
-    dt = datetime.strptime(fecha_str, "%Y-%m-%d")
-    return int(dt.timestamp() * 1000)
+fecha_inicio_str = "2025-02-28"
+fecha_fin_str = "2025-05-16"
 
-epoch_from = fecha_a_epoch_ms(fecha_inicio)
-epoch_to = fecha_a_epoch_ms(fecha_fin)
+fmt = "%Y-%m-%d"
+epoch_from = int(datetime.strptime(fecha_inicio_str, fmt).timestamp() * 1000)
+epoch_to = int(datetime.strptime(fecha_fin_str, fmt).timestamp() * 1000)
+
 epoch_from_s = epoch_from // 1000
 epoch_to_s = epoch_to // 1000
 
+# Bucle de consulta
+
 for nombre_estacion in nombres_estaciones:
-    # === 4. Armar SQL personalizado ===
+    # === Armar SQL personalizado ===
     raw_sql = f"""
     SELECT d.fecha + INTERVAL 10 HOUR AS 'time',
            d.valorCorregido AS 'R3'
@@ -68,7 +68,7 @@ for nombre_estacion in nombres_estaciones:
                        AND FROM_UNIXTIME({epoch_to_s}) + INTERVAL 3 HOUR
     """
 
-    # === 5. Payload para el query de datos ===
+    # === Payload para el query de datos ===
     query_payload = {
         "queries": [
             {
@@ -88,7 +88,7 @@ for nombre_estacion in nombres_estaciones:
         "to": str(epoch_to)
     }
 
-    # === 6. Enviar request a /api/ds/query ===
+    # === Enviar request a /api/ds/query ===
     url_datos = "https://sistemas.inumet.gub.uy/api/ds/query?ds_type=mysql&requestId=Q100"
     response_datos = session.post(url_datos, json=query_payload, headers=headers)
 
@@ -97,15 +97,21 @@ for nombre_estacion in nombres_estaciones:
     if response_datos.status_code == 200:
         data = response_datos.json()
         try:
+            # Extraer listas de fecha y precip
             timestamps = data["results"]["A"]["frames"][0]["data"]["values"][0]
             valores = data["results"]["A"]["frames"][0]["data"]["values"][1]
+
+            # Convertir timestamps a datetime en formato yyyy-mm-dd HH:mm            
             fechas = [datetime.fromtimestamp(ts / 1000, timezone.utc).strftime("%Y-%m-%d") for ts in timestamps]
+            
             df = pd.DataFrame({
                 "fecha": fechas,
-                "valor": valores
+                'valor': pd.Series(valores).round(2) # Redondear los valores
             })
+
+            # === Alterar ruta de salida ===
             nombre_archivo = nombre_estacion.replace(" ", "_") + ".csv"
-            ruta_salida = os.path.join(r"C:\Tiago\3_Series_Hitoricas", nombre_archivo)
+            ruta_salida = os.path.join(r"C:\Tiago\3_Series_Hitoricas\Estaciones_Santa_Lucia\03-2025_05-2025\Convencionales", nombre_archivo)
             df.to_csv(ruta_salida, index=False, encoding="utf-8")
             print(f"CSV guardado en: {ruta_salida}")
         except Exception as e:
@@ -114,4 +120,4 @@ for nombre_estacion in nombres_estaciones:
         print(f"Error en la consulta para {nombre_estacion}")
     
     # Pausa entre estaciones para evitar bloqueos
-    time.sleep(random.uniform(2, 5))
+    time.sleep(random.uniform(8, 15))
