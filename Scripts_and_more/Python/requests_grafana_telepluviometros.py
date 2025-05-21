@@ -68,7 +68,7 @@ for nombre_estacion in nombres_estaciones:
                         "type": "sum"
                     }
                 ],
-                "query": f"locality.keyword :{nombre_estacion} AND (_exists_:rtuRain AND (rtuRain:[0 TO 0.001] OR rtuRain:{{0.005 TO 15}}))",
+                "query": f"locality.keyword :{nombre_estacion} AND (_exists_:rtuRain AND (rtuRain:[0 TO 0.001}} OR rtuRain:{{0.005 TO 15]))",
                 "refId": "A",
                 "timeField": "timestamp",
                 "datasourceId": 56,
@@ -76,6 +76,8 @@ for nombre_estacion in nombres_estaciones:
                 "maxDataPoints": 1000
             }
         ],
+        "title": "$rain_gauge - Precipitación",
+        "type": "timeseries",
         "from": str(epoch_from),
         "to": str(epoch_to)
     }
@@ -102,7 +104,7 @@ for nombre_estacion in nombres_estaciones:
     valores_lluvia = data['results']['A']['frames'][0]['data']['values'][1]
 
     # Convertir timestamps (milisegundos) a datetime en formato yyyy-mm-dd HH:mm
-    fechas = [datetime.fromtimestamp(ts / 1000).strftime('%Y-%m-%d %H:%M') for ts in valores_tiempo]
+    fechas = [datetime.fromtimestamp(ts / 1000).strftime('%Y-%m-%d %H:%M:%S') for ts in valores_tiempo]
 
     # Crear DataFrame
     df = pd.DataFrame({

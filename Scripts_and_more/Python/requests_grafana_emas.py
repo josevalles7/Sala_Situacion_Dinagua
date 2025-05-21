@@ -37,7 +37,9 @@ time.sleep(random.uniform(5, 8))
 
 # === Lista de estaciones ===
 nombres_estaciones = [
-    "Lavalleja G3"
+    "Florida G3",
+    "La Calera G5",
+    "San José G4",
 ]
 
 # === Elegir fechas y convertir a milisegundos y segundos epoch ===
@@ -95,15 +97,20 @@ for nombre_estacion in nombres_estaciones:
     if response_datos.status_code == 200:
         data = response_datos.json()
         try:
+            # Extraer listas de fecha y precip
             timestamps = data["results"]["A"]["frames"][0]["data"]["values"][0]
             valores = data["results"]["A"]["frames"][0]["data"]["values"][1]
-            fechas = [datetime.fromtimestamp(ts / 1000, timezone.utc).strftime("%Y-%m-%d") for ts in timestamps]
+
+            # Convertir timestamps a datetime en formato yyyy-mm-dd HH:mm
+            fechas = [datetime.fromtimestamp(ts / 1000).strftime('%Y-%m-%d %H:%M:%S') for ts in timestamps]
+            
             df = pd.DataFrame({
                 "fecha": fechas,
-                "valor": valores
+                'valor': pd.Series(valores).round(2) # Redondear los valores
             })
-            nombre_archivo = "ema_" + nombre_estacion.replace(" ", "_") + ".csv"
+
             # === Alterar ruta de salida ===
+            nombre_archivo = "ema_" + nombre_estacion.replace(" ", "_") + ".csv"
             ruta_salida = os.path.join(r"C:\Tiago\3_Series_Hitoricas\Estaciones_Santa_Lucia\03-2025_05-2025\EMA", nombre_archivo)
             df.to_csv(ruta_salida, index=False, encoding="utf-8")
             print(f"CSV guardado en: {ruta_salida}")
