@@ -38,9 +38,39 @@ time.sleep(random.uniform(8, 15))
 
 # === Lista de estaciones ===
 nombres_estaciones = [
-    "25 de Agosto",
-    "Barriga Negra"
+        "San Gregorio (Pintos)"
 ]
+
+"""[
+    "25 de Agosto",
+    "Barriga Negra",
+    "Casupa_fr",
+    "Cerrillos",
+    "Chacra Policial",
+    "Chamizo_fr",
+    "Cufré",
+    "Cerro Colorado",
+    "Florida",
+    "Fray Marcos",
+    "Ismael Cortinas",
+    "Juan Soler",
+    "Melilla",
+    "Mendoza",
+    "Reboledo",
+    "San Antonio",
+    "San Bautista",
+    "San Gabriel",
+    "San Gregorio (Pintos)",
+    "San José",
+    "Santa Lucía",
+    "Santa Rosa",
+    "Sta. Lucía (La Calera)",
+    "Tala",
+    "Toledo",
+    "V. Rosario",
+    "Villa 25 de Mayo",
+    "Villa Cardal"
+]"""
 
 # === Elegir fechas y convertir a milisegundos y segundos epoch ===
 
@@ -102,7 +132,7 @@ for nombre_estacion in nombres_estaciones:
             valores = data["results"]["A"]["frames"][0]["data"]["values"][1]
 
             # Convertir timestamps a datetime en formato yyyy-mm-dd HH:mm            
-            fechas = [datetime.fromtimestamp(ts / 1000, timezone.utc).strftime("%Y-%m-%d") for ts in timestamps]
+            fechas = [datetime.fromtimestamp(ts / 1000, timezone.utc).strftime("%Y-%m-%d 07:00:00") for ts in timestamps]
             
             df = pd.DataFrame({
                 "fecha": fechas,
