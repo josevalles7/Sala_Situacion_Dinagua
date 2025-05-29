@@ -50,25 +50,25 @@ fecha_pronos3 = fecha_pronos3.strftime('%A, %d de %B de %Y').encode('latin-1').d
 # %%
 # Río Yí
 sheet_yi = wb.sheets['YI']
-context_yi = sheet_yi.range('B2').options(dict,expand='table',numbers=float).value
+context_yi = sheet_yi.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río Cuareim
 sheet_cuareim = wb.sheets['CUAREIM']
-context_cuareim = sheet_cuareim.range('B2').options(dict,expand='table',numbers=float).value
+context_cuareim = sheet_cuareim.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río Santa Lucia
 sheet_lucia = wb.sheets['SANTALUCIA']
-context_lucia = sheet_lucia.range('B2').options(dict,expand='table',numbers=float).value
+context_lucia = sheet_lucia.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río Uruguay
 sheet_uy = wb.sheets['URUGUAY']
-context_uy = sheet_uy.range('B2').options(dict,expand='table',numbers=float).value
+context_uy = sheet_uy.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río Negro
 sheet_negro = wb.sheets['NEGRO']
-context_negro = sheet_negro.range('B2').options(dict,expand='table',numbers=float).value
+context_negro = sheet_negro.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río Olimar Grande
 sheet_olimar = wb.sheets['OLIMAR']
-context_olimar = sheet_olimar.range('B2').options(dict,expand='table',numbers=float).value
+context_olimar = sheet_olimar.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 # Río San Jose
 sheet_jose = wb.sheets['SANJOSE']
-context_jose = sheet_jose.range('B2').options(dict,expand='table',numbers=float).value
+context_jose = sheet_jose.range('B2').options(dict,expand='table',numbers=float,empty_value=None).value
 
 # %%
 context = {
@@ -116,7 +116,7 @@ env.filters['strftime'] = lambda dt, fmt: dt.strftime(fmt)
 doc.render(context, jinja_env=env)
 
 # %%
-output_file = f'INFORME_SITUACION_PRONOSTICO_{entero}.docx'
+output_file = f'Informe_situacion_pronostico_{entero}.docx'
 print(output_file)
 
 # %%
