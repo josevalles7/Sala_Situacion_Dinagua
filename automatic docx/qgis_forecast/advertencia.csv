@@ -1,13 +1,13 @@
 Nombre,codcuenca_n1,codcuenca_n2,Advertencia
-RÍO CUAREIM,1,10,ALTO
-RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,ALTO
-RÍO ARAPEY CHICO,1,12,ALTO
-RÍO ARAPEY GRANDE,1,13,MEDIO
-RÍO URUGUAY entre Río Arapey Grande y Río Daymán,1,14,MEDIO
-RÍO DAYMÁN,1,15,MEDIO
-RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,MEDIO
-RÍO QUEGUAY GRANDE,1,17,MEDIO
-RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,MEDIO
+RÍO CUAREIM,1,10,MEDIO
+RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,BAJA
+RÍO ARAPEY CHICO,1,12,BAJA
+RÍO ARAPEY GRANDE,1,13,BAJA
+RÍO URUGUAY entre Río Arapey Grande y Río Daymán,1,14,BAJA
+RÍO DAYMÁN,1,15,BAJA
+RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,BAJA
+RÍO QUEGUAY GRANDE,1,17,BAJA
+RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,BAJA
 RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,NO
 RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,NO
 RÍO SAN JUAN,2,21,NO
