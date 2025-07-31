@@ -1,0 +1,11 @@
+@echo off
+echo Ingrese el mes de analisis (YYYY-MM):
+set /p FECHA= 
+
+CALL C:\Anaconda\Scripts\activate.bat GEE
+echo Entorno GEE activado
+
+python C:\Dinagua\1_estado_espejos_agua\1_Laguna_Merin\python\estado_mensual_l_merin.py %FECHA%
+echo Script ejecutado
+
+pause
