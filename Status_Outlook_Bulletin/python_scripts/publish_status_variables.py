@@ -72,7 +72,7 @@ post_estado = requests.post(
     url=f"{url_base}estadohidro/escorrentia?fecha={fecha}",
     headers=headers,
     json=json_body,
-    verify=True
+    verify=False
 )
 if post_estado.status_code != 200:
     print("Error al publicar el estado:", post_estado.text)
