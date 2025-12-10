@@ -32,6 +32,7 @@ args = parser.parse_args()
 
 for f in os.listdir(args.input_directory):
     if f.endswith('.csv'):
+        print(f)
         if args.freq == 'daily':
             print("daily input data found")
             flowdata, stationid = aggvar.import_data(args.input_directory, filename = f)
