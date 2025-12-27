@@ -192,11 +192,7 @@ for columna, datos in ALL_BASIN.iteritems():
     hydro_status = EstadoHidrologico(station_name = columna,values=values,flow_cat=flow_cat)
     DISCHARGE_MONTHLY = hydro_status.cargar_datos()
     STATUS_ONE_MONTH = hydro_status.estado_mensual()
-    STATUS_THREE_MONTH = hydro_status.estado_trimestral()
-    STATUS_TWELVE_MONTH = hydro_status.estado_anual()
     STATUS_ONE_MONTH = STATUS_ONE_MONTH.rename_axis('date')
-    STATUS_THREE_MONTH = STATUS_THREE_MONTH.rename_axis('date')
-    STATUS_TWELVE_MONTH = STATUS_TWELVE_MONTH.rename_axis('date')
     # Extract categories from the last back_months variable
     df_cat[columna] = STATUS_ONE_MONTH.loc[fechas]['flowcat']
     
