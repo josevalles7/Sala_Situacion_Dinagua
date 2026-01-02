@@ -459,7 +459,8 @@ color_mapping_summary = {
 column_name = category_counts_summary.index.to_list()
 colors = [mcolors.to_rgb(color_mapping_summary.get(x,'#808080')) for x in category_counts_summary.index]
 ax3 = category_counts_summary['percentage_ensemble'].plot(kind='bar',color=colors,figsize=(12, 8));
-plt.xticks(range(len(category_counts_summary.index)),column_name,rotation=0,horizontalalignment='center');
+plt.xticks(range(len(category_counts_summary.index)),column_name,rotation=0,horizontalalignment='center',fontsize=20);
+plt.yticks(fontsize=20)
 plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=14);
 plt.ylabel('% de miembros',fontweight='bold',fontsize=14);
 #plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
