@@ -206,66 +206,200 @@ piv = pd.pivot_table(df_cat_float,columns=["FECHA"])
 # %% [markdown]
 # ### Plot the HeatMap
 
-# %%
+# %% Funciones para generar heatmaps de estado hidrológico
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm 
 import locale
+import numpy as np
 
 locale.setlocale(locale.LC_TIME, "es_ES")
 
 
+def plot_heatmap_status_simple(piv_df, df_dates, allbasins_df, output_file=None):
+    """
+    Genera un heatmap simple del estado hidrológico sin agrupación de cuencas.
+    
+    Parameters:
+    -----------
+    piv_df : pd.DataFrame
+        Dataframe pivotado (cuencas como rows, fechas como columns)
+    df_dates : pd.DataFrame
+        Dataframe con columna FECHA
+    allbasins_df : pd.DataFrame
+        Dataframe con información de cuencas (columna 'nombre')
+    output_file : str, optional
+        Ruta para guardar la figura. Si es None, no guarda.
+    
+    Returns:
+    --------
+    fig, ax : matplotlib.figure.Figure, matplotlib.axes.Axes
+    """
+    # Definir colores y normalización
+    colors = ['#CD233F', '#FFA885', '#E7E2BC', '#8ECEEE', '#2C7DCD']
+    cmap = ListedColormap(colors)
+    bounds = [1, 2, 3, 4, 5, 6]
+    my_norm = BoundaryNorm(bounds, ncolors=len(colors))
+    
+    font_size = 12
+    factor_delta = 2
+    
+    # Crear el heatmap
+    fig, ax = plt.subplots(figsize=(28, 14))
+    ax = sns.heatmap(piv_df, 
+                     square=True, 
+                     cmap=cmap, 
+                     vmin=1, 
+                     vmax=5,
+                     annot=False,
+                     norm=my_norm,
+                     linewidths=1,
+                     linecolor='black', 
+                     ax=ax, 
+                     annot_kws={'fontsize': font_size, 'fontweight': 'bold'},
+                     cbar_kws={'label': '', 'orientation': 'vertical', 'shrink': 0.3})
+    
+    ax.set_title('Estado Hidrológico en Uruguay', pad=20, loc='center', size=18)
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
+    
+    ax.set_xlabel('Fecha', rotation=0, labelpad=10, size=font_size + factor_delta)
+    ax.set_xticklabels(df_dates['FECHA'].dt.strftime('%b-%y'), fontsize=font_size + factor_delta)
+    
+    ax.set_ylabel('Subcuenca Hidrográfica', rotation=90, labelpad=10, fontsize=font_size + factor_delta)
+    ax.tick_params(axis='y', labelsize=font_size + factor_delta)
+    
+    ax.set_yticklabels(allbasins_df.nombre, rotation=0)
+    
+    # Configurar colorbar
+    colorbar = ax.collections[0].colorbar
+    colorbar.set_ticks([(b0 + b1) / 2 for b0, b1 in zip(bounds[:-1], bounds[1:])])
+    colorbar.set_ticklabels(['Flujo bajo', 'Por debajo de lo normal', 'Normal', 
+                             'Por encima de lo normal', 'Flujo alto'])
+    colorbar.ax.tick_params(labelsize=font_size)
+    colorbar.ax.yaxis.set_tick_params(rotation=0)
+    colorbar.ax.yaxis.set_label_position('left')
+    ax.figure.axes[-1].yaxis.label.set_size(font_size)
+    
+    plt.rcParams.update({'font.family': 'Arial'})
+    sns.set(font_scale=1.4)
+    plt.tight_layout()
+    
+    if output_file:
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    
+    return fig, ax
 
-# Definir colores discretos para cada categoría
-colors = ['#CD233F', '#FFA885', '#E7E2BC', '#8ECEEE', '#2C7DCD']
-cmap = ListedColormap(colors)
 
-bounds = [1, 2, 3, 4, 5, 6]
-my_norm = BoundaryNorm(bounds, ncolors=len(colors))
+def plot_heatmap_status_grouped(piv_df, df_dates, allbasins_df, output_file=None):
+    """
+    Genera un heatmap del estado hidrológico con agrupación por cuencas principales.
+    
+    Parameters:
+    -----------
+    piv_df : pd.DataFrame
+        Dataframe pivotado (cuencas como rows, fechas como columns)
+    df_dates : pd.DataFrame
+        Dataframe con columna FECHA
+    allbasins_df : pd.DataFrame
+        Dataframe con información de cuencas (columna 'nombre')
+    output_file : str, optional
+        Ruta para guardar la figura. Si es None, no guarda.
+    
+    Returns:
+    --------
+    fig, ax : matplotlib.figure.Figure, matplotlib.axes.Axes
+    """
+    # Definir colores y normalización
+    colors = ['#CD233F', '#FFA885', '#E7E2BC', '#8ECEEE', '#2C7DCD']
+    cmap = ListedColormap(colors)
+    bounds = [1, 2, 3, 4, 5, 6]
+    my_norm = BoundaryNorm(bounds, ncolors=len(colors))
+    
+    font_size = 12
+    factor_delta = 2
+    ancho_linea = 2
+    
+    # Mapeo de grupos de cuencas
+    group_map = {
+        '1': 'Río Uruguay',
+        '2': 'Río de la Plata',
+        '3': 'Océano Atlántico',
+        '4': 'Laguna Merín',
+        '5': 'Río Negro',
+        '6': 'Río Santa Lucia'
+    }
+    
+    # Obtener grupos para cada fila
+    basin_groups = [group_map.get(str(code)[0], "Otro") for code in piv_df.index]
+    change_indices = np.where(np.array(basin_groups)[:-1] != np.array(basin_groups)[1:])[0]
+    
+    # Crear heatmap
+    fig, ax = plt.subplots(figsize=(28, 14))
+    plt.subplots_adjust(left=0.3)
+    
+    sns.heatmap(piv_df, square=True, cmap=cmap, norm=my_norm, linewidths=1,
+                linecolor='black', ax=ax, cbar_kws={'shrink': 0.3})
+    
+    # Agregar etiquetas de grupo y bordes
+    last_idx = 0
+    x_lim_left = -1.7
+    
+    for idx in list(change_indices) + [len(basin_groups) - 1]:
+        mid_point = (last_idx + idx + 1) / 2
+        group_name = basin_groups[last_idx]
+        
+        ax.annotate(group_name, xy=(x_lim_left + 0.05, mid_point),
+                    xycoords=('axes fraction', 'data'),
+                    ha='left', va='center', fontweight='bold', fontsize=16)
+        
+        ax.axhline(y=idx + 1, xmin=x_lim_left, xmax=1.0,
+                   color='black', linewidth=ancho_linea, clip_on=False)
+        
+        if last_idx == 0:
+            ax.axhline(y=0, xmin=x_lim_left, xmax=1.0,
+                       color='black', linewidth=ancho_linea, clip_on=False)
+        
+        last_idx = idx + 1
+    
+    # Líneas verticales
+    ax.vlines(x=x_lim_left, ymin=0, ymax=len(piv_df), transform=ax.get_yaxis_transform(),
+              color='black', linewidth=ancho_linea, clip_on=False)
+    
+    ax.vlines(x=x_lim_left + 0.5, ymin=0, ymax=len(piv_df), transform=ax.get_yaxis_transform(),
+              color='black', linewidth=ancho_linea, clip_on=False)
+    
+    # Formateo de etiquetas
+    ax.set_yticklabels(allbasins_df.nombre, rotation=0, fontsize=font_size + factor_delta)
+    ax.set_xticklabels(df_dates['FECHA'].dt.strftime('%b-%y'), fontsize=font_size + factor_delta)
+    
+    # Configurar colorbar
+    colorbar = ax.collections[0].colorbar
+    colorbar.set_ticks([(b0 + b1) / 2 for b0, b1 in zip(bounds[:-1], bounds[1:])])
+    colorbar.set_ticklabels(['Flujo bajo', 'Por debajo de lo normal', 'Normal',
+                             'Por encima de lo normal', 'Flujo alto'])
+    colorbar.ax.tick_params(labelsize=font_size)
+    colorbar.ax.yaxis.set_tick_params(rotation=0)
+    colorbar.ax.yaxis.set_label_position('left')
+    ax.figure.axes[-1].yaxis.label.set_size(font_size)
+    
+    plt.rcParams.update({'font.family': 'Arial'})
+    sns.set(font_scale=1.4)
+    plt.tight_layout()
+    
+    if output_file:
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    
+    return fig, ax
 
-font_size = 12
-factor_delta = 2
 
-# Crear el heatmap
-fig, ax = plt.subplots(figsize=(28,14))
-ax = sns.heatmap(piv, 
-                 square=True, 
-                 cmap=cmap, 
-                 vmin=1, 
-                 vmax=5,
-                 annot = False,
-                 norm=my_norm,
-                 linewidths=1,
-                 linecolor='black', 
-                 ax=ax, 
-                 annot_kws={'fontsize': font_size, 'fontweight':'bold',},
-                 cbar_kws={'label': '','orientation':'vertical','shrink': 0.3})
+# %% Ejecutar los gráficos
 
-ax.set_title('Estado Hidrológico en Uruguay', pad=20, loc='center',size=18)
-plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
+# Gráfico 1: Heatmap simple
+# fig1, ax1 = plot_heatmap_status_simple(piv, df_cat_float, allbasins_n2, output_file="./waterbalance/output_png/07_status_heatmap_simple.png")
+# plt.close(fig1)
 
-ax.set_xlabel('Fecha',rotation=0, labelpad=10,size=font_size+factor_delta)
-ax.set_xticklabels(df_cat_float['FECHA'].dt.strftime('%b-%y'),fontsize=font_size+factor_delta)
-
-ax.set_ylabel('Subcuenca Hidrográfica', rotation=90, labelpad=10, fontsize=font_size+factor_delta)
-ax.tick_params(axis='y', labelsize=font_size+factor_delta)
-
-ax.set_yticklabels(allbasins_n2.nombre,rotation=0)
-
-colorbar = ax.collections[0].colorbar
-colorbar.set_ticks([(b0+b1)/2 for b0, b1 in zip(bounds[:-1], bounds[1:])])
-colorbar.set_ticklabels(['Flujo bajo', 'Por debajo de lo normal', 'Normal', 'Por encima de lo normal', 'Flujo alto'])
-
-colorbar.ax.tick_params(labelsize=font_size)
-colorbar.ax.yaxis.set_tick_params(rotation=0)
-colorbar.ax.yaxis.set_label_position('left')
-ax.figure.axes[-1].yaxis.label.set_size(font_size)
-
-plt.rcParams.update({'font.family':'Arial'})
-sns.set(font_scale=1.4)
-plt.tight_layout()
-plt.savefig(f"./waterbalance/output_png/07_status_heatmap.png", dpi=300, bbox_inches='tight')
-plt.close()
-
-
-
+# Gráfico 2: Heatmap con agrupación
+fig2, ax2 = plot_heatmap_status_grouped(piv, df_cat_float, allbasins_n2,
+                                        output_file="./waterbalance/output_png/07_status_heatmap.png")
+plt.close(fig2)
