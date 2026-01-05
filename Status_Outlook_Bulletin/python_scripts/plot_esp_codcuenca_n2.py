@@ -461,8 +461,8 @@ colors = [mcolors.to_rgb(color_mapping_summary.get(x,'#808080')) for x in catego
 ax3 = category_counts_summary['percentage_ensemble'].plot(kind='bar',color=colors,figsize=(12, 8));
 plt.xticks(range(len(category_counts_summary.index)),column_name,rotation=0,horizontalalignment='center',fontsize=20);
 plt.yticks(fontsize=20)
-plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=14);
-plt.ylabel('% de miembros',fontweight='bold',fontsize=14);
+plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=20);
+plt.ylabel('% de miembros',fontweight='bold',fontsize=20);
 #plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
 #plt.title(f"{forecast_leadtime}-Mes de Perspectiva",fontweight='bold',fontsize=14);
 plt.savefig(f"./waterbalance/output_png/06_barplot_{forecast_leadtime}_leadtime.png", dpi=300, bbox_inches='tight')
