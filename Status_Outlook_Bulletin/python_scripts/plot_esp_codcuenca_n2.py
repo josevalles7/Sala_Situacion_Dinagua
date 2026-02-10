@@ -443,6 +443,8 @@ ax3 = category_counts['percentage_ensemble'].plot(kind='bar',color=colors,figsiz
 plt.xticks(range(len(category_counts.index)),column_name,rotation=0,horizontalalignment='center');
 plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=14);
 plt.ylabel('% de miembros',fontweight='bold',fontsize=14);
+# set xlimits to 100%
+plt.ylim(0,100)
 #plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
 #plt.title(f"{forecast_leadtime}-Mes de Perspectiva",fontweight='bold',fontsize=14);
 plt.savefig(f"./waterbalance/output_png/05_barplot_{forecast_leadtime}_leadtime.png", dpi=300, bbox_inches='tight')
@@ -463,6 +465,8 @@ plt.xticks(range(len(category_counts_summary.index)),column_name,rotation=0,hori
 plt.yticks(fontsize=20)
 plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=20);
 plt.ylabel('% de miembros',fontweight='bold',fontsize=20);
+# set xlimits to 100%
+plt.ylim(0,100)
 #plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
 #plt.title(f"{forecast_leadtime}-Mes de Perspectiva",fontweight='bold',fontsize=14);
 plt.savefig(f"./waterbalance/output_png/06_barplot_{forecast_leadtime}_leadtime.png", dpi=300, bbox_inches='tight')

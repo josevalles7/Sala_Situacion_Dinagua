@@ -188,6 +188,12 @@ AVERAGE_PERCENTAGE.to_json(f'./waterbalance/output_json/output_variables/{args.y
 # %%
 # Contar las ocurrencias de cada categoría
 category_counts = AVERAGE_PERCENTAGE['hydroSOS_category'].value_counts()
+# calcular el area que esta en cada categoria como porcentaje del area total
+BASIN_LEVEL2.loc['Area'] = BASIN_LEVEL2.loc['Area'].astype(float)
+total_area = BASIN_LEVEL2.loc['Area', AVERAGE_PERCENTAGE['codigo']].sum()
+category_counts_area = AVERAGE_PERCENTAGE.groupby('hydroSOS_category')['codigo'].apply(
+    lambda x: BASIN_LEVEL2.loc['Area', x].sum() / total_area * 100
+)
 
 # %%
 # Definir los colores para cada categoría basados en el estado hidrológico
@@ -197,23 +203,21 @@ colors = [
     '#E7E2BC' if category == 'Normal range' else
     '#FFA885' if category == 'Below normal' else
     '#CD233F'  # Low flow
-    for category in category_counts.index
+    for category in category_counts_area.index
 ]
 
 # Crear el gráfico de doughnut
 fig, ax = plt.subplots()
-ax.pie(category_counts, labels=None, autopct='%1.1f%%', startangle=90, wedgeprops={'width': 0.3}, colors=colors)
+ax.pie(category_counts_area, labels=None, autopct='%1.0f%%', startangle=90, wedgeprops={'width': 0.3}, colors=colors)
 
 # Asegurar que el gráfico sea un círculo
 ax.axis('equal')
 
 # Añadir leyenda con los nombres de las categorías
-plt.legend(category_counts.index, title="HydroSOS Category", loc="center left", bbox_to_anchor=(1, 0.5))
+plt.legend(category_counts_area.index, title="HydroSOS Category", loc="center left", bbox_to_anchor=(1, 0.5))
 
 # Título del gráfico
 plt.title('Distribución de HydroSOS Category')
 
 # Mostrar el gráfico
 plt.show()
-
-
