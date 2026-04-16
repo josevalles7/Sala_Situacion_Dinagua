@@ -15,6 +15,13 @@ ETP1(:,1:2)=[];
 mes_fin = fechas(end,2) + 1 ;
 ano_fin = fechas(end,1);
 
+if mes_fin > 12
+    mes_fin = mes_fin - 12;
+    ano_fin = ano_fin + 1;
+end
+
+disp(['El mes pronostico es ',num2str(mes_fin),' del año ', num2str(ano_fin)])
+
 rows = find(fechas(:,2)==mes_fin);
 
 for j = 1:length(rows)
