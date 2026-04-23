@@ -12,8 +12,8 @@ import pandas as pd
 # Define the path to the python HydroSOS Package
 sys.path.append('.')
 
-import HydroSOS_scripts.get_status_product as SOS
-import HydroSOS_scripts.aggregate_variable as aggvar
+import HydroSOS_scripts.hydrological_status as SOS
+import HydroSOS_scripts.flow_aggregation as aggvar
 
 # Define arguments 
 parser = argparse.ArgumentParser(

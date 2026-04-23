@@ -94,7 +94,7 @@ forecast_leadtime = int(args.forecast_leadtime)
 
 for basin in allbasins_n2.columns:
     aggregate_discharge, concat_df = importmodelensemble(basin)
-    DISCHARGE_SELECTION = aggregate_discharge[(aggregate_discharge['year'] >= 1991) & (aggregate_discharge['year'] <= 2020)]
+    DISCHARGE_SELECTION = aggregate_discharge[(aggregate_discharge['year'] >= 1981) & (aggregate_discharge['year'] <= 2010)]
     percentiles = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).quantile([0.10,0.25,0.75,0.90])
     percentiles = percentiles.reset_index()
     percentiles = percentiles.drop(columns=['year'])
