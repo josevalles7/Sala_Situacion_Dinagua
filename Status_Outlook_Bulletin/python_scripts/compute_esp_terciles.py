@@ -1,4 +1,3 @@
-# %%
 import pandas as pd
 import os
 import numpy as np
@@ -6,14 +5,20 @@ from datetime import datetime, timedelta
 import argparse
 import sys
 import matplotlib.pyplot as plt
+from scipy.stats import mstats
 
+'''
+print(f"Old Directory: {os.getcwd()}")
+os.chdir(r'../')
+print(f"New Directory: {os.getcwd()}")
+'''
 # Define the path to the python HydroSOS Package
 sys.path.append(os.path.abspath('.'))
-
 import HydroSOS_scripts.flow_aggregation as flowagg
 
-# %%
+
 # Define arguments
+
 parser = argparse.ArgumentParser(
                     prog='ESP_outlook_tertiles',
                     description='Postprocess the ESP outlook products',
@@ -24,11 +29,17 @@ parser.add_argument('codcuenca_n2', help='enter the codigo_n2 of the basin to pl
 parser.add_argument('leadtime', help='provide forecast leadtime')
 
 args = parser.parse_args()
-
+'''
+args = argparse.Namespace(
+    end_date='2026-04-30',
+    codcuenca_n2='60',
+    leadtime='3'
+)
+'''
 end_date = args.end_date
 codigo = args.codcuenca_n2
 leadtime = args.leadtime
-# %%
+
 # ------------------------------------------------------------------------------
 # Hydrological Status Parameters
 # ------------------------------------------------------------------------------
@@ -60,7 +71,10 @@ def _get_esp_raw(file_path):
         _esp_raw_cache[file_path] = pd.read_csv(file_path)
     return _esp_raw_cache[file_path]
 
-# %%
+# Define the probabilities for quantile calculation
+probs = [0.10, 0.25, 0.75, 0.90]
+
+
 # Calculate start date as one year before the provided end date
 if isinstance(end_date, str):
     end_date = datetime.strptime(end_date, '%Y-%m-%d')
@@ -70,7 +84,8 @@ start_date = end_date - timedelta(days=365)
 start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
 
-# %%
+
+
 def importmodelensemble(codcuenca_n2):
     prefix = str(codcuenca_n2)
     basin_level3_cols = _basin_level3_map.get(prefix, [])
@@ -109,28 +124,6 @@ def importmodelensemble(codcuenca_n2):
     concat_df = pd.concat(df_list)
     return aggregate_discharge, concat_df
 
-# %%
-values_months = ['Below Normal', 'Normal Range', 'Above Normal']
-values_months_summary = ['Low', 'Normal', 'High']
-category_col_map = {'Below Normal': 'BelowNormal', 'Normal Range': 'NormalRange', 'Above Normal': 'AboveNormal'}
-
-# %%
-# ==============================================================================
-#   Compute ESP tercile outlook for three aggregation periods:
-#   1-Month  (1M)  : single month after end_date (e.g. Apr)
-#   1-2 Month (1_2M): two-month mean after end_date (e.g. Apr-May)
-#   1-3 Month (1_3M): three-month mean after end_date (e.g. Apr-May-Jun)
-#
-#   For 1M the raw monthly discharge percentiles are used.
-#   For 1_2M and 1_3M the rolling-mean percentiles from discharge_twomonths
-#   and discharge_threemonths (computed with flowagg.calculate_accumulated)
-#   are used so the thresholds match the aggregated ensemble values.
-#
-#   Outputs:
-#   results_1month, results_2month, results_3month
-# ==============================================================================
-
-
 def classify_terciles(values, p25, p75, labels):
     """Classify values into terciles using only p25 and p75 thresholds.
     This guarantees that values > p75 are classified as Above Normal
@@ -165,7 +158,16 @@ def fill_row_percentages(row, counts, total, category_map):
     row[items[1][1]] = v2
     row[items[2][1]] = v3
 
-# %%
+def group_quantiles_mstats(series, probs, alphap, betap):
+    """Apply mstats.mquantiles to a GroupBy group, returning a Series."""
+    q = mstats.mquantiles(series.dropna().values, probs, alphap=alphap, betap=betap)
+    return pd.Series(q, index=probs)
+
+
+values_months = ['Below Normal', 'Normal Range', 'Above Normal']
+values_months_summary = ['Low', 'Normal', 'High']
+category_col_map = {'Below Normal': 'BelowNormal', 'Normal Range': 'NormalRange', 'Above Normal': 'AboveNormal'}
+
 basin_discharge = {}
 basin_ensemble = {}
 results_1month = []
@@ -185,17 +187,28 @@ for basin in allbasins_n2.columns:
 
     # Historical climatology by scale
     discharge_std = discharge[(discharge['year'] >= stdStart) & (discharge['year'] <= stdEnd)]
-    pct_grouped_1m = discharge_std.groupby('month')['mean_flow']
-    pct_dict_1m = pct_grouped_1m.quantile([0.10, 0.25, 0.75, 0.90]).to_dict()
+    # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+    pct_dict_1m = (
+                discharge_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+            ).to_dict()
 
     discharge_twomonths_std = discharge_twomonths[(discharge_twomonths['year'] >= stdStart) & (discharge_twomonths['year'] <= stdEnd)]
-    pct_grouped_2m = discharge_twomonths_std.groupby('month')['mean_flow']
-    pct_dict_2m = pct_grouped_2m.quantile([0.10, 0.25, 0.75, 0.90]).to_dict()
+    # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+    pct_dict_2m = (
+                discharge_twomonths_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+            ).to_dict()
 
     discharge_threemonths_std = discharge_threemonths[(discharge_threemonths['year'] >= stdStart) & (discharge_threemonths['year'] <= stdEnd)]
-    pct_grouped_3m = discharge_threemonths_std.groupby('month')['mean_flow']
-    pct_dict_3m = pct_grouped_3m.quantile([0.10, 0.25, 0.75, 0.90]).to_dict()
-
+    # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+    pct_dict_3m = (
+                discharge_threemonths_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+            ).to_dict()
     # Prepare forecast ensemble table once
     concat_df = concat_df.reset_index(drop=False)
     concat_df['group'] = concat_df.index // 7
@@ -250,13 +263,13 @@ for basin in allbasins_n2.columns:
     basin_climate_2month[basin] = discharge_twomonths_std
     basin_climate_3month[basin] = discharge_threemonths_std
 
-# %%
+
 # Build DataFrames for each horizon
 results_1month_df = pd.DataFrame(results_1month)
 results_2month_df = pd.DataFrame(results_2month)
 results_3month_df = pd.DataFrame(results_3month)
 
-# %%
+
 # Stacked tercile plot for basin codigo 60 across forecast horizons
 row_1m = results_1month_df[results_1month_df['codigo'].astype(str) == codigo].iloc[0]
 row_2m = results_2month_df[results_2month_df['codigo'].astype(str) == codigo].iloc[0]
@@ -423,4 +436,3 @@ fig.text(0.5, -0.02, 'Caudal medio (m³/s)', ha='center', va='center', fontsize=
 plt.tight_layout()
 plt.savefig(f"./waterbalance/output_png/10_FDC_outlook.png", dpi=300, bbox_inches='tight')
 plt.close()
-
