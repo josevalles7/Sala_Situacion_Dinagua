@@ -20,11 +20,19 @@ values = ['High flow','Above normal','Normal range','Below normal','Low flow']
 flow_cat = [5,4,3,2,1]
 
 # ------------------------------------------------------------------------------
+# Define plotting position parameters
+# Cunnane is alphap = 0.4 and betap = 0.4 
+# Weibull is alphap = 0 and betap = 0 
+# ------------------------------------------------------------------------------
+alphap = 0.4
+betap = 0.4
+
+# ------------------------------------------------------------------------------
 # Helper functions
 # ------------------------------------------------------------------------------
 
 def _classify(df):
-    wr = df['weibell_rank']
+    wr = df['pct_rank']
     criteria = [
         (wr >= percentile[3]) & (wr <= 1.00),
         (wr > percentile[2]) & (wr < percentile[3]),
@@ -35,12 +43,12 @@ def _classify(df):
     df['percentile_range'] = np.select(criteria, values, None)
     df['flowcat'] = np.select(criteria, flow_cat, pd.NA)
 
-def _compute_status(df, group_col, avg_series, anomaly_col):
+def _compute_status(df, group_col, avg_series, anomaly_col,alphap,betap):
     avg_map = df[group_col].map(avg_series)
     df[anomaly_col] = (df['mean_flow'] - avg_map) / avg_map
     df['rank_average'] = df.groupby(group_col)['mean_flow'].rank()
     df['complete%'] = df.groupby(group_col)['mean_flow'].transform(lambda x: x.notnull().sum())
-    df['weibell_rank'] = df['rank_average'] / (df['complete%'] + 1)
+    df['pct_rank'] = (df['rank_average'] - alphap) / (df['complete%'] + 1 - alphap - betap)
     _classify(df)
 
 # ------------------------------------------------------------------------------
@@ -53,7 +61,7 @@ def monthly_status(DISCHARGE_MONTHLY):
     ].groupby('month')['mean_flow'].mean()
 
     df = DISCHARGE_MONTHLY.copy()
-    _compute_status(df, 'month', avg, 'percentile_flow')
+    _compute_status(df, 'month', avg, 'percentile_flow', alphap=alphap, betap=betap)
     return df
 
 def quarterly_status(DISCHARGE_THREE_MONTHS):
@@ -62,7 +70,7 @@ def quarterly_status(DISCHARGE_THREE_MONTHS):
     ].groupby('startMonth')['mean_flow'].mean()
 
     df = DISCHARGE_THREE_MONTHS.copy()
-    _compute_status(df, 'startMonth', avg, 'percentage_flow')
+    _compute_status(df, 'startMonth', avg, 'percentage_flow', alphap=alphap, betap=betap)
 
     row_labels = {1:'EFM', 2:'FMA', 3:'MAM', 4:'AMJ', 5:'MJJ', 6:'JJA',
                   7:'JAS', 8:'ASO', 9:'SON', 10:'OND', 11:'NDE', 12:'DEF'}
@@ -75,7 +83,7 @@ def bimonthly_status(DISCHARGE_TWO_MONTHS):
     ].groupby('startMonth')['mean_flow'].mean()
 
     df = DISCHARGE_TWO_MONTHS.copy()
-    _compute_status(df, 'startMonth', avg, 'percentage_flow')
+    _compute_status(df, 'startMonth', avg, 'percentage_flow', alphap=alphap, betap=betap)
 
     row_labels = {1:'EF', 2:'FM', 3:'MA', 4:'AM', 5:'MJ', 6:'JJ',
                   7:'JA', 8:'AS', 9:'SO', 10:'ON', 11:'ND', 12:'DE'}
@@ -88,7 +96,7 @@ def semiannual_status(DISCHARGE_SIX_MONTHS):
     ].groupby('startMonth')['mean_flow'].mean()
 
     df = DISCHARGE_SIX_MONTHS.copy()
-    _compute_status(df, 'startMonth', avg, 'percentage_flow')
+    _compute_status(df, 'startMonth', avg, 'percentage_flow', alphap=alphap, betap=betap)
 
     row_labels = {1:'JFMAMJ', 2:'FMAMJJ', 3:'MAMJJA', 4:'AMJJAS', 5:'MJJASO', 6:'JJASON',
                   7:'JASOND', 8:'ASONJF', 9:'SONDJF', 10:'ONDJFM', 11:'NDJFMA', 12:'DJFMAM'}
@@ -101,7 +109,7 @@ def annualy_status(DISCHARGE_TWELVE_MONTHS):
     ].groupby('startMonth')['mean_flow'].mean()
 
     df = DISCHARGE_TWELVE_MONTHS.copy()
-    _compute_status(df, 'startMonth', avg, 'percentage_flow')
+    _compute_status(df, 'startMonth', avg, 'percentage_flow', alphap=alphap, betap=betap)
     return df
 
 def export_csv(groupBy, output_directory, filename):
