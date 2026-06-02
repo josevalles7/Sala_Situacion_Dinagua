@@ -1,0 +1,6 @@
+Para graficar los resultados del CRPSS para una cuenca en cada mes del año, se debe utilizar el script - 02_Por_mes_cuenca_especifica_graficar_metricas - que se encuentra en la carpeta - 01_Notebooks -
+
+El flujo de trabajo de toda la carpeta se basa en las tablas resultantes de la evaluación del ESP que se encuentran en la carpeta - 02_Tablas_de_resultados_evaluacion_ESP.
+Se procesan estos datos por medio del notebook - 01_Por_mes_y_por_cuenca_calcular_crpss_ad - que genera diferentes muestras de los datos por medio de Bootstrap y calcula el CRPSS para cada una de ellas. Los resultados se guardan en la carpeta - 03_Tabla_de_metricas_por_mes_por_cuenca -. 
+
+De esta carpeta el script - 02_Por_mes_cuenca_especifica_graficar_metricas - saca los datos para crear los gráficos por cuenca.
