@@ -191,7 +191,7 @@ for basin in allbasins_n2.columns:
     pct_dict_1m = (
                 discharge_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
 
     discharge_twomonths_std = discharge_twomonths[(discharge_twomonths['year'] >= stdStart) & (discharge_twomonths['year'] <= stdEnd)]
@@ -199,7 +199,7 @@ for basin in allbasins_n2.columns:
     pct_dict_2m = (
                 discharge_twomonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
 
     discharge_threemonths_std = discharge_threemonths[(discharge_threemonths['year'] >= stdStart) & (discharge_threemonths['year'] <= stdEnd)]
@@ -207,7 +207,7 @@ for basin in allbasins_n2.columns:
     pct_dict_3m = (
                 discharge_threemonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
     # Prepare forecast ensemble table once
     concat_df = concat_df.reset_index(drop=False)
