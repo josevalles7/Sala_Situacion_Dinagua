@@ -9,6 +9,8 @@
 
 # %%
 # Importing the libraries
+from unittest import result
+
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -65,7 +67,10 @@ class EstadoHidrologico:
             self.DISCHARGE_MONTHLY.loc[self.DISCHARGE_MONTHLY.eval('month==@m & year==@y'),'non_missing']  = self.DISCHARGE_MONTHLY.query('month==@m')["Caudal"].notnull().sum()
             self.DISCHARGE_MONTHLY.loc[self.DISCHARGE_MONTHLY.eval('month==@m & year==@y'),'average_percentage'] = (self.DISCHARGE_MONTHLY['Caudal'][i] - DISCHARGE_AVERAGE.query('month == @m')["Caudal"].item()) / DISCHARGE_AVERAGE.query('month == @m')["Caudal"].item()
 
-        self.DISCHARGE_MONTHLY['percentile'] = self.DISCHARGE_MONTHLY['rank_average']/(self.DISCHARGE_MONTHLY['non_missing']+1)
+        # Percentile position using the Weibull (alphap = 0.0 , betap = 0.0) or Cunnane (alphap = 0.4 , betap = 0.4) plotting position formula
+        alphap = 0.4
+        betap = 0.4
+        self.DISCHARGE_MONTHLY['percentile'] = (self.DISCHARGE_MONTHLY['rank_average'] - alphap) / (self.DISCHARGE_MONTHLY['non_missing'] + 1 - alphap - betap)
 
         criteria = [self.DISCHARGE_MONTHLY['percentile'].between(0.90,1.00),
             self.DISCHARGE_MONTHLY['percentile'].between(0.75,0.90),
@@ -104,7 +109,9 @@ class EstadoHidrologico:
             DISCHARGE_THREE_MONTHS.loc[DISCHARGE_THREE_MONTHS.eval('startMonth==@m & year==@y'),'non_missing']  = DISCHARGE_THREE_MONTHS.query('startMonth==@m')["Caudal"].notnull().sum()
             DISCHARGE_THREE_MONTHS.loc[DISCHARGE_THREE_MONTHS.eval('startMonth==@m & year==@y'),'average_percentage'] = (DISCHARGE_THREE_MONTHS['Caudal'][i] - DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["Caudal"].item()) / DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["Caudal"].item()
 
-        DISCHARGE_THREE_MONTHS['percentile'] = DISCHARGE_THREE_MONTHS['rank_average']/(DISCHARGE_THREE_MONTHS['non_missing']+1)
+        alphap = 0.4
+        betap = 0.4
+        DISCHARGE_THREE_MONTHS['percentile'] = (DISCHARGE_THREE_MONTHS['rank_average'] - alphap) / (DISCHARGE_THREE_MONTHS['non_missing'] + 1 - alphap - betap)
 
         criteria_three_months = [DISCHARGE_THREE_MONTHS['percentile'].between(0.90,1.00),
             DISCHARGE_THREE_MONTHS['percentile'].between(0.75,0.90),
@@ -156,7 +163,9 @@ class EstadoHidrologico:
             DISCHARGE_TWELVE_MONTHS.loc[DISCHARGE_TWELVE_MONTHS.eval('startMonth==@m & year==@y'),'non_missing']  = DISCHARGE_TWELVE_MONTHS.query('startMonth==@m')["Caudal"].notnull().sum()
             DISCHARGE_TWELVE_MONTHS.loc[DISCHARGE_TWELVE_MONTHS.eval('startMonth==@m & year==@y'),'average_percentage'] = (DISCHARGE_TWELVE_MONTHS['Caudal'][i] - DISCHARGE_AVERAGE_TWELVE_MONTH.query('startMonth == @m')["Caudal"].item()) / DISCHARGE_AVERAGE_TWELVE_MONTH.query('startMonth == @m')["Caudal"].item()
     
-        DISCHARGE_TWELVE_MONTHS['percentile'] = DISCHARGE_TWELVE_MONTHS['rank_average']/(DISCHARGE_TWELVE_MONTHS['non_missing']+1)
+        alphap = 0.4
+        betap = 0.4
+        DISCHARGE_TWELVE_MONTHS['percentile'] = (DISCHARGE_TWELVE_MONTHS['rank_average'] - alphap) / (DISCHARGE_TWELVE_MONTHS['non_missing'] + 1 - alphap - betap)
 
         criteria_twelve_months = [DISCHARGE_TWELVE_MONTHS['percentile'].between(0.90,1.00),
             DISCHARGE_TWELVE_MONTHS['percentile'].between(0.75,0.90),

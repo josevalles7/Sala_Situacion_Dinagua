@@ -14,6 +14,7 @@ import numpy as np
 import calendar
 from datetime import datetime, timedelta
 import argparse
+from scipy.stats import mstats
 
 # Define arguments 
 parser = argparse.ArgumentParser(
@@ -84,6 +85,11 @@ def importmodelensemble(codcuenca_n2):
     concat_df = pd.concat(df_list)
     return aggregate_discharge, concat_df
 
+def group_quantiles_mstats(series, probs, alphap, betap):
+    """Apply mstats.mquantiles to a GroupBy group, returning a Series."""
+    q = mstats.mquantiles(series.dropna().values, probs, alphap=alphap, betap=betap)
+    return pd.Series(q, index=probs)
+    
 # %% [markdown]
 # ## Generar Quintiles
 
@@ -102,7 +108,7 @@ forecast_leadtime = int(args.forecast_leadtime)
 for basin in allbasins_n2.columns:
     aggregate_discharge, concat_df = importmodelensemble(basin)
     DISCHARGE_SELECTION = aggregate_discharge[(aggregate_discharge['year'] >= 1981) & (aggregate_discharge['year'] <= 2010)]
-    percentiles = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).quantile([0.10,0.25,0.75,0.90])
+    percentiles = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month)['discharge'].apply(group_quantiles_mstats, probs=[0.10,0.25,0.75,0.90], alphap=0.4, betap=0.4)
     percentiles = percentiles.reset_index()
     percentiles = percentiles.drop(columns=['year'])
     percentiles.rename(columns={'level_1':'percentile','discharge':'discharge_percentile'}, inplace=True)

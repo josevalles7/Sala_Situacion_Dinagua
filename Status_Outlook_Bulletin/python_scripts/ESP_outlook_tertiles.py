@@ -215,7 +215,7 @@ for basin in allbasins_n2.columns:
             pct_dict_1m = (
                 discharge_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
             print("Processing 1-month lead time outlook...")
             p10 = pct_dict_1m.get((month_1, 0.10), np.nan)
@@ -236,7 +236,7 @@ for basin in allbasins_n2.columns:
             pct_dict_2m = (
                 discharge_twomonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
             print("Processing 2-month lead time outlook...")
             # extract the relevant months for the 2-month outlook and compute the mean discharge for those months
@@ -260,7 +260,7 @@ for basin in allbasins_n2.columns:
             pct_dict_3m = (
                 discharge_threemonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
             print("Processing 3-month lead time outlook...")
             # extract the relevant months for the 3-month outlook and compute the mean discharge for those months

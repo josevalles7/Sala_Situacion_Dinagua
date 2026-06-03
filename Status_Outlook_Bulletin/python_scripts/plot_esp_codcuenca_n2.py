@@ -14,6 +14,7 @@ import numpy as np
 import calendar
 from datetime import datetime, timedelta
 import argparse
+from scipy.stats.mstats import mquantiles
 
 sns.set()
 
@@ -23,40 +24,34 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "es_ES")
 
+def quantile_position(x, p, alphap=0.4, betap=0.4):
+    # For Weibull use alphap = 0.0 and betap = 0.0. For Cunnane use alphap = 0.4 and betap = 0.4
+    return mquantiles(x.dropna(), p, alphap=alphap, betap=betap)[0]
+
 # %%
 # Quantile Function Definitions
 def q1(x):
-    return x.quantile(0.28)
-
-def q2(x):
-    return x.median()
-
-def q3(x):
-    return x.quantile(0.72)
-
-def q5(x):
-    return x.quantile(0.05)
-
-def q95(x):
-    return x.quantile(0.95)
-
-def q87(x):
-    return x.quantile(0.87)
-
-def q13(x):
-    return x.quantile(0.13)
-
-def q10(x):
-    return x.quantile(0.10)
-
-def q25(x):
-    return x.quantile(0.25)
-
-def q75(x):
-    return x.quantile(0.75)
-
-def q90(x):
-    return x.quantile(0.90)
+    return quantile_position(x, 0.28)
+def q2(x):   
+    return quantile_position(x, 0.50)
+def q3(x):   
+    return quantile_position(x, 0.72)
+def q5(x):   
+    return quantile_position(x, 0.05)
+def q95(x):  
+    return quantile_position(x, 0.95)
+def q87(x):  
+    return quantile_position(x, 0.87)
+def q13(x):  
+    return quantile_position(x, 0.13)
+def q10(x):  
+    return quantile_position(x, 0.10)
+def q25(x):  
+    return quantile_position(x, 0.25)
+def q75(x):  
+    return quantile_position(x, 0.75)
+def q90(x):  
+    return quantile_position(x, 0.90)
 
 # Define arguments 
 parser = argparse.ArgumentParser(
