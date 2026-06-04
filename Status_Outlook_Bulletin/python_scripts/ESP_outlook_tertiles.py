@@ -1,10 +1,4 @@
-# %% [markdown]
-# # Pronostico basado en ESP para toda las cuencas
 
-# %% [markdown]
-# Este notebook realiza el pronosticos hidrologico sub-estacional a estacional (S2S) en todas las cuencas. Brinda como resultado archivos CSV para ser utilizado en GIS y hacer el mapa de visualización de pronosticos para todas las cuencas nivel 2
-
-# %%
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
@@ -13,6 +7,21 @@ plt.style.use('classic')
 import numpy as np
 from datetime import datetime, timedelta
 import argparse
+import sys
+from scipy.stats import mstats
+
+
+'''
+print(f"Old Directory: {os.getcwd()}")
+os.chdir(r'../')
+print(f"New Directory: {os.getcwd()}")
+'''
+
+sys.path.append(os.path.abspath('.'))
+import HydroSOS_scripts.flow_aggregation as flowagg
+import HydroSOS_scripts.hydrological_status as SOS
+
+
 
 # Define arguments 
 parser = argparse.ArgumentParser(
@@ -25,21 +34,40 @@ parser.add_argument('forecast_leadtime', help='provide forecast leadtime')
 parser.add_argument('end_date', help='end date for the discharge plot in format YYYY-MM-DD')
 
 args = parser.parse_args()
+'''
+args = argparse.Namespace(
+    forecast_leadtime='3',
+    end_date='2026-04-30',
+)
+'''
 
-# Calculate start date as one year before the provided end date
+# ------------------------------------------------------------------------------
+# Date Management
+# ------------------------------------------------------------------------------
 end_date = datetime.strptime(args.end_date, '%Y-%m-%d')
 start_date = end_date - timedelta(days=365)  # Subtracting 365 days for a year difference
-
 # Format dates as strings
 start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
-# %%
+# Importing basin file
 allbasins_n2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
 
-# %% [markdown]
-# Importar codigos de cuenca nivel 2 y 3
 
-# %%
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+stdStart = 1981
+stdEnd = 2010
+# Define the Three outlook categories (3) and their corresponding column names
+values_months = ['Below Normal', 'Normal Range', 'Above Normal']
+category_col_map = {'Below Normal': 'BelowNormal', 'Normal Range': 'NormalRange', 'Above Normal': 'AboveNormal'}
+# Define the Five outlook categories (5) and their corresponding column names
+values_months_5 = ['Low Flow', 'Below Normal', 'Normal Range', 'Above Normal', 'High Flow']
+category_col_map_5 = {'Low Flow': 'LowFlow', 'Below Normal': 'BelowNormal', 'Normal Range': 'NormalRange', 'Above Normal': 'AboveNormal', 'High Flow': 'HighFlow'}
+# Define the probabilities for quantile calculation
+probs = [0.10, 0.25, 0.75, 0.90]
+
+
 def importmodelensemble(codcuenca_n2):
     basin_level3 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel3.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
     basin_level2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',usecols=lambda col: col.startswith(str(codcuenca_n2)))
@@ -82,100 +110,188 @@ def importmodelensemble(codcuenca_n2):
     concat_df = pd.concat(df_list)
     return aggregate_discharge, concat_df
 
-# %%
+def group_quantiles_mstats(series, probs, alphap, betap):
+    """Apply mstats.mquantiles to a GroupBy group, returning a Series."""
+    q = mstats.mquantiles(series.dropna().values, probs, alphap=alphap, betap=betap)
+    return pd.Series(q, index=probs)
+
+
+def classify_terciles(values, p25, p75, labels):
+    """Classify values into terciles using p25 and p75 thresholds."""
+    values = np.asarray(values, dtype=float)
+    out = np.full(values.shape, np.nan, dtype=object)
+    if np.isfinite(p25) and np.isfinite(p75) and (p25 < p75):
+        out[values < p25] = labels[0]
+        out[(values >= p25) & (values <= p75)] = labels[1]
+        out[values > p75] = labels[2]
+    return pd.Categorical(out, categories=labels, ordered=True)
+
+def classify_quintiles(values, p10, p25, p75, p90, labels):
+    """Classify values into quintiles using p10, p25, p75, and p90 thresholds."""
+    values = np.asarray(values, dtype=float)
+    out = np.full(values.shape, np.nan, dtype=object)
+    if np.isfinite(p10) and np.isfinite(p25) and np.isfinite(p75) and np.isfinite(p90) and (p10 < p25 < p75 < p90):
+        out[values < p10] = labels[0]
+        out[(values >= p10) & (values < p25)] = labels[1]
+        out[(values >= p25) & (values <= p75)] = labels[2]
+        out[(values > p75) & (values <= p90)] = labels[3]
+        out[values > p90] = labels[4]
+    return pd.Categorical(out, categories=labels, ordered=True)
+
+
+def fill_row_percentages(row, counts, total, category_map):
+    """Fill row percentages for each category."""
+    items = list(category_map.items())
+    if total <= 0:
+        for _, col in items:
+            row[col] = 0.0
+        return
+    row[items[0][1]] = round(counts.get(items[0][0], 0) / total * 100, 1)
+    row[items[1][1]] = round(counts.get(items[1][0], 0) / total * 100, 1)
+    row[items[2][1]] = round(counts.get(items[2][0], 0) / total * 100, 1)
+
+
+# Create output dataframe with basin code and percentage columns for each category
 ENSEMBLE_PERCENTAGE = pd.DataFrame()
 ENSEMBLE_PERCENTAGE['codigo'] = allbasins_n2.columns
 ENSEMBLE_PERCENTAGE['BelowNormal'] = np.nan
 ENSEMBLE_PERCENTAGE['NormalRange'] = np.nan
 ENSEMBLE_PERCENTAGE['AboveNormal'] = np.nan
 
+# assign the forecast leadtime to a variable for easier use. If the leadtime is not 1, 2, or 3, print an error message and exit the program
 forecast_leadtime = int(args.forecast_leadtime)
+if forecast_leadtime not in [1, 2, 3]:
+    print(f"Unsupported forecast leadtime: {forecast_leadtime}. Supported values are 1, 2, or 3.")
+    sys.exit(1)
 
 
+# Determine outlook months from end_date
+# month_1 is 1 month ahead, month_2 is 2 months ahead, month_3 is 3 months ahead
+month_1 = (end_date.month % 12) + 1
+month_2 = ((end_date.month + 1) % 12) + 1
+month_3 = ((end_date.month + 2) % 12) + 1
+
+# Print the outlook months for verification in %B Format (e.g., January, February, etc.)    
+print(
+    f"Outlook months: "
+    f"{pd.Timestamp(end_date.year, month_1, 1).strftime('%b-%Y')}, "
+    f"{pd.Timestamp(end_date.year, month_2, 1).strftime('%b-%Y')}, "
+    f"{pd.Timestamp(end_date.year, month_3, 1).strftime('%b-%Y')}"
+)
+
+
+# from allbasins_n2, extract the column names '60' and drop the rest
+# allbasins_n2 = allbasins_n2[['60']]
+
+# ============================================================
+# Quantile calculation
+# ============================================================
+# Formula (scipy.stats.mstats.mquantiles):
+#   p(k) = (k - alphap) / (n + 1 - alphap - betap)
+#
+#   k  = rank of the sorted observation (1 = smallest, n = largest)
+#   n  = number of observations in the sample (e.g. 30 years of climatology)
+#
+#   Weibull : alphap=0,   betap=0   -> p = k / (n + 1)
+#   Cunnane : alphap=0.4, betap=0.4 -> p = (k - 0.4) / (n + 0.2)
+#   Pandas  : linear interpolation (Type 7) -> p = (k - 1) / (n - 1)
+# ============================================================
 for basin in allbasins_n2.columns:
+    print(f"Processing basin {basin}...")
+    # Import the discharge data for the current basin
     aggregate_discharge, concat_df = importmodelensemble(basin)
-    DISCHARGE_SELECTION = aggregate_discharge[(aggregate_discharge['year'] >= 1981) & (aggregate_discharge['year'] <= 2010)]
-    percentiles = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).quantile([0.10,0.25,0.75,0.90])
-    percentiles = percentiles.reset_index()
-    percentiles = percentiles.drop(columns=['year'])
-    percentiles.rename(columns={'level_1':'percentile','discharge':'discharge_percentile'}, inplace=True)
-
-    max_values = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).max()
-    max_values = max_values.drop(columns=['year'])
-    min_values = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).min()
-    min_values = min_values.drop(columns=['year'])
-
-    concat_df['percentile_range'] = ''
-    concat_df['percentile_range_summary'] = ''
-    values_months = ['Below Normal','Normal Range','Above Normal']
-    values_months_summary = ['Low','Normal','High']
-    # OJO: Cambiar Fecha
-    discharge_plot = aggregate_discharge.loc[start_date_str:end_date_str]
-    discharge_plot = discharge_plot.reset_index()
-
-    # create empty columns in the dataframe
-    discharge_plot['25th_percentile'] = np.nan
-    discharge_plot['75th_percentile'] = np.nan
-
-    for i in range(len(discharge_plot)):
-        # Extract the current month 
-        m = discharge_plot.month[i]
-        discharge_plot.loc[discharge_plot.eval('month==@m'),'minimum']  = percentiles.query('month==@m & percentile==0.10')['discharge_percentile'].item()
-        discharge_plot.loc[discharge_plot.eval('month==@m'),'25th_percentile']  = percentiles.query('month==@m & percentile==0.25')['discharge_percentile'].item()
-        discharge_plot.loc[discharge_plot.eval('month==@m'),'75th_percentile']  = percentiles.query('month==@m & percentile==0.75')['discharge_percentile'].item()
-
+    # the outlook forecast (concat_df) is expected to have 7 rows corresponding to the 7 ensemble members for the forecast months, including the current month.
+    # We will need to classify these 7 values into terciles or quintiles based on the climatological percentiles computed from the aggregate_discharge data. 
+    # To do this, we will first need to reset the index of concat_df and create a 'group' column that identifies which rows belong to the same month (since we have 7 rows per month, we can use integer division by 7 to create this grouping).
     concat_df = concat_df.reset_index()
     concat_df['group'] = concat_df.index // 7
+    # Rename for compatibility with flowagg rolling-mean functions
+    discharge = aggregate_discharge.rename(columns={'discharge': 'mean_flow'})
+    match forecast_leadtime:
+        case 1:
+            print("Calculating 1-month forecast percentages...")
+            discharge_std = discharge[(discharge['year'] >= stdStart) & (discharge['year'] <= stdEnd)]
+            # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+            pct_dict_1m = (
+                discharge_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
+            ).to_dict()
+            print("Processing 1-month lead time outlook...")
+            p10 = pct_dict_1m.get((month_1, 0.10), np.nan)
+            p25 = pct_dict_1m.get((month_1, 0.25), np.nan)
+            p75 = pct_dict_1m.get((month_1, 0.75), np.nan)
+            p90 = pct_dict_1m.get((month_1, 0.90), np.nan)
+            # extract the relevant months for the 1-month outlook
+            vals = concat_df.loc[concat_df['month'] == month_1, 'discharge'].to_numpy(dtype=float)
+            print("...end of the 1-month lead time outlook processing.")
+            # Rolling-mean climatology for 2-month and 3-month scales (computed only when needed)
+        case 2:
+            print("Calculating 2-month accumulated discharge and climatology...")
+            discharge_twomonths = flowagg.calculate_accumulated(discharge, 2)
+            discharge_twomonths_std = discharge_twomonths[
+                (discharge_twomonths['year'] >= stdStart) & (discharge_twomonths['year'] <= stdEnd)
+            ]
+            # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+            pct_dict_2m = (
+                discharge_twomonths_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
+            ).to_dict()
+            print("Processing 2-month lead time outlook...")
+            # extract the relevant months for the 2-month outlook and compute the mean discharge for those months
+            vals = (
+                concat_df[concat_df['month'].isin([month_1, month_2])]
+                .groupby('group')['discharge'].mean()
+                .to_numpy(dtype=float)
+            )
+            p10 = pct_dict_2m.get((month_2, 0.10), np.nan)
+            p25 = pct_dict_2m.get((month_2, 0.25), np.nan)
+            p75 = pct_dict_2m.get((month_2, 0.75), np.nan)
+            p90 = pct_dict_2m.get((month_2, 0.90), np.nan)
+            print("...end of the 2-month lead time outlook processing.")
+        case 3:
+            print("Calculating 3-month accumulated discharge and climatology...")
+            discharge_threemonths = flowagg.calculate_accumulated(discharge, 3)
+            discharge_threemonths_std = discharge_threemonths[
+                (discharge_threemonths['year'] >= stdStart) & (discharge_threemonths['year'] <= stdEnd)
+            ]
+            # calculate percentile using Weibull formula. For Cunnane use alphap=0.4, betap=0.4 
+            pct_dict_3m = (
+                discharge_threemonths_std
+                .groupby('month')['mean_flow']
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
+            ).to_dict()
+            print("Processing 3-month lead time outlook...")
+            # extract the relevant months for the 3-month outlook and compute the mean discharge for those months
+            vals = (
+                concat_df[concat_df['month'].isin([month_1, month_2, month_3])]
+                .groupby('group')['discharge'].mean()
+                .to_numpy(dtype=float)
+            )
+            p10 = pct_dict_3m.get((month_3, 0.10), np.nan)
+            p25 = pct_dict_3m.get((month_3, 0.25), np.nan)
+            p75 = pct_dict_3m.get((month_3, 0.75), np.nan)
+            p90 = pct_dict_3m.get((month_3, 0.90), np.nan)
+            print("...end of the 3-month lead time outlook processing.")
+        case _:
+            print(f"Unsupported forecast leadtime: {forecast_leadtime}. Supported values are 1, 2, or 3.")
+            sys.exit(1)
 
-    for i in range(len(concat_df)):
-        # Extract the current month 
-        m = concat_df.month[i]
-        y = concat_df.year[i]
-        # pmin = min_values.query('month==@m')['discharge'].item()
-        pmin = 0
-        p75 = percentiles.query('percentile == 0.75 & month==@m')['discharge_percentile'].item()
-        p25 = percentiles.query('percentile == 0.25 & month==@m')['discharge_percentile'].item()
-        pmax = max_values.query('month==@m')['discharge'].item()
-        value = concat_df.discharge[i]
-        category = pd.cut([value],bins=[pmin,p25,p75,pmax],labels=values_months)
-        category_summary = pd.cut([value],bins=[pmin,p25,p75,pmax],labels=values_months_summary)
-        concat_df.loc[concat_df.eval('index==@i'),'percentile_range'] = category[0]
-        concat_df.loc[concat_df.eval('index==@i'),'percentile_range_summary'] = category_summary[0]
+    # Three Categories (Terciles)
+    outlook = pd.Series(classify_terciles(vals, p25, p75, values_months))
+    # Five Categories (Quintiles)
+    # outlook = pd.Series(classify_quintiles(vals, p10, p25, p75, p90, values_months_5))
+    counts = outlook.value_counts()
+    total = int(counts.sum())
+    row = {'codigo': basin}
+    fill_row_percentages(row, counts, total, category_col_map)
 
-    month_outlook = discharge_plot['month'].iloc[-1] + forecast_leadtime
+    for col_name in ['BelowNormal', 'NormalRange', 'AboveNormal']:
+        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'), col_name] = row[col_name]
 
-    if month_outlook > 12:
-        month_outlook = month_outlook - 12
 
-    category_counts = concat_df.query('month==@month_outlook')['percentile_range'].value_counts()
-    category_counts = category_counts.to_frame()
-    category_counts = category_counts.sort_index(key=lambda x: x.map({val:idx for idx,val in enumerate(values_months)}))
-
-    category_counts_summary = concat_df.query('month==@month_outlook')['percentile_range_summary'].value_counts()
-    category_counts_summary = category_counts_summary.to_frame()
-    category_counts_summary = category_counts_summary.sort_index(key=lambda x: x.map({val:idx for idx,val in enumerate(values_months_summary)}))
-
-    category_counts['percentage_ensemble'] = round((category_counts['percentile_range']/category_counts['percentile_range'].sum())*100,1)
-    category_counts_summary['percentage_ensemble'] = round((category_counts_summary['percentile_range_summary']/category_counts_summary['percentile_range_summary'].sum())*100,1)
-
-    query_result = category_counts.query('index == "Below Normal"')['percentage_ensemble']
-    if not query_result.empty:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'BelowNormal'] = category_counts.query('index == "Below Normal"')['percentage_ensemble'].item()
-    else:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'BelowNormal'] = 0
-
-    query_result = category_counts.query('index == "Normal Range"')['percentage_ensemble']
-    if not query_result.empty:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'NormalRange'] = category_counts.query('index == "Normal Range"')['percentage_ensemble'].item()
-    else:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'NormalRange'] = 0
-
-    query_result = category_counts.query('index == "Above Normal"')['percentage_ensemble']
-    if not query_result.empty:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'AboveNormal'] = category_counts.query('index == "Above Normal"')['percentage_ensemble'].item()
-    else:
-        ENSEMBLE_PERCENTAGE.loc[ENSEMBLE_PERCENTAGE.eval('codigo==@basin'),'AboveNormal'] = 0
-
-# %%
 ENSEMBLE_PERCENTAGE.to_csv(f'./qgis_status_outlook/csvtables/terciles_{forecast_leadtime}_month_outlook.csv',index=False)
 print('Archivo exportado correctamente')
+
+
