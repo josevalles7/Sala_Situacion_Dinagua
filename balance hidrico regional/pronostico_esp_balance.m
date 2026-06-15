@@ -25,6 +25,7 @@ disp(['El mes pronostico es ', num2str(mes_fin), ' del año ', num2str(ano_fin)])
 
 rows = find(fechas(:,2) == mes_fin);
 
+% Agregado por verasun
 % Crear carpeta de salida si no existe
 outdir = 'esp';
 
