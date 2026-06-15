@@ -1,0 +1,35 @@
+N_OFICIAL,NOMBRE_ESTACION,NOMBRE_GRAFANA,FEWS,GRAFANA
+INUMET-608,Aeropuerto Melilla G3,Aeropuerto Melilla G3,TRUE,TRUE
+INUMET-1337,Artigas G3,Artigas G3,TRUE,TRUE
+INUMET-1341,Atlántida G3,Atlántida G3,TRUE,TRUE
+INUMET-594,Colonia G3,Colonia G3,TRUE,TRUE
+INUMET-610,Durazno G3,Durazno G3,TRUE,TRUE
+INUMET-953,Laguna del Sauce G3,Laguna del Sauce G3,TRUE,TRUE
+INUMET-1334,Lavalleja G3,Lavalleja G3,TRUE,TRUE
+INUMET-1336,Melo G3,Melo G3,TRUE,TRUE
+INUMET-609,Mercedes G3,Mercedes G3,TRUE,TRUE
+INUMET-1554,Minas de Corrales G4,Minas de Corrales G5,TRUE,TRUE
+INUMET-603,Paso de los Toros G3,Paso de los Toros G3,TRUE,TRUE
+INUMET-1333,Paysandú G3,Paysandú G3,TRUE,TRUE
+INUMET-652,Prado G3,Prado G3,TRUE,TRUE
+INUMET-1332,Rivera G3,Rivera G3,TRUE,TRUE
+INUMET-590,Rocha G3,Rocha G3,TRUE,TRUE
+INUMET-600,Salto G3,Salto G3,TRUE,TRUE
+INUMET-1335,San Jacinto G3,San Jacinto G3,TRUE,TRUE
+INUMET-1326,Tacuarembó G3,Tacuarembó G3,TRUE,TRUE
+INUMET-1342,Treinta y Tres G3,Treinta y Tres G3,TRUE,TRUE
+INUMET-XXXX,Aeropuerto de Melo,Aeropuerto de Melo,FALSE,TRUE
+INUMET-XXXX,Antartida G3,Antartida G3,FALSE,TRUE
+INUMET-XXXX,Bella Unión G4,Bella Unión G4,FALSE,TRUE
+INUMET-XXXX,Cardona G4,Cardona G4,FALSE,TRUE
+INUMET-XXXX,Florida G3,Florida G3,FALSE,TRUE
+INUMET-XXXX,Illescas G4,Illescas G4,FALSE,TRUE
+INUMET-XXXX,La Calera G5,La Calera G5,FALSE,TRUE
+INUMET-XXXX,La Carolina G5,La Carolina G5,FALSE,TRUE
+INUMET-XXXX,Picada de las Piedras G4,Picada de las Piedras G4,FALSE,TRUE
+INUMET-XXXX,Punta del Este G4,Punta del Este G4,FALSE,TRUE
+INUMET-XXXX,San José G4,San José G4,FALSE,TRUE
+INUMET-XXXX,Santa Teresa G4,Santa Teresa G4,FALSE,TRUE
+INUMET-XXXX,Trinidad G4,Trinidad G4,FALSE,TRUE
+INUMET-XXXX,Vichadero G4,Vichadero G4,FALSE,TRUE
+INUMET-XXXX,Young G3,Young G3,FALSE,TRUE

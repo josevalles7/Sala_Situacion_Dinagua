@@ -1,0 +1,106 @@
+N_OFICIAL,NOMBRE_ESTACION,NOMBRE_GRAFANA,FEWS,GRAFANA
+INUMET-1440,25 de Mayo (TP),,TRUE,TRUE
+INUMET-1399,Achar (TP),Achar,TRUE,FALSE
+INUMET-1417,Aeropuerto Carrasco (TP),Estacion Carrasco,TRUE,FALSE
+INUMET-1423,Aigua (TP),Aigua,TRUE,FALSE
+INUMET-1382,Andresito (TP),Andresito,TRUE,FALSE
+INUMET-1437,Arbolito (TP),Arbolito,TRUE,FALSE
+INUMET-1411,Balneario Solís (TP),Balneario Solís,TRUE,FALSE
+INUMET-1420,Barriga Negra (TP),Barriga Negra,TRUE,FALSE
+INUMET-1409,Bocas del Cufre (TP),Bocas del Cufré,TRUE,FALSE
+INUMET-1425,Cardona (TP),Cardona,TRUE,FALSE
+INUMET-1439,Cebollati (TP),Cebollatí,TRUE,FALSE
+INUMET-1408,Chacra Policial (TP),Chacra Policial,TRUE,FALSE
+INUMET-1395,Chamanga (TP),Chamangá,TRUE,FALSE
+INUMET-1415,Chamizo (TP),Chamizo,TRUE,FALSE
+INUMET-1530,Chapicuy (TP),Chapicuy,TRUE,FALSE
+INUMET-1569,Clara (TP),clara,TRUE,FALSE
+INUMET-1402,Colonia (TP),Colonia,TRUE,FALSE
+INUMET-1428,Colonia Manuel Victoria (TP),Colonia Manuel Victoria,TRUE,FALSE
+INUMET-1391,Colonia Migulete (TP),Colonia Migulete,TRUE,FALSE
+INUMET-1441,Colonia Rosell y Rius (TP),Colonia Rosell y Rius,TRUE,FALSE
+INUMET-1536,Corrales (TP),,TRUE,TRUE
+INUMET-1426,Cuchilla Caraguatá Sur (TP),Cuchilla Caraguatá Sur,TRUE,FALSE
+INUMET-1433,Cuchilla de Dionisio (TP),Cuchilla de Dionisio,TRUE,FALSE
+INUMET-1434,Cuchilla del Carmen (TP),Cuchilla del Carmen,TRUE,FALSE
+INUMET-1427,Cuchilla del Ombú (TP),Cuchilla del Ombú,TRUE,FALSE
+INUMET-1396,Curtina (TP),Curtina,TRUE,FALSE
+INUMET-1432,Dolores (TP),Dolores,TRUE,FALSE
+INUMET-1376,El Águila (TP),El Águila,TRUE,FALSE
+INUMET-1397,El Cerro (TP),El Cerro,TRUE,FALSE
+INUMET-1533,El Eucaliptus (TP),El Eucaliptus,TRUE,FALSE
+INUMET-1380,El Tala (TP),El Tala,TRUE,FALSE
+INUMET-1424,Florida (TP),Florida,TRUE,FALSE
+INUMET-1401,Fraile Muerto (TP),Fraile Muerto,TRUE,FALSE
+INUMET-1413,Garzón (TP),Garzón,TRUE,FALSE
+INUMET-1532,Guichon (TP),Guichon,TRUE,FALSE
+INUMET-1566,Illescas (TP),Illescas,TRUE,FALSE
+INUMET-1435,Isla Patrulla (TP),Isla Patrulla,TRUE,FALSE
+INUMET-1392,Ismael Cortinas (TP),Ismael Cortinas,TRUE,FALSE
+INUMET-1414,Kiyú (TP),Kiyú,TRUE,FALSE
+INUMET-1638,La Calera (TP),La Calera,TRUE,FALSE
+INUMET-1524,La Colmena (TP),La Colmena,TRUE,FALSE
+INUMET-1390,La Cruz (TP),La Cruz,TRUE,FALSE
+INUMET-1431,La Hilera (TP),La Hilera,TRUE,FALSE
+INUMET-1386,La Paloma (TP),La Paloma,TRUE,FALSE
+INUMET-1443,Laguna Merin (TP),Laguna Merin,TRUE,FALSE
+INUMET-1568,Lascano (TP),Lascano,TRUE,FALSE
+INUMET-1406,Marincho (TP),Marincho,TRUE,FALSE
+INUMET-1421,Mariscala (TP),Mariscala,TRUE,FALSE
+INUMET-1537,Masoller (TP),,TRUE,TRUE
+INUMET-1398,Mataojo (TP),Mataojo,TRUE,FALSE
+INUMET-1381,Mendoza Grande (TP),Mendoza Grande,TRUE,FALSE
+INUMET-1565,Migues (TP),Migues,TRUE,FALSE
+INUMET-1564,Moirones (TP),Moirones,TRUE,FALSE
+INUMET-1442,Montecoral (TP),Montecoral,TRUE,FALSE
+INUMET-1403,Nueva Palmira (TP),Nueva Palmira,TRUE,FALSE
+INUMET-1526,Nuevo Berlín (TP),Nuevo Berlín,TRUE,FALSE
+INUMET-1394,Palmitas (TP),Palmitas,TRUE,FALSE
+INUMET-1527,Parador La Vibora (TP),Parador La Vibora,TRUE,FALSE
+INUMET-1429,Parque Policial Solymar (TP),Parque Policial Solymar,TRUE,FALSE
+INUMET-1563,Paso Ataques (TP),Paso Ataques,TRUE,FALSE
+INUMET-1430,Paso del Cerro (TP),Paso del Cerro,TRUE,FALSE
+INUMET-1545,Paso Severino (TP),Paso Severino,TRUE,FALSE
+INUMET-1379,Peralta (TP),Peralta,TRUE,FALSE
+INUMET-1544,Piedra Sola (TP),Piedra Sola,TRUE,FALSE
+INUMET-1529,Piedras Coloradas (TP),Piedras Coloradas,TRUE,FALSE
+INUMET-1422,Piraraja (TP),Piraraja,TRUE,FALSE
+INUMET-1562,Piriápolis (TP),Piriapolis,TRUE,FALSE
+INUMET-1378,Prado (TP),Prado,TRUE,FALSE
+INUMET-1372,Pueblo Centenario (TP),Pueblo Centenario,TRUE,FALSE
+INUMET-1373,Pueblo Grecco (TP),Pueblo Grecco,TRUE,FALSE
+INUMET-1400,Punta del Este (TP),Estación Punta del Este,TRUE,FALSE
+INUMET-1412,Puntas del Sauce (TP),Puntas del Sauce,TRUE,FALSE
+INUMET-1531,Quebracho (TP),Quebracho,TRUE,FALSE
+INUMET-1410,Rafael Perazza (TP),Rafael Perazza,TRUE,FALSE
+INUMET-1642,Reboledo (TP),Reboledo,TRUE,FALSE
+INUMET-1444,Rincón (TP),Rincón,TRUE,FALSE
+INUMET-1570,Rincón de Pereira (TP),rincondepereira,TRUE,FALSE
+INUMET-1383,San Gabriel (TP),San Gabriel,TRUE,FALSE
+INUMET-1525,San Javier (TP),San Javier,TRUE,FALSE
+INUMET-1404,San Jorge (TP),San Jorge,TRUE,FALSE
+INUMET-1418,San José (TP),Estación San José,TRUE,FALSE
+INUMET-1387,San Luis (TP),San Luis,TRUE,FALSE
+INUMET-1377,San Ramón (TP),San Ramón,TRUE,FALSE
+INUMET-1528,Santa Clara de Olimar (TP),,TRUE,TRUE
+INUMET-1374,Santa Lucía (TP),Santa Lucía,TRUE,FALSE
+INUMET-1643,Santa Rosa (TP),Santa Rosa,TRUE,FALSE
+INUMET-1384,Santa Teresa (TP),Santa Teresa,TRUE,FALSE
+INUMET-1407,Sarandi del Navarro (TP),Sarandí de Navarro,TRUE,FALSE
+INUMET-1543,Sarandí Grande (TP),Sarandí Grande,TRUE,FALSE
+INUMET-1416,Sauce (TP),Sauce,TRUE,FALSE
+INUMET-1523,Tarumanes (TP),Tarumanes,TRUE,FALSE
+INUMET-1405,Toledo (TP),Toledo,TRUE,FALSE
+INUMET-1419,Trinidad (TP),Estación Trinidad,TRUE,FALSE
+INUMET-1389,Valizas (TP),Valizas,TRUE,FALSE
+INUMET-1393,Valle Edén (TP),Valle Edén,TRUE,FALSE
+INUMET-1385,Velázquez (TP),Velázquez,TRUE,FALSE
+INUMET-1538,Vichadero (TP),,TRUE,TRUE
+INUMET-1438,Zapican (TP),Zapicán,TRUE,FALSE
+INUMET-XXXX,Castillos,Castillos,FALSE,FALSE
+INUMET-XXXX,Cañada Nieto,Cañada Nieto,FALSE,FALSE
+INUMET-XXXX,Colonia Valdense,Colonia Valdense,FALSE,FALSE
+INUMET-XXXX,Cufré,Cufré,FALSE,FALSE
+INUMET-XXXX,Los Indios,Los Indios,FALSE,FALSE
+INUMET-XXXX,Pintos,Pintos,FALSE,FALSE
+INUMET-XXXX,Ramón Trigo,Ramón Trigo,FALSE,FALSE
