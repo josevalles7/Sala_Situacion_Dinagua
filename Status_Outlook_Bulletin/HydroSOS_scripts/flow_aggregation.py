@@ -37,7 +37,7 @@ def import_data(input_directory, filename):
 
 def calculate_monthly(flowdata):
     flowdata = flowdata.set_index('date')
-    resampled = flowdata['flow'].resample('ME')
+    resampled = flowdata['flow'].resample('M')
     monthly_mean = resampled.mean()
     monthly_count = resampled.count()
     monthly_size = resampled.size()
