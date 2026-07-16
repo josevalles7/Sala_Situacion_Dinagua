@@ -8,6 +8,8 @@ set /p end_date=
 
 echo Generating plots for hydrological outlook
 echo ===============================================================================
+c:\Users\DINAGUA\anaconda3\envs\HydroSOS\python.exe python_scripts/plot_esp_codcuenca_n2.py %codcuenca_n2% %end_date%
+echo ... 
 c:\Users\DINAGUA\anaconda3\envs\HydroSOS\python.exe python_scripts/compute_esp_terciles.py %end_date% %codcuenca_n2%
 echo End of process - Goodbye - 
 pause
