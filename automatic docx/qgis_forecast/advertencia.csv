@@ -4,10 +4,10 @@ RÍO URUGUAY entre Río Cuareim y Río Arapey Grande,1,11,MEDIO
 RÍO ARAPEY CHICO,1,12,MEDIO
 RÍO ARAPEY GRANDE,1,13,MEDIO
 RÍO URUGUAY entre Río Arapey Grande y Río Daymán,1,14,MEDIO
-RÍO DAYMÁN,1,15,MEDIO
-RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,MEDIO
+RÍO DAYMÁN,1,15,BAJA
+RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,BAJA
 RÍO QUEGUAY GRANDE,1,17,BAJA
-RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,BAJA
+RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,NO
 RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,NO
 RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,NO
 RÍO SAN JUAN,2,21,NO
@@ -19,22 +19,22 @@ RÍO DE LA PLATA entre Ao. Pando y Ao. Solís Grande,2,27,NO
 Ao. SOLÍS GRANDE,2,28,NO
 RÍO DE LA PLATA entre Ao. Solís Grande y Punta Del Este,2,29,NO
 OCÉANO ATLÁNTICO entre Punta del Este y Ao. MALDONADO,3,30,NO
-OCÉANO ATLÁNTICO entre Ao. Maldonado y LAGUNA DE ROCHA,3,31,NO
-OCÉANO ATLÁNTICO entre Laguna de Rocha y Ao. VALIZAS,3,32,NO
-OCÉANO ATLÁNTICO entre Ao. Valizas y Ao. CHUY,3,33,NO
-LAGUNA MERÍN entre Río Yaguarón y Río Tacuarí,4,40,BAJA
-RÍO TACUARÍ,4,41,BAJA
-LAGUNA MERÍN entre Río Tacuarí y Río Cebollatí,4,42,BAJA
-RÍO OLIMAR GRANDE,4,43,BAJA
-RÍO CEBOLLATÍ,4,44,BAJA
+OCÉANO ATLÁNTICO entre Ao. Maldonado y LAGUNA DE ROCHA,3,31,BAJA
+OCÉANO ATLÁNTICO entre Laguna de Rocha y Ao. VALIZAS,3,32,BAJA
+OCÉANO ATLÁNTICO entre Ao. Valizas y Ao. CHUY,3,33,BAJA
+LAGUNA MERÍN entre Río Yaguarón y Río Tacuarí,4,40,MEDIO
+RÍO TACUARÍ,4,41,MEDIO
+LAGUNA MERÍN entre Río Tacuarí y Río Cebollatí,4,42,MEDIO
+RÍO OLIMAR GRANDE,4,43,MEDIO
+RÍO CEBOLLATÍ,4,44,MEDIO
 LAGUNA MERÍN entre Río Cebollatí y Ao. SAN MIGUEL,4,45,BAJA
 RÍO NEGRO entre nacientes y Río Tacuarembó,5,50,BAJA
-RÍO TACUAREMBÓ entre nacientes y Ao. Tacuarembó Chico,5,51,MEDIO
-Ao. TACUAREMBÓ CHICO,5,52,MEDIO
+RÍO TACUAREMBÓ entre nacientes y Ao. Tacuarembó Chico,5,51,BAJA
+Ao. TACUAREMBÓ CHICO,5,52,BAJA
 RÍO TACUAREMBÓ entre Ao. Tacuarembó Chico y Río Negro,5,53,BAJA
-RÍO NEGRO entre Río Tacuarembó y Rincón del Bonete,5,54,NO
+RÍO NEGRO entre Río Tacuarembó y Rincón del Bonete,5,54,BAJA
 RÍO NEGRO entre Rincón del Bonete y Río Yí,5,55,NO
-RÍO YÍ,5,56,BAJA
+RÍO YÍ,5,56,MEDIO
 RÍO NEGRO entre Río Yí y Rincón de Palmar,5,57,NO
 RÍO NEGRO entre Rincón de Palmar y Río Uruguay,5,58,NO
 RÍO SANTA LUCÍA entre nacientes y Río Santa Lucía Chico,6,60,NO
