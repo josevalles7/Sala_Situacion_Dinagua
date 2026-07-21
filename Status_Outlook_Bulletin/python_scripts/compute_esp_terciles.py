@@ -26,7 +26,6 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('end_date', help='end date for the discharge plot in format YYYY-MM-DD')
 parser.add_argument('codcuenca_n2', help='enter the codigo_n2 of the basin to plot (e.g. 60)')
-parser.add_argument('leadtime', help='provide forecast leadtime')
 
 args = parser.parse_args()
 '''
@@ -38,7 +37,6 @@ args = argparse.Namespace(
 '''
 end_date = args.end_date
 codigo = args.codcuenca_n2
-leadtime = args.leadtime
 
 # ------------------------------------------------------------------------------
 # Hydrological Status Parameters
@@ -191,7 +189,7 @@ for basin in allbasins_n2.columns:
     pct_dict_1m = (
                 discharge_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
 
     discharge_twomonths_std = discharge_twomonths[(discharge_twomonths['year'] >= stdStart) & (discharge_twomonths['year'] <= stdEnd)]
@@ -199,7 +197,7 @@ for basin in allbasins_n2.columns:
     pct_dict_2m = (
                 discharge_twomonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
 
     discharge_threemonths_std = discharge_threemonths[(discharge_threemonths['year'] >= stdStart) & (discharge_threemonths['year'] <= stdEnd)]
@@ -207,7 +205,7 @@ for basin in allbasins_n2.columns:
     pct_dict_3m = (
                 discharge_threemonths_std
                 .groupby('month')['mean_flow']
-                .apply(group_quantiles_mstats, probs=probs, alphap=0, betap=0)
+                .apply(group_quantiles_mstats, probs=probs, alphap=0.4, betap=0.4)
             ).to_dict()
     # Prepare forecast ensemble table once
     concat_df = concat_df.reset_index(drop=False)
@@ -436,3 +434,47 @@ fig.text(0.5, -0.02, 'Caudal medio (m³/s)', ha='center', va='center', fontsize=
 plt.tight_layout()
 plt.savefig(f"./waterbalance/output_png/10_FDC_outlook.png", dpi=300, bbox_inches='tight')
 plt.close()
+
+# Plot single bar plot
+plt.style.use('classic')
+import seaborn as sns
+sns.set()
+
+# create a horizon from 1 to 3 
+for ranges_leadtime in range(1, 4):
+    horizon = str(ranges_leadtime)
+    # Select row based on leadtime (1, 2, or 3 months)
+    row_map = {'1': row_1m, '2': row_2m, '3': row_3m}
+    row_sel = row_map[horizon]
+
+    horizon_label = build_horizon_label(end_date, int(horizon), month_names)
+
+    labels = ['Inferior', 'Rango Normal', 'Superior']
+    values = [row_sel['BelowNormal'], row_sel['NormalRange'], row_sel['AboveNormal']]
+    colors = ['#CD233F', '#E7E2BC', '#2C7DCD']
+
+    plt.figure(figsize=(12, 8))
+    bars = plt.bar(labels, values, color=colors)
+
+    plt.ylabel('% de miembros',fontweight='bold',fontsize=20);
+    plt.xlabel(f'{horizon_label}', fontsize=20, fontweight='bold')
+    plt.ylabel('% de miembros', fontsize=20)
+    plt.ylim(0, 100)
+    plt.yticks(fontsize=20)
+    plt.xticks(fontsize=20)
+
+    # Match clean style used in previous figures
+    ax = plt.gca()
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.grid(axis='y', linestyle='--', linewidth=0.5, alpha=0.6)
+    ax.set_axisbelow(True)
+
+    # Value labels
+    for b, v in zip(bars, values):
+        plt.text(b.get_x() + b.get_width() / 2, v + 1, f'{v:.1f}%', ha='center', va='bottom', fontsize=14)
+
+    plt.tight_layout()
+    plt.savefig(f"./waterbalance/output_png/06_barplot_{horizon}_leadtime.png", dpi=300, bbox_inches='tight')
+    plt.close()
+    # plt.show()

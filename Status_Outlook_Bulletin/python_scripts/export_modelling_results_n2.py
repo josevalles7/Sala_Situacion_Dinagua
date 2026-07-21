@@ -52,7 +52,7 @@ def convertRunoff2Discharge(df_runoff):
     df_discharge['month'] = df_runoff['month'].values
     return df_discharge
 
-def defineHydroSOScategory(VARIABLE_MENSUAL, VARIABLE_AVERAGE, VARIABLE):
+def defineHydroSOScategory(VARIABLE_MENSUAL, VARIABLE_AVERAGE, VARIABLE,alphap, betap):
     # Work on a copy to avoid mutating the caller's DataFrame
     result = VARIABLE_MENSUAL.copy()
 
@@ -67,8 +67,8 @@ def defineHydroSOScategory(VARIABLE_MENSUAL, VARIABLE_AVERAGE, VARIABLE):
     result['mean'] = result['month'].map(VARIABLE_AVERAGE[VARIABLE])
     result['average_percentage'] = (result[VARIABLE] - result['mean']) / result['mean']
 
-    # Percentile position using the Weibull plotting position formula
-    result['percentile'] = result['rank_average'] / (result['non_missing'] + 1)
+    # Percentile position using the Weibull (alphap = 0.0 , betap = 0.0) or Cunnane (alphap = 0.4 , betap = 0.4) plotting position formula
+    result['percentile'] = (result['rank_average'] - alphap) / (result['non_missing'] + 1 - alphap - betap)
 
     # Classify into HydroSOS categories using vectorised np.select (no Python loop)
     criteria = [
@@ -167,7 +167,7 @@ for basin in BASIN_LEVEL2.columns:
     PRECIP_AVERAGE    = PRECIP_SELECTED.loc[ref_mask].groupby('month')[['precip']].mean()
 
     # --- HydroSOS classification (vectorised inside defineHydroSOScategory) ---
-    hydroSOS = defineHydroSOScategory(DISCHARGE_SELECTED, DISCHARGE_AVERAGE, 'discharge')
+    hydroSOS = defineHydroSOScategory(DISCHARGE_SELECTED, DISCHARGE_AVERAGE, 'discharge', alphap=0.4, betap=0.4)
 
     # --- Extract scalar values for the analysis month/year ---
     # analysis_mask is a pre-built boolean array; iloc[0] is a single scalar read.

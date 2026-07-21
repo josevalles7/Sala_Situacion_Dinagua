@@ -14,6 +14,7 @@ import numpy as np
 import calendar
 from datetime import datetime, timedelta
 import argparse
+from scipy.stats.mstats import mquantiles
 
 sns.set()
 
@@ -23,40 +24,34 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "es_ES")
 
+def quantile_position(x, p, alphap=0.4, betap=0.4):
+    # For Weibull use alphap = 0.0 and betap = 0.0. For Cunnane use alphap = 0.4 and betap = 0.4
+    return mquantiles(x.dropna(), p, alphap=alphap, betap=betap)[0]
+
 # %%
 # Quantile Function Definitions
 def q1(x):
-    return x.quantile(0.28)
-
-def q2(x):
-    return x.median()
-
-def q3(x):
-    return x.quantile(0.72)
-
-def q5(x):
-    return x.quantile(0.05)
-
-def q95(x):
-    return x.quantile(0.95)
-
-def q87(x):
-    return x.quantile(0.87)
-
-def q13(x):
-    return x.quantile(0.13)
-
-def q10(x):
-    return x.quantile(0.10)
-
-def q25(x):
-    return x.quantile(0.25)
-
-def q75(x):
-    return x.quantile(0.75)
-
-def q90(x):
-    return x.quantile(0.90)
+    return quantile_position(x, 0.28)
+def q2(x):   
+    return quantile_position(x, 0.50)
+def q3(x):   
+    return quantile_position(x, 0.72)
+def q5(x):   
+    return quantile_position(x, 0.05)
+def q95(x):  
+    return quantile_position(x, 0.95)
+def q87(x):  
+    return quantile_position(x, 0.87)
+def q13(x):  
+    return quantile_position(x, 0.13)
+def q10(x):  
+    return quantile_position(x, 0.10)
+def q25(x):  
+    return quantile_position(x, 0.25)
+def q75(x):  
+    return quantile_position(x, 0.75)
+def q90(x):  
+    return quantile_position(x, 0.90)
 
 # Define arguments 
 parser = argparse.ArgumentParser(
@@ -66,8 +61,7 @@ parser = argparse.ArgumentParser(
 
 # 
 parser.add_argument('codcuenca_n2', help='provide the input time series frequency (daily or monthly)')
-parser.add_argument('end_date', help='end date for the discharge plot in format YYYY-MM-DD')    
-parser.add_argument('leadtime', help='end date for the discharge plot in format YYYY-MM-DD')    
+parser.add_argument('end_date', help='end date for the discharge plot in format YYYY-MM-DD')  
 
 args = parser.parse_args()
 
@@ -375,99 +369,4 @@ ax5.add_artist(legend1)
 
 plt.xticks(rotation=0)
 plt.savefig('./waterbalance/output_png/04_conditional_outlook.png', dpi=300, bbox_inches='tight')
-plt.close()
-
-# %%
-concat_df['percentile_range'] = ''
-concat_df['percentile_range_summary'] = ''
-values_months = ['Notab. Inferior','Inferior','Normal','Superior','Notab. Superior']
-values_months_summary = ['Inferior','Normal','Superior']
-
-for i in range(len(concat_df)):
-    # Extract the current month 
-    m = concat_df.month[i]
-    y = concat_df.year[i]
-    # pmin = min_values.query('month==@m')['discharge'].item()
-    pmin = 0
-    p90 = percentiles.query('percentile == 0.90 & month==@m')['discharge_percentile'].item()
-    p75 = percentiles.query('percentile == 0.75 & month==@m')['discharge_percentile'].item()
-    p25 = percentiles.query('percentile == 0.25 & month==@m')['discharge_percentile'].item()
-    p10 = percentiles.query('percentile == 0.10 & month==@m')['discharge_percentile'].item()
-    pmax = max_values.query('month==@m')['discharge'].item()
-    value = concat_df.discharge[i]
-    category = pd.cut([value],bins=[pmin,p10,p25,p75,p90,pmax],labels=values_months)
-    category_summary = pd.cut([value],bins=[pmin,p25,p75,pmax],labels=values_months_summary)
-    concat_df.loc[concat_df.eval('index==@i'),'percentile_range'] = category[0]
-    concat_df.loc[concat_df.eval('index==@i'),'percentile_range_summary'] = category_summary[0]
-
-# %%
-# OJO: SELECT FORECAST LEADTIME 
-forecast_leadtime = int(args.leadtime)
-# month_outlook = discharge_plot['date'] + pd.DateOffset(months=+forecast_leadtime)
-month_outlook = discharge_plot['month'].iloc[-1] + forecast_leadtime
-
-# %%
-if month_outlook > 12:
-    month_outlook = month_outlook - 12
-
-month_outlook
-
-# %%
-category_counts = concat_df.query('month==@month_outlook')['percentile_range'].value_counts()
-category_counts = category_counts.to_frame()
-category_counts = category_counts.sort_index(key=lambda x: x.map({val:idx for idx,val in enumerate(values_months)}))
-
-# %%
-category_counts_summary = concat_df.query('month==@month_outlook')['percentile_range_summary'].value_counts()
-category_counts_summary = category_counts_summary.to_frame()
-category_counts_summary = category_counts_summary.sort_index(key=lambda x: x.map({val:idx for idx,val in enumerate(values_months_summary)}))
-
-# %%
-category_counts['percentage_ensemble'] = round((category_counts['percentile_range']/category_counts['percentile_range'].sum())*100,1)
-category_counts_summary['percentage_ensemble'] = round((category_counts_summary['percentile_range_summary']/category_counts_summary['percentile_range_summary'].sum())*100,1)
-
-# %%
-import matplotlib.colors as mcolors
-
-color_mapping = {
-    'Notab. Inferior':'#CD233F',
-    'Inferior': '#FFA885',
-    'Normal': '#E7E2BC',
-    'Superior': '#8ECEEE',
-    'Notab. Superior': '#2C7DCD'
-}
-
-column_name = category_counts.index.to_list()
-colors = [mcolors.to_rgb(color_mapping.get(x,'#808080')) for x in category_counts.index]
-ax3 = category_counts['percentage_ensemble'].plot(kind='bar',color=colors,figsize=(12, 8));
-plt.xticks(range(len(category_counts.index)),column_name,rotation=0,horizontalalignment='center');
-plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=14);
-plt.ylabel('% de miembros',fontweight='bold',fontsize=14);
-# set xlimits to 100%
-plt.ylim(0,100)
-#plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
-#plt.title(f"{forecast_leadtime}-Mes de Perspectiva",fontweight='bold',fontsize=14);
-plt.savefig(f"./waterbalance/output_png/05_barplot_{forecast_leadtime}_leadtime.png", dpi=300, bbox_inches='tight')
-plt.close()
-
-# %%
-font_size = 18
-color_mapping_summary = {
-    'Inferior':'#CD233F',
-    'Normal': '#E7E2BC',
-    'Superior': '#2C7DCD'
-}
-
-column_name = category_counts_summary.index.to_list()
-colors = [mcolors.to_rgb(color_mapping_summary.get(x,'#808080')) for x in category_counts_summary.index]
-ax3 = category_counts_summary['percentage_ensemble'].plot(kind='bar',color=colors,figsize=(12, 8));
-plt.xticks(range(len(category_counts_summary.index)),column_name,rotation=0,horizontalalignment='center',fontsize=20);
-plt.yticks(fontsize=20)
-plt.xlabel('Categoria de Perspectiva Hidrologica',fontweight='bold',fontsize=20);
-plt.ylabel('% de miembros',fontweight='bold',fontsize=20);
-# set xlimits to 100%
-plt.ylim(0,100)
-#plt.suptitle(f'Ensemble Streamflow Prediction (ESP) en subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=20);
-#plt.title(f"{forecast_leadtime}-Mes de Perspectiva",fontweight='bold',fontsize=14);
-plt.savefig(f"./waterbalance/output_png/06_barplot_{forecast_leadtime}_leadtime.png", dpi=300, bbox_inches='tight')
 plt.close()
