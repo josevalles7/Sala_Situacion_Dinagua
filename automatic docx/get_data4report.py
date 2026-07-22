@@ -41,7 +41,7 @@ def fetch_timeseries(
     moduleInstanceIds,
     start_time,
     end_time,
-    base_url="http://testterh-fssaws:8080/FewsWebServices/rest/fewspiservice/v1/timeseries",
+    base_url="http://prodterh-fssaws:8080/FewsWebServices/rest/fewspiservice/v1/timeseries",
 ):
     """
     Build the URL and params for a FEWS PI REST timeseries request.
