@@ -7,13 +7,12 @@ from urllib.parse import urlencode
 import pandas as pd
 import argparse
 
-
 # %%
 
 # Define arguments 
 parser = argparse.ArgumentParser(
-                    prog='Get data from FEWS-UY to Excel database_report.xlsx',
-                    description='Import data to Excel for Sala de Situación DINAGUA',
+                    prog='generate drought warning',
+                    description='Postprocess the ESP outlook products',
                     epilog='Jose Valles, DINAGUA, 08Abr2026')
 
 # 
@@ -42,6 +41,7 @@ def fetch_timeseries(
     start_time,
     end_time,
     base_url="http://prodterh-fssaws:8080/FewsWebServices/rest/fewspiservice/v1/timeseries",
+    # base_url="http://testterh-fssaws:8080/FewsWebServices/rest/fewspiservice/v1/timeseries",
 ):
     """
     Build the URL and params for a FEWS PI REST timeseries request.
@@ -169,7 +169,7 @@ mod_stage_sim = ["ImportUTE", "ImportCTM","ImportDINAGUA","ImportINA"]
 # get UTC time now
 end_time = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 # start_time is end_time minus 12 hours
-start_time = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=80)).strftime("%Y-%m-%dT%H:%M:%SZ")
+start_time = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=168)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 url_stage_sim, params_stage_sim = fetch_timeseries(
     filterId,
@@ -198,7 +198,7 @@ url_precip, params_precip = fetch_timeseries(
 loc_precip_fcst = ["56","43","60","61","10","65"]
 par_precip_fcst = "P.pro"
 mod_precip_fcst = ["PreprocessGFS"]
-end_fcst = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=72)).strftime("%Y-%m-%dT%H:%M:%SZ")
+end_fcst = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=168)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 url_precip_fcst, params_precip_fcst = fetch_timeseries(
     filterId,
@@ -232,6 +232,74 @@ response_precip_fcst.close()
 dfs_stage_sim = parse_timeseries(data_stage_sim)
 dfs_precip_sim = parse_timeseries(data_precip_sim)
 dfs_precip_fcst = parse_timeseries(data_precip_fcst)
+
+# %%
+# offset sensor at A50C9566 (Monte Caseros)
+dfs_stage_sim["A50C9566"]["value"] = dfs_stage_sim["A50C9566"]["value"] - 0.25
+
+# %%
+dfs_precip_sim_cum = {}
+for loc, df in dfs_precip_sim.items():
+    if df.empty or "value" not in df.columns:
+        continue
+    last_time = df.index.max()
+    last_3_days = last_time - pd.Timedelta(days=3)
+    last_week = last_time - pd.Timedelta(weeks=1)
+
+    cum_3_days = df.loc[df.index > last_3_days, "value"].sum()
+    cum_last_week = df.loc[df.index > last_week, "value"].sum()
+
+    dfs_precip_sim_cum[loc] = {
+        "last_day": round(df.loc[df.index == last_time, "value"].iloc[0], 2),
+        "last_3_days": round(cum_3_days, 2),
+        "last_week": round(cum_last_week, 2),
+    }
+
+dfs_precip_fcst_cum = {}
+for loc, df in dfs_precip_fcst.items():
+    if df.empty or "value" not in df.columns:
+        continue
+    first_time = df.index.min()
+    next_3_days = first_time + pd.Timedelta(days=3)
+    next_week = first_time + pd.Timedelta(weeks=1)
+
+    cum_next_3_days = df.loc[df.index <= next_3_days, "value"].sum()
+    cum_next_week = df.loc[df.index <= next_week, "value"].sum()
+
+    dfs_precip_fcst_cum[loc] = {
+        "next_day": round(df.loc[df.index <= first_time + pd.Timedelta(days=1), "value"].sum(), 2),
+        "next_3_days": round(cum_next_3_days, 2),
+        "next_week": round(cum_next_week, 2),
+    }
+
+
+# %%
+today_10h = pd.Timestamp.now().normalize() + pd.Timedelta(hours=10)
+
+for loc, cum in dfs_precip_sim_cum.items():
+    dates = [today_10h - pd.Timedelta(days=d) for d in range(4, -1, -1)]
+    dfs_precip_sim_cum[loc] = pd.DataFrame(
+        {
+            "value": [float("nan"), float("nan"), cum["last_week"], cum["last_3_days"], cum["last_day"]],
+            # the flag number is based on the number of days before today, with -9999 for missing data, -7 for last week, -3 for last 3 days, and 0 for last day
+            "flag": [-9999, -9999, -7, -3, 0],
+            "parameterId": "P.cuenca",
+        },
+        index=pd.DatetimeIndex(dates, name="datetime"),
+    )
+
+for loc, cum in dfs_precip_fcst_cum.items():
+    dates = [today_10h + pd.Timedelta(days=d) for d in range(1, 5)]
+    dfs_precip_fcst_cum[loc] = pd.DataFrame(
+        {
+            "value": [cum["next_day"], cum["next_3_days"], cum["next_week"], float("nan")],
+            # the flag number is based on the number of days after today, with -9999 for missing data, 1 for next day, 3 for next 3 days, and 7 for next week
+            "flag": [1, 3, 7, -9999],
+            "parameterId": "P.pro",
+        },
+        index=pd.DatetimeIndex(dates, name="datetime"),
+    )
+
 
 # %%
 # create a mapping of locationId to basin and excel cell location
@@ -283,12 +351,12 @@ write_values_to_excel(wb, dfs_stage_sim, location_basin_mapping,
                       offsets=[pd.Timedelta(hours=-1)], decimals=2)
 
 # Observed precipitation: latest + same timestamp + 1 day before
-write_values_to_excel(wb, dfs_precip_sim, location_basin_mapping_precip,
+write_values_to_excel(wb, dfs_precip_sim_cum, location_basin_mapping_precip,
                       offsets=[pd.Timedelta(days=-1), pd.Timedelta(days=-2)], decimals=0)
 
 # Forecast precipitation: tomorrow (lead 1) + day after tomorrow (lead 2) + 3 days ahead (lead 3)
 tomorrow = pd.Timestamp.now().normalize() + pd.Timedelta(days=1)
-write_values_to_excel(wb, dfs_precip_fcst, location_basin_mapping_fcst,
+write_values_to_excel(wb, dfs_precip_fcst_cum, location_basin_mapping_fcst,
                       offsets=[pd.Timedelta(days=1), pd.Timedelta(days=2)], decimals=0,
                       anchor_time=tomorrow)
 
