@@ -14,7 +14,7 @@ m = 4  # Mes de inicio año hidrológico (Abril)
 data_folder = './stations/data'
 
 # Percentage of missing data
-max_pct_missing = 50
+max_pct_missing = 80
 
 # Obtener lista de estaciones disponibles
 import glob

@@ -255,7 +255,7 @@ ax4.fill_between(df_stats['date'], 0, df_stats['10th_percentile'], color='#CD233
 ax4.fill_between(df_stats['date'], df_stats['10th_percentile'], df_stats['25th_percentile'], color='#FFA885', alpha=0.3,label="Inferior a lo normal")
 ax4.fill_between(df_stats['date'], df_stats['25th_percentile'], df_stats['75th_percentile'], color='#E7E2BC', alpha=0.3,label="Normal")
 ax4.fill_between(df_stats['date'], df_stats['75th_percentile'], df_stats['90th_percentile'], color='#8ECEEE', alpha=0.3,label="Superior a lo normal")
-ax4.fill_between(df_stats['date'], df_stats['90th_percentile'], 600,color='#2C7DCD', alpha=0.3,label="Alto")
+ax4.fill_between(df_stats['date'], df_stats['90th_percentile'], 3000,color='#2C7DCD', alpha=0.3,label="Alto")
 
 ax4.plot(stats_fcst['date'],stats_fcst['q10'],color = 'red',linestyle = '--',linewidth=2, mec='k', label='Percentil 10')
 ax4.plot(stats_fcst['date'],stats_fcst['q25'],color = 'orange',linestyle = '--',linewidth=2, mec='k', label='Percentil 25')
@@ -289,7 +289,7 @@ ax2.fill_between(df_stats['date'], 0, df_stats['10th_percentile'], color='#CD233
 ax2.fill_between(df_stats['date'], df_stats['10th_percentile'], df_stats['25th_percentile'], color='#FFA885', alpha=0.3,label="Inferior a lo normal")
 ax2.fill_between(df_stats['date'], df_stats['25th_percentile'], df_stats['75th_percentile'], color='#E7E2BC', alpha=0.3,label="Normal")
 ax2.fill_between(df_stats['date'], df_stats['75th_percentile'], df_stats['90th_percentile'], color='#8ECEEE', alpha=0.3,label="Superior a lo normal")
-ax2.fill_between(df_stats['date'], df_stats['90th_percentile'], 600,color='#2C7DCD', alpha=0.3,label="Alto")
+ax2.fill_between(df_stats['date'], df_stats['90th_percentile'], 3000,color='#2C7DCD', alpha=0.3,label="Alto")
 ax2.set_ylim(0,discharge_max_plot)
 # ax2.set_ylim(0,500)
 ax2.legend(loc='best',title='Estado Hidrológico',fancybox=True, title_fontproperties={'weight':'bold'})
@@ -309,7 +309,7 @@ plt.close()
 # A continuación seleccionaremos algunos años similares
 
 # %%
-selected_years = [1982, 2008, 1993]
+selected_years = [1982, 1997, 2015, 2023]
 concat_df['year_analogue'] = concat_df['year_analogue'].astype(int)
 years_to_select = [int(year) for year in selected_years]
 
@@ -346,7 +346,7 @@ a1 = ax5.fill_between(df_stats['date'], 0, df_stats['10th_percentile'], color='#
 a2 = ax5.fill_between(df_stats['date'], df_stats['10th_percentile'], df_stats['25th_percentile'], color='#FFA885', alpha=0.3, label="Inferior a lo normal")
 a3 = ax5.fill_between(df_stats['date'], df_stats['25th_percentile'], df_stats['75th_percentile'], color='#E7E2BC', alpha=0.3, label="Normal")
 a4 = ax5.fill_between(df_stats['date'], df_stats['75th_percentile'], df_stats['90th_percentile'], color='#8ECEEE', alpha=0.3, label="Superior a lo normal")
-a5 = ax5.fill_between(df_stats['date'], df_stats['90th_percentile'], 600, color='#2C7DCD', alpha=0.3, label="Alto")
+a5 = ax5.fill_between(df_stats['date'], df_stats['90th_percentile'], 3000, color='#2C7DCD', alpha=0.3, label="Alto")
 
 # Límites del eje Y y leyenda para Estado Hidrológico
 # ax5.set_ylim(0, 300)
