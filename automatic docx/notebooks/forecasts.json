@@ -150,12 +150,12 @@
   "OLIMAR": {
     "TREINTA Y TRES": {
       "pronostico": {
-        "locationIds": "10.1",
+        "locationIds": "OlimarTreintaTres",
         "parameterIds": "Q.for",
         "moduleInstanceIds": "POST_OlimarTreintaTres_GFS"
       },
       "simulado": {
-        "locationIds": "10.1",
+        "locationIds": "OlimarTreintaTres",
         "parameterIds": "Q.sim",
         "moduleInstanceIds": "POST_OlimarTreintaTres_Update"
       },
@@ -174,12 +174,12 @@
   "CEBOLLATI": {
     "PASO AVERIAS": {
       "pronostico": {
-        "locationIds": "15.0",
+        "locationIds": "CebollatiAverias",
         "parameterIds": "Q.for",
         "moduleInstanceIds": "POST_CebollatiAverias_GFS"
       },
       "simulado": {
-        "locationIds": "15.0",
+        "locationIds": "CebollatiAverias",
         "parameterIds": "Q.sim",
         "moduleInstanceIds": "POST_CebollatiAverias_Update"
       },
