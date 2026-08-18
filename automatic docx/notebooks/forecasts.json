@@ -1,0 +1,199 @@
+{
+  "CUAREIM": {
+    "ARTIGAS": {
+      "pronostico": {
+        "locationIds": "A50C65E2",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "ADD_CuareimPuente_GFS"
+      },
+      "simulado": {
+        "locationIds": "A50C65E2",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "ADD_CuareimPuente_Update"
+      },
+      "observado": {
+        "locationIds": "A50C65E2",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessHQ"
+      },
+      "umbrales": {
+        "aviso": 1076,
+        "seguridad": 2161,
+        "sensible": 2713,
+        "extrema": 5753
+      },
+      "nombre": "Río Cuareim"
+    }
+  },
+  "YI": {
+    "DURAZNO": {
+      "pronostico": {
+        "locationIds": "2206",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "ADD_YiPuente_GFS"
+      },
+      "simulado": {
+        "locationIds": "2206",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "ADD_YiPuente_Update"
+      },
+      "observado": {
+        "locationIds": "2206",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessHQ"
+      },
+      "umbrales": {
+        "aviso": 562,
+        "seguridad": 1326,
+        "sensible": 2185,
+        "extrema": 4920
+      },
+      "nombre": "Río Yí"
+    }
+  },
+  "SANTA LUCIA": {
+    "SANTA LUCIA": {
+      "pronostico": {
+        "locationIds": "133.0",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_ForecastGFS"
+      },
+      "simulado": {
+        "locationIds": "133.0",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_Update"
+      },
+      "observado": {
+        "locationIds": "133.0",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "aviso": 720,
+        "seguridad": 1655,
+        "sensible": 2988,
+        "extrema": 4048
+      },
+      "nombre": "Río Santa Lucía"
+    },
+    "SAN RAMON": {
+      "pronostico": {
+        "locationIds": "23.0",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_ForecastGFS"
+      },
+      "simulado": {
+        "locationIds": "23.0",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_Update"
+      },
+      "observado": {
+        "locationIds": "23.0",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "seguridad": 555,
+        "sensible": 1126
+      },
+      "nombre": "Río Santa Lucía"
+    },
+    "FLORIDA": {
+      "pronostico": {
+        "locationIds": "53.1",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_subdiario_ForecastGFS"
+      },
+      "simulado": {
+        "locationIds": "53.1",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_subdiario_Update"
+      },
+      "observado": {
+        "locationIds": "53.1",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "aviso": 1531,
+        "seguridad": 3257
+      },
+      "nombre": "Río Santa Lucía"
+    }
+  },
+  "SAN JOSE": {
+    "SAN JOSE": {
+      "pronostico": {
+        "locationIds": "115.0",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_ForecastGFS"
+      },
+      "simulado": {
+        "locationIds": "115.0",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "wflow_sbm_SantaLucia_diario_Update"
+      },
+      "observado": {
+        "locationIds": "115.0",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "aviso": 161,
+        "seguridad": 1000,
+        "sensible": 2100,
+        "extrema": 3249
+      },
+      "nombre": "Río San José"
+    }
+  },
+  "OLIMAR": {
+    "TREINTA Y TRES": {
+      "pronostico": {
+        "locationIds": "OlimarTreintaTres",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "POST_OlimarTreintaTres_GFS"
+      },
+      "simulado": {
+        "locationIds": "OlimarTreintaTres",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "POST_OlimarTreintaTres_Update"
+      },
+      "observado": {
+        "locationIds": "10.1",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "seguridad": 1715,
+        "extrema": 7052
+      },
+      "nombre": "Río Olimar Grande"
+    }
+  },
+  "CEBOLLATI": {
+    "PASO AVERIAS": {
+      "pronostico": {
+        "locationIds": "CebollatiAverias",
+        "parameterIds": "Q.for",
+        "moduleInstanceIds": "POST_CebollatiAverias_GFS"
+      },
+      "simulado": {
+        "locationIds": "CebollatiAverias",
+        "parameterIds": "Q.sim",
+        "moduleInstanceIds": "POST_CebollatiAverias_Update"
+      },
+      "observado": {
+        "locationIds": "15.0",
+        "parameterIds": "Q.obs",
+        "moduleInstanceIds": "PreprocessQ"
+      },
+      "umbrales": {
+        "aviso": 1296,
+        "seguridad": 1991,
+        "sensible": 2892
+      },
+      "nombre": "Río Cebollatí"
+    }
+  }
+}

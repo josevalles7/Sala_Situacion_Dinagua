@@ -1,0 +1,154 @@
+{
+  "rio cuareim": {
+    "Cuareim Rio": {
+      "locationIds": "A50079DA",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportCTM"
+    },
+    "Catalan Grande": {
+      "locationIds": "A5006AAC",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportCTM"
+    },
+    "Artigas": {
+      "locationIds": "A50C65E2",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportCTM",
+      "umbrales": {
+        "aviso": 8.0,
+        "seguridad": 10.2
+      }
+    }
+  },
+  "rio yi": {
+    "Sarandi del Yí": {
+      "locationIds": "2215",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportUTE"
+    },
+    "Polanco del Yí": {
+      "locationIds": "2257",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportUTE"
+    },
+    "Durazno": {
+      "locationIds": "0000",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportUTE",
+      "umbrales": {
+        "aviso": 6.05,
+        "seguridad": 8.20
+      }
+    },
+    "Mansavillagra R6": {
+      "locationIds": "34.0",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA"
+    }
+  },
+  "rio santa lucia": {
+    "Fray Marcos": {
+      "locationIds": "44.0",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA"
+    },
+    "Paso Pache": {
+      "locationIds": "59.1",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA"
+    },
+    "Santa Lucia R11": {
+      "locationIds": "133.0",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA",
+      "umbrales": {
+        "aviso": 6.80,
+        "seguridad": 9.00
+      }
+    },
+    "Florida": {
+      "locationIds": "53.1",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA",
+      "umbrales": {
+        "aviso": 7.42,
+        "seguridad": 9.00
+      }
+    }
+  },
+  "rio san jose": {
+    "Picada Varela": {
+      "locationIds": "115.0",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA",
+      "umbrales": {
+        "aviso": 3.32,
+        "seguridad": 7.40
+      }
+    }
+  },
+  "rio uruguay": {
+    "Bella Unión": {
+      "locationIds": "A50C9566",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportCTM",
+      "umbrales": {
+        "seguridad": 6.30
+      }
+    },
+    "Salto": {
+      "locationIds": "A501258E",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportCTM",
+      "umbrales": {
+        "aviso": 11.40,
+        "seguridad": 12.20
+      }
+    },
+    "Paysandú": {
+      "locationIds": "2232",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportINA",
+      "umbrales": {
+        "aviso": 4.39,
+        "seguridad": 6.00
+      }
+    },
+    "Fray Bentos": {
+      "locationIds": "2235",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportINA",
+      "umbrales": {
+        "aviso": 1.60,
+        "seguridad": 3.90
+      }
+    }
+  },
+  "rio olimar grande": {
+    "Treinta y Tres": {
+      "locationIds": "10.1",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA",
+      "umbrales": {
+        "seguridad": 7.00
+      }
+    }
+  },
+  "rio negro": {
+    "Mercedes": {
+      "locationIds": "2145",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportUTE",
+      "umbrales": {
+        "seguridad": 7.00
+      }
+    }
+  },
+  "rio yaguaron":{
+    "Passo das Pedras":{
+      "locationIds": "88260000",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportANA"
+    }
+  }
+}
