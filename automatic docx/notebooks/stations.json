@@ -3,17 +3,20 @@
     "Cuareim Rio": {
       "locationIds": "A50079DA",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportCTM"
+      "moduleInstanceIds": "ImportCTM",
+      "cursoObservado": "Río Cuareim"
     },
     "Catalan Grande": {
       "locationIds": "A5006AAC",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportCTM"
+      "moduleInstanceIds": "ImportCTM",
+      "cursoObservado": "Ao Catalán Grande"
     },
     "Artigas": {
       "locationIds": "A50C65E2",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportCTM",
+      "cursoObservado": "Río Cuareim",
       "umbrales": {
         "aviso": 8.0,
         "seguridad": 10.2
@@ -24,17 +27,20 @@
     "Sarandi del Yí": {
       "locationIds": "2215",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportUTE"
+      "moduleInstanceIds": "ImportUTE",
+      "cursoObservado": "Río Yí"
     },
     "Polanco del Yí": {
       "locationIds": "2257",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportUTE"
+      "moduleInstanceIds": "ImportUTE",
+      "cursoObservado": "Río Yí"
     },
     "Durazno": {
       "locationIds": "0000",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportUTE",
+      "cursoObservado": "Río Yí",
       "umbrales": {
         "aviso": 6.05,
         "seguridad": 8.20
@@ -43,24 +49,28 @@
     "Mansavillagra R6": {
       "locationIds": "34.0",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportDINAGUA"
+      "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Ao. Mansavillagra"
     }
   },
   "rio santa lucia": {
     "Fray Marcos": {
       "locationIds": "44.0",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportDINAGUA"
+      "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río Santa Lucia Grande"
     },
     "Paso Pache": {
       "locationIds": "59.1",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportDINAGUA"
+      "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río Santa Lucia Grande"
     },
     "Santa Lucia R11": {
       "locationIds": "133.0",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río Santa Lucia Grande",
       "umbrales": {
         "aviso": 6.80,
         "seguridad": 9.00
@@ -70,6 +80,7 @@
       "locationIds": "53.1",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río Santa Lucia Chico",
       "umbrales": {
         "aviso": 7.42,
         "seguridad": 9.00
@@ -81,6 +92,7 @@
       "locationIds": "115.0",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río San José",
       "umbrales": {
         "aviso": 3.32,
         "seguridad": 7.40
@@ -92,6 +104,7 @@
       "locationIds": "A50C9566",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportCTM",
+      "cursoObservado": "Río Uruguay",
       "umbrales": {
         "seguridad": 6.30
       }
@@ -100,6 +113,7 @@
       "locationIds": "A501258E",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportCTM",
+      "cursoObservado": "Río Uruguay",
       "umbrales": {
         "aviso": 11.40,
         "seguridad": 12.20
@@ -109,6 +123,7 @@
       "locationIds": "2232",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportINA",
+      "cursoObservado": "Río Uruguay",
       "umbrales": {
         "aviso": 4.39,
         "seguridad": 6.00
@@ -118,6 +133,7 @@
       "locationIds": "2235",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportINA",
+      "cursoObservado": "Río Uruguay",
       "umbrales": {
         "aviso": 1.60,
         "seguridad": 3.90
@@ -129,6 +145,7 @@
       "locationIds": "10.1",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Río Olimar Grande",
       "umbrales": {
         "seguridad": 7.00
       }
@@ -139,16 +156,26 @@
       "locationIds": "2145",
       "parameterIds": "H.obs",
       "moduleInstanceIds": "ImportUTE",
+      "cursoObservado": "Río Negro",
       "umbrales": {
-        "seguridad": 7.00
+        "seguridad": 6.50
       }
+    }
+  },
+  "laguna merín": {
+    "Lago Merín": {
+      "locationIds": "98.0",
+      "parameterIds": "H.obs",
+      "moduleInstanceIds": "ImportDINAGUA",
+      "cursoObservado": "Laguna Merin"
     }
   },
   "rio yaguaron":{
     "Passo das Pedras":{
       "locationIds": "88260000",
       "parameterIds": "H.obs",
-      "moduleInstanceIds": "ImportANA"
+      "moduleInstanceIds": "ImportANA",
+      "cursoObservado": "Río Yaguarón"
     }
   }
 }
