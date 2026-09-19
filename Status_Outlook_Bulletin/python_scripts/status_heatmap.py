@@ -380,7 +380,7 @@ def plot_heatmap_status_grouped(piv_df, df_dates, allbasins_df, output_file=None
     
     # Formateo de etiquetas
     ax.set_yticklabels(allbasins_df.nombre, rotation=0, fontsize=font_size + factor_delta)
-    ax.set_xticklabels(df_dates['FECHA'].dt.strftime('%b-%y'), fontsize=font_size + factor_delta)
+    ax.set_xticklabels(df_dates['FECHA'].dt.strftime('%b-%y').str.upper(), fontsize=font_size + factor_delta)
     
     # Configurar colorbar
     colorbar = ax.collections[0].colorbar

@@ -281,7 +281,7 @@ def plot_heatmap_grouped(piv_df, df_original, allbasins_df, output_file=None):
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
     
     ax.set_xlabel('Día-Mes', rotation=0, labelpad=10, size=font_size)
-    ax.set_xticklabels(df_original['FECHA'].dt.strftime('%d-%b'), fontsize=font_size)
+    ax.set_xticklabels(df_original['FECHA'].dt.strftime('%d-%b').str.upper(), fontsize=font_size)
     
     ax.tick_params(axis='y', labelsize=font_size)
     ax.set_yticklabels(allbasins_df.nombre, rotation=0)
