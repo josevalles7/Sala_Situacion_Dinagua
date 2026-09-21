@@ -1,0 +1,297 @@
+C3,NOMBRE
+102,Río Cuareim entre Ao. Catalán Grande y Ao. Pintado Grande
+103,Río Cuareim entre Ao. Pintado Grande y Ao. Yacot
+105,Río Cuareim entre Ao. Yacot y Ao. Yacaré Grande
+106,Río Cuareim entre Ao. Yacaré Grande y Ao. Tres Cruces Grande
+107,Río Cuareim entre Ao. Tres Cruces Grande y Ao. Cuaró Grande
+108,Río Cuareim entre Ao. Cuaró Grande y Ao. Yucutujá
+109,Río Cuareim entre Ao. Yucutujá y Río Uruguay
+110,Río Uruguay entre Río Cuareim y Ao. Itacumbú
+111,Río Uruguay entre Ao. Itacumbú y Ao. Lenguazo
+112,Río Uruguay entre Ao. Lenguazo y Ao. Ñaquiñá
+114,Río Uruguay entre Ao. Ñaquiñá y Ao. Mandiyú
+115,Río Uruguay entre Ao. Mandiyú y Ao. Del Tigre
+116,Río Uruguay entre Ao. Del Tigre y Ao. Guaviyú
+117,Río Uruguay entre Ao. Guaviyú y Ao. Yacuy
+119,Río Uruguay entre Ao. Yacuy y Río Arapey Grande
+120,Río Arapey Chico entre nacientes y Ao. Sequeira
+123,Río Arapey Chico entre Ao. Sequeira y Ao. De Las Cañas
+125,Río Arapey Chico entre Ao. De Las Cañas y Ao Ceballos Grande
+128,Río Arapey Chico entre Ao Ceballos Grande y Río Arapey Grande
+130,Río Arapey Grande entre nacientes y Ao. Del Cerro Chato
+131,Río Arapey Grande entre Ao. Del Cerro Chato y Ao. Mataojo Chico
+132,Río Arapey Grande entre Ao. Mataojo Chico y Ao. Mataojo Grande
+133,Río Arapey Grande entre Ao. Mataojo Grande y Ao. Mataojito
+134,Río Arapey Grande entre Ao. Mataojito y Ao. Arerunguá
+135,Río Arapey Grande entre Ao. Arerunguá y Ao. Valentín Grande
+136,Río Arapey Grande entre Ao. Valentín Grande y Ao. Valentín Chico
+137,Río Arapey Grande entre Ao. Valentín Chico y Ao. Tangarupá
+138,Río Arapey Grande entre Ao. Tangarupá y Ao. Palomas Grande
+139,Río Arapey Grande entre Ao. Palomas Grande y Río Uruguay
+140,Río Uruguay entre Río Arapey Grande y Ao. Espinillar
+142,Río Uruguay entre Ao. Espinillar y Ao. Itapebí Grande
+146,Río Uruguay entre Ao. Itapebí Grande y Ao. San Antonio Grande
+148,Río Uruguay entre Ao. San Antonio Grande y Río Daymán
+150,Río Daymán entre nacientes y Ao. Carumbé
+155,Río Daymán entre Ao. Carumbé y Ao. Laureles Grande
+158,Río Daymán entre Ao. Laureles Grande y Río Uruguay
+160,Río Uruguay entre Río Daymán y Ao. Chapicuy Chico
+163,Río Uruguay entre Ao. Chapicuy Chico y Ao. Chapicuy Grande
+165,Río Uruguay entre Ao. Chapicuy Grande y Ao. Guaviyú
+167,Río Uruguay entre Ao. Guaviyú y Ao. Barrancas Grande
+168,Río Uruguay entre Ao. Barrancas Grande y Río Queguay Grande
+170,Río Queguay Grande entre nacientes y Ao. De Los Corrales
+171,Río Queguay Grande entre Ao. De Los Corrales y Ao. Guayabos Grande
+172,Río Queguay Grande entre Ao. Guayabos Grande y Ao. Ñacurutú Grande
+173,Río Queguay Grande entre Ao. Ñacurutú Grande y Río Queguay Chico
+174,Río Queguay Grande entre Río Queguay Chico y Ao. Burucayupí
+175,Río Queguay Grande entre Ao. Burucayupí y Ao. Capilla Vieja
+176,Río Queguay Grande entre Ao. Capilla Vieja y Ao. Bacacuá Grande
+177,Río Queguay Grande entre Ao. Bacacuá Grande y Ao. De Soto
+178,Río Queguay Grande entre Ao. De Soto y Ao. Quebracho
+179,Río Queguay Grande entre Ao. Quebracho y Río Uruguay
+180,Río Uruguay entre Río Queguay Grande y Ao. San Francisco Grande
+183,Río Uruguay entre Ao. San Francisco Grande y Ao. Negro
+186,Río Uruguay entre Ao. Negro y Ao. Román Grande
+189,Río Uruguay entre Ao. Román Grande y Río Negro
+190,Río Uruguay entre Río Negro y Río San Salvador
+193,Río Uruguay entre Río San Salvador y Ao. Del Catalán
+196,Río Uruguay entre Ao. Del Catalán y Ao. Agraciada
+199,Río Uruguay entre Ao. Agraciada y Río De La Plata
+201,Río De la Plata entre Río Uruguay y Ao. De Las Víboras
+204,Río De La Plata entre Ao. De Las Víboras y Ao. De Las Vacas
+208,Río De La Plata entre Ao. De Las Vacas y Río San Juan
+210,Río San Juan entre nacientes y Ao. Piedras De Espinosa
+211,Río San Juan entre Ao. Piedras De Espinosa y Ao. Sauce
+212,Río San Juan entre Ao. Sauce y Ao. Del Tala
+213,Río San Juan entre Ao. Del Tala y Ao. Del Cerro
+214,Río San Juan entre Ao. Del Cerro y Ao. San Luis
+215,Río San Juan entre Ao. San Luis y Ao. Tarariras
+216,Río San Juan entre Ao. Tarariras y Ao. Miguelete
+217,Río San Juan entre Ao. Miguelete y Río De La Plata
+220,Río De La Plata entre Río San Juan y Ao. San Pedro
+221,Río De La Plata entre Ao. San Pedro y Ao. De La Caballada
+222,Río De La Plata entre Ao. De La Caballada y Ao. Riachuelo
+223,Río De La Plata entre Ao. Riachuelo y Ao. De Pintos
+224,Río De La Plata entre Ao. De Pintos y Ao. Del Artillero
+225,Río De La Plata entre Ao. Del Artillero y Ao. Sauce
+226,Río De La Plata entre Ao. Sauce y Río Rosario
+230,Río Rosario entre nacientes y Ao. Del Medio
+231,Río Rosario entre Ao. Del Medio y Ao. De La Horqueta
+232,Río Rosario entre Ao. De La Horqueta y Ao. De La Quinta
+233,Río Rosario entre Ao. De La Quinta y Ao. Rosario Chico
+234,Río Rosario entre Ao. Rosario Chico y Ao. Pichinango
+235,Río Rosario entre Ao. Pichinango y Ao. Navarro
+236,Río Rosario entre Ao. Navarro y Ao. Colla
+237,Río Rosario entre Ao. Colla y Ao. Sarandí Grande
+238,Río Rosario entre Ao. Sarandí Grande y Ao. Cufré
+239,Río Rosario entre Ao. Cufré y Río De La Plata
+240,Río De La Plata entre Río Rosario y Ao. Sauce
+241,Río De La Plata entre Ao. Sauce y Ao. Cufré
+242,Río De La Plata entre Ao. Cufré y Ao. Pavón
+243,Río De La Plata entre Ao. Pavón y Ao. Luis Pereira
+244,Río De La Plata entre Ao. Luis Pereira y Ao. Sauce
+245,Río De La Plata entre Ao. Sauce y Ao. San Gregorio
+246,Río De La Plata entre Ao. San Gregorio y Ao. Mauricio
+247,Río De La Plata entre Ao. Mauricio y Ao. Del Tigre
+248,Río De La Plata entre Ao. Del Tigre y Río Santa Lucía
+260,Río De La Plata entre Río Santa Lucía y Ao. Pantanoso
+262,Río De La Plata entre Ao. Pantanoso y Ao. Miguelete
+264,Río De La Plata entre Ao. Miguelete y Ao. Carrasco
+266,Río De La Plata entre Ao. Carrasco y Ao. Pando
+268,Ao. Pando entre nacientes y Río De La Plata
+270,Río De La Plata entre Ao. Pando y Ao. Solís Chico
+274,Río De La Plata entre Ao. Solís Chico y Ao. Sarandí
+275,Río De La Plata entre Ao. Sarandí y Ao. del Bagre
+276,Río De La Plata entre Ao. del Bagre y Ao. De La Tuna
+277,Río De La Plata entre Ao. De La Tuna y Ao. De La Coronilla
+279,Río De La Plata entre Ao. De La Coronilla y Ao. Solís Grande
+280,Ao. Solís Grande entre nacientes y Ao. Del Sarandí
+281,Ao. Solís Grande entre Ao. Del Sarandí y Ao. Del Sauce Solo
+282,Ao. Solís Grande entre Ao. Del Sauce Solo y Ao. De Los Chanchos
+283,Ao. Solís Grande entre Ao. De Los Chanchos y Ao. Mataojo
+284,Ao. Solís Grande entre Ao. Mataojo y Ao. Sauce De Solís
+285,Ao. Solís Grande entre Ao. Sauce De Solís y Ao. Malvín
+286,Ao. Solís Grande entre Ao. Malvín y Ao. Curupí
+287,Ao. Solís Grande entre Ao. Curupí y Ao. Navarro
+288,Ao. Solís Grande entre Ao. Navarro y Ao. Tío Diego
+289,Ao. Solís Grande entre Ao. Tío Diego y Río De La Plata
+290,Río De La Plata entre Ao. Solís Grande y Ao. De Las Tarariras
+293,Río De La Plata entre Ao. De Las Tarariras y Ao. De La Barra Falsa
+294,Río De La Plata entre Ao. De La Barra Falsa y Ao. Del Potrero
+295,Ao. Del Potrero y Laguna del Sauce
+297,Río De La Plata entre Ao. Del Potrero y Laguna Del Diario
+298,Río De La Plata entre Laguna Del Diario y Punta del Este
+300,Océano Atlántico entre Punta del Este y Ao. Maldonado
+301,Ao. San Carlos
+305,Ao. Maldonado entre nacientes y Ao. San Carlos
+306,Ao. Maldonado entre Ao. San Carlos y Océano Atlántico
+310,Océano Atlántico entre Ao. Maldonado y Laguna José Ignacio
+312,Océano Atlántico entre Laguna José Ignacio y Laguna Garzón
+315,Laguna Garzón
+316,Océano Atlántico entre Laguna Garzón y Laguna De Rocha
+318,Laguna De Rocha
+320,Océano Atlántico entre Laguna De Rocha y Ao. Valizas
+325,Ao. Valizas
+330,Océano Atlántico entre Ao. Valizas y Laguna Negra
+333,Laguna Negra
+334,CANAL No. 2 entre nacientes y CANAL ANDREONI
+335,Océano Atlántico entre CANAL ANDREONI y Ao. Chuy
+338,Ao. Chuy / Tramo Limítrofe
+406,Río Yaguarón entre Ao. Yaguarón Chico y Laguna Merín
+407,Laguna Merín entre Río Yaguarón y Río Tacuarí
+410,Río Tacuarí entre nacientes y Ao. Saca Calzones
+411,Río Tacuarí entre Ao. Saca Calzones y Ao. Bañado De Medina
+412,Río Tacuarí entre Ao. Bañado De Medina y Ao. Conventos
+413,Río Tacuarí entre Ao. Conventos y Ao. Chuy
+414,Río Tacuarí entre Ao. Chuy y Ao. Del Rabón
+415,Río Tacuarí entre Ao. Del Rabón y Ao. Del Campamento
+416,Río Tacuarí entre Ao. Del Campamento y Ao. Malo
+417,Río Tacuarí entre Ao. Malo y Ao. Garao
+418,Río Tacuarí entre Ao. Garao y Cda. De Santos
+419,Río Tacuarí entre Cda. De Santos y Laguna Merín
+420,Laguna Merín entre Río Tacuarí y Ao. De Las Tres Islas
+422,Laguna Merín entre Ao. De Las Tres Islas y Ao. Zapata
+424,Laguna Merín entre Ao. Zapata y Ao. Sarandí Grande
+426,Laguna Merín entre Ao. Sarandí Grande y Ao. De Ayala
+428,Laguna Merín entre Ao. De Ayala y Río Cebollatí
+430,Río Olimar Grande entre nacientes y Ao. De La Ternera
+431,Río Olimar Grande entre Ao. De La Ternera y Ao. Rosario
+432,Río Olimar Grande entre Ao. Rosario y Ao. Del Carmen
+433,Río Olimar Grande entre Ao. Del Carmen y Ao. De Las Pavas
+434,Río Olimar Grande entre Ao. De Las Pavas y Ao. Avestruz Grande
+435,Río Olimar Grande entre Ao. Avestruz Grande y Río Olimar Chico
+436,Río Olimar Grande entre Río Olimar Chico y Ao. Yerbal Grande
+437,Río Olimar Grande entre Ao. Yerbal Grande y Ao. De Los Ceibos
+438,Río Olimar Grande entre Ao. De Los Ceibos y Río Cebollatí
+440,Ao. De Godoy
+441,Río Cebollatí entre nacientes y Ao. De Los Molles
+442,Río Cebollatí entre Ao. De Los Molles y Ao. Barriga Negra
+443,Río Cebollatí entre Ao. Barriga Negra y Ao. Tapes Grande
+444,Río Cebollatí entre Ao. Tapes Grande y Ao. Del Aiguá
+445,Río Cebollati entre Ao. Del Aiguá y Ao. Gutiérrez
+446,Ríio Cebollatí entre Ao. Gutiérrez y Ao. Corrales
+447,Río Cebollatí entre Ao. Corrales y Río Olimar Grande
+448,Río Cebollatí entre Río Olimar Grande y Ao. Parao
+449,Río Cebollatí entre Ao. Parao y Laguna Merín
+450,Laguna Merín entre Río Cebollatí y Ao. Estero De Pelotas
+452,Laguna Merín entre Ao. Estero De Pelotas y Río San Luis
+453,Ao. Quebracho / CANAL QUEBRACHO entre nacientes y Canal No. 1
+454,Ao. India Muerta entre nacientes y Canal No. 1
+455,Río San Luis entre Ao. India Muerta y Laguna Blanca
+457,Río San Luis entre Laguna Blanca y Laguna Merín
+458,Laguna Merín entre Río San Luis y Ao. San Miguel
+459,Ao. San Miguel
+501,Río Negro entre Ao. San Luis y Ao. Del Hospital
+502,Río Negro entre Ao. Del Hospital y Ao. Lechiguana
+503,Río Negro entre Ao. Lechiguana y Ao. Bañados De Aceguá
+504,Río Negro entre Ao. Bañados De Aceguá y Ao. Zapallar
+505,Río Negro entre Ao. Zapallar y Ao. Fraile Muerto
+506,Río Negro entre Ao. Fraile Muerto y Ao. Tupambaé
+507,Río Negro entre Ao. Tupambaé y Ao. Tarariras
+508,Río Negro entre Ao. Tarariras y Ao. Del Cordobés
+509,Río Negro entre Ao. Del Cordobés y Río Tacuarembó
+510,Río Tacuarembó entre nacientes y Ao. Aurora
+511,Río Tacuarembó entre Ao. Aurora y Ao. Valiente
+512,Río Tacuarembó entre Ao. Valiente y Ao. Lunarejo
+513,Río Tacuarembó entre Ao. Lunarejo y Ao. Laureles
+514,Río Tacuarembó entre Ao. Laureles y Ao. De Las Cañas
+515,Río Tacuarembó entre Ao. De Las Cañas y Ao. Carpintería
+516,Río Tacuarembó entre Ao. Carpintería y Ao. Cuñapirú
+517,Río Tacuarembó entre Ao. Cuñapirú y Ao. Buena Orden
+518,Río Tacuarembó entre Ao. Buena Orden y Ao. Zapucay
+519,Río Tacuarembó entre Ao. Zapucay y Ao. Tacuarembó Chico
+520,Ao. Tacuarembó Chico entre nacientes y Ao. Tranqueras
+522,Ao. Tacuarembó Chico entre Ao. Tranqueras y Ao. Tres Cruces
+524,Ao. Tacuarembó Chico entre Ao. Tres Cruces y Ao. Batoví
+526,Ao. Tacuarembó Chico entre Ao. Batoví y Río Tacuarembó
+530,Río Tacuarembó entre Ao. Tacuarembó Chico y Ao. Veras
+532,Río Tacuarembó entre Ao. Veras y Ao. Del Sauce
+534,Río Tacuarembó entre Ao. Del Sauce y Ao. Yaguarí
+536,Río Tacuarembó entre Ao. Yaguarí y Ao. Caraguatá
+538,Río Tacuarembó entre Ao. Caraguatá y Río Negro
+540,Río Negro entre Río Tacuarembó y Ao. Malo
+541,Ao. De Clara entre nacientes y Ao. Malo
+542,Río Negro entre Ao. Malo y Ao. Sarandí
+543,Río Negro entre Ao. Sarandí y Ao. De Las Cañas
+544,Río Negro entre Ao. De Las Cañas y Ao. Chileno Grande
+545,Río Negro entre Ao. Chileno Grande y Ao. Laureles
+546,Río Negro entre Ao. Laureles y Ao. Carpintería
+548,Río Negro entre Ao. Carpintería y Ao. Cardozo
+549,Río Negro entre Ao. Cardozo y Rincón del Bonete
+550,Río Negro entre Rincón del Bonete y Ao. Minas De Callorda
+551,Río Negro entre Ao. Minas De Callorda y Ao. De Los Molles
+552,Río Negro entre Ao. De Los Molles y Ao. Del Tala
+553,Río Negro entre Ao. Del Tala y Ao. Salsipuedes Grande
+554,Río Negro entre Ao. Salsipuedes Grande y Ao. Tres Árboles
+555,Río Negro entre Ao. Tres Árboles y Ao. Rolón
+556,Río Negro entre Ao. Rolón y Ao. Molles De Porrúa
+557,Río Negro entre Ao. Molles De Porrúa y Ao. Moles De Quinteros
+558,Río Negro entre Ao. Moles De Quinteros y Ao. Ramírez Grande
+559,Río Negro entre Ao. Ramírez Grande y Río Yí
+560,Río Yí entre nacientes y Ao. Illescas
+561,Río Yí entre Ao. Illescas y Ao. Antonio Herrera
+562,Río Yí entre Ao. Antonio Herrera y Ao. Mansavillagra
+563,Río Yí entre Ao. Mansavillagra y Ao. Timote
+564,Río Yí entre Ao. Timote y Ao. De Castro
+565,Río Yí entre Ao. De Castro y Ao. Tomás Cuadra
+566,Río Yí entre Ao. Tomás Cuadra y Ao. Maciel
+567,Río Yí entre Ao. Maciel y Ao. Porongos
+568,Río Yí entre Ao. Porongos y Ao. Marincho
+569,Río Yí entre Ao. Marincho y Río Negro
+570,Río Negro entre Río Yí y Ao. Grande Del Sur
+571,Ao. Grande Del Sur entre nacientes y Río Negro
+575,Río Negro entre Ao. Grande Del Sur y Rincón De Palmar
+580,Río Negro entre Rincón De Palmar y Ao. Grande Del Norte
+581,Río Negro entre Ao. Grande Del Norte y Ao. Don Esteban Grande
+582,Río Negtro entre Ao. Don Esteban Grande y Ao. De Vera
+583,Río Negro entre Ao. De Vera y Ao. Perico Flaco
+584,Río Negro entre Ao. Perico Flaco y Ao. Coladeras
+585,Río Negro entre Ao. Coladeras y Ao. Abrojal
+586,Río Negro entre Ao. Abrojal y Ao. Cololó
+587,Río Negro entre Ao. Cololó y Ao. Bequeló
+588,Río Negro entre Ao. Bequeló y Ao. De Las Maulas
+589,Río Negro entre Ao. De Las Maulas y Río Uruguay
+600,Río Santa Lucía entre nacientes y Ao. San Francisco
+601,Río Santa Lucía entre Ao. San Francisco y Ao. Del Soldado
+602,Río Santa Lucía entre Ao. Del Soldado y Ao. De Los Chanchos
+603,Río Santa Lucía entre Ao. De Los Chanchos y Ao. Gaetán
+604,Río Santa Lucía entre Ao. Gaetán y Ao. Casupá
+605,Río Santa Lucía entre Ao. Casupá y Ao. Vejigas
+606,Río Santa Lucía entre Ao. Vejigas y Ao. Chamizo Grande
+607,Río Santa Lucía entre Ao. Chamizo Grande y Ao. Del Tala
+608,Río Santa Lucía entre Ao. Del Tala y Ao. De Mendoza
+609,Río Santa Lucía entre Ao. De Mendoza y Río Santa Lucía Chico
+610,Río Santa Lucía Chico entre nacientes y Ao. Tornero Grande
+611,Río Santa Lucía Chico entre Ao. Tornero Grande y Ao. Talita
+612,Río Santa Lucía Chico entre Ao. Talita y Ao. De La Cruz
+613,Río Santa Lucía Chico entre Ao. De La Cruz y Ao. De La Macana
+615,Río Santa Lucía Chico entre Ao. De La Macana y Ao. De Pintado
+616,Río Santa Lucía Chico entre Ao. De Pintado y Ao. Sauce De Berdías
+620,Río Santa Lucía entre Río Santa Lucía Chico y Ao. De La Virgen
+625,Río Santa Lucía entre Ao. De La Virgen y Ao. Canelón Grande
+630,Ao. Canelón Grande entre nacientes y Ao. Canelón Chico
+635,Ao. Canelón Grande entre Ao. Canelón Chico y Río Santa Lucía
+640,Río Santa Lucía entre Ao. Canelón Grande y Ao. del Juncal
+645,Río Santa Lucía entre Ao. del Juncal y Río San José
+650,Río San José entre nacientes y Ao. De Pintos
+651,Río San José entre Ao. De Pintos y Ao. San Gregorio
+652,Río San José entre Ao. San Gregorio y Ao. Guaycurú
+653,Río San José entre Ao. Guaycurú y Ao. Mahoma
+654,Río San José entre Ao. Mahoma y Ao. Chamizo
+655,Río San José entre Ao. Chamizo y Ao. Carreta Quemada
+656,Río San José entre Ao. Carreta Quemada y Ao. Castellanos
+657,Río San José entre Ao. Castellanos y Ao. Cagancha
+658,Río San José entre Ao. Cagancha y Río Santa Lucía
+660,Río Santa Lucía entre Río San José y Ao. Durán
+661,Río Santa Lucía entre Ao. Durán y Ao. Tropa Vieja
+662,Río Santa Lucía entre Ao. Tropa Vieja y Ao. De Las Brujas Grande
+666,Río Santa Lucía entre Ao. De Las Brujas Grande y Ao. Colorado
+670,Ao. Colorado entre nacientes y Ao. Colorado Chico
+673,Ao. Colorado entre Ao. Colorado Chico y Ao. De Las Piedras
+677,Ao. Colorado entre Ao. De Las Piedras y Río Santa Lucía
+680,Río Santa Lucía entre Ao. Colorado y Ao. De Los Carros
+683,Río Santa Lucía entre Ao. De Los Carros y Ao. De Melilla
+687,Río Santa Lucía entre Ao. De Melilla y Río de la Plata
+618,Río Santa Lucía Chico entre Ao. Isla Mala y Río Santa Lucía
+101,Río Cuareim entre nacientes y Ao. Catalán Grande
