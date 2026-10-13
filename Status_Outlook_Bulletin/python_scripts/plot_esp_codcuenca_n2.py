@@ -168,16 +168,31 @@ for i in range(len(discharge_plot)):
     discharge_plot.loc[discharge_plot.eval('month==@m'),'90th_percentile']  = percentiles.query('month==@m & percentile==0.90')['discharge_percentile'].item()
 
 # %%
-df_stats = pd.DataFrame(index=pd.date_range(start=discharge_plot['date'].iloc[0], end=concat_df['date'].iloc[-1], freq='MS',inclusive='both'))
-df_stats['month'] = df_stats.index.month
-df_stats = df_stats.rename_axis('date')
 
-# %%
-# create empty columns in the dataframe
-df_stats['10th_percentile'] = np.nan
-df_stats['25th_percentile'] = np.nan
-df_stats['75th_percentile'] = np.nan
-df_stats['90th_percentile'] = np.nan
+df_stats = pd.DataFrame({
+    'date': pd.date_range(
+        start=discharge_plot['date'].iloc[0], 
+        end=concat_df['date'].iloc[-1], 
+        freq='MS', 
+        inclusive='both'
+    )
+})
+df_stats['month'] = df_stats['date'].dt.month
+
+pivoted_percentiles = percentiles.pivot(
+    index='month', 
+    columns='percentile', 
+    values='discharge_percentile'
+).rename(
+    columns={
+        0.10: '10th_percentile',
+        0.25: '25th_percentile',
+        0.75: '75th_percentile',
+        0.90: '90th_percentile'
+    }
+)
+
+df_stats = df_stats.merge(pivoted_percentiles, on='month', how='left')
 
 for i in range(len(df_stats)):
     # Extract the current month 
@@ -264,8 +279,8 @@ ax4.plot(stats_fcst['date'],stats_fcst['q75'],color = 'gray',linestyle = '--',li
 ax4.plot(stats_fcst['date'],stats_fcst['q90'],color = 'black',linestyle = '--',linewidth=2, mec='k', label='Percentil 90')
 
 ax4.set_title(f'Pronóstico hidrológico para los próximos meses en la subcuenca: {codcuenca_n2}',fontweight='bold',fontsize=16)
-# ax4.set_ylim(0,discharge_max_plot)
-ax4.set_ylim(0,500)
+ax4.set_ylim(0,discharge_max_plot)
+# ax4.set_ylim(0,500)
 ax4.legend(loc='best',title='Estado Hidrológico',fancybox=True, title_fontproperties={'weight':'bold'})
 ax4.set_ylabel('Discharge (m$^3$/s)');
 

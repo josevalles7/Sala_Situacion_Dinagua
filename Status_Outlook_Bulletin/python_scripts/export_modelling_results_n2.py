@@ -31,9 +31,16 @@ BASIN_LEVEL2 = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_mode
 # %%
 def importmodelvariable(model_variable):
     df = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/{model_variable}.csv')
-    df = df.rename(columns={'-1': 'year','-1.1':'month'})
-    df['date'] = pd.to_datetime(dict(year=df['year'],month=df['month'],day=1))
-    df = df.set_index('date')
+    df = df.rename(columns={'-1': 'year', '-1.1': 'month'})
+    
+    # Construir el índice temporal directamente
+    date_index = pd.to_datetime(dict(year=df['year'], month=df['month'], day=1))
+    
+    # Asignar el índice y desfragmentar la memoria
+    df = df.set_index(date_index)
+    df = df.copy()
+    
+    # Asignar days_in_month sobre el DataFrame consolidado
     df['days_in_month'] = df.index.days_in_month
     return df
 

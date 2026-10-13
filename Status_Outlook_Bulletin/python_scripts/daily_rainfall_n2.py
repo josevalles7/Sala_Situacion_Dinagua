@@ -139,9 +139,13 @@ display(df.tail(6))
 cols = ['FECHA','63','67','28','52','45','42','40','31','33','32','30','12','13','44','10','15','27','29','24','22','26','20','58','55','54','57','50','43','17','23','65','21','61','64','68','66','62','60','53','51','41','14','11','16','19','18','56']
 df = df[cols]
 
+# Forzar tipos numéricos
+basin_cols = [c for c in cols if c != 'FECHA']
+df[basin_cols] = df[basin_cols].apply(pd.to_numeric, errors='coerce')
+
 # %%
-piv = pd.pivot_table(df,columns=["FECHA"])
-piv[piv < 0] = np.NaN
+piv = pd.pivot_table(df, values=basin_cols, columns=["FECHA"], aggfunc='mean')
+piv[piv < 0] = np.nan
 
 # %%
 piv2 = piv.transpose()

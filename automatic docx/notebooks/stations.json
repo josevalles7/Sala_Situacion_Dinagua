@@ -115,8 +115,8 @@
       "moduleInstanceIds": "ImportCTM",
       "cursoObservado": "Río Uruguay",
       "umbrales": {
-        "aviso": 11.40,
-        "seguridad": 12.20
+        "aviso": 11.00,
+        "seguridad": 12.00
       }
     },
     "Paysandú": {

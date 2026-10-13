@@ -34,147 +34,125 @@ args = parser.parse_args()
 
 # %%
 class EstadoHidrologico:
-    def __init__(self, station_name,values,flow_cat):
+    def __init__(self, station_name, values, flow_cat):
         self.station_name = station_name
         self.values = values
         self.flow_cat = flow_cat
         self.DISCHARGE_MONTHLY = None
 
     def cargar_datos(self):
-        self.DISCHARGE_MONTHLY = pd.read_csv(f'./waterbalance/input/{self.station_name}.csv',parse_dates=['Fecha'],index_col="Fecha",dayfirst=True,na_values="NA")
+        self.DISCHARGE_MONTHLY = pd.read_csv(
+            f'./waterbalance/input/{self.station_name}.csv',
+            parse_dates=['Fecha'],
+            index_col="Fecha",
+            dayfirst=True,
+            na_values="NA"
+        )
         self.DISCHARGE_MONTHLY['year'] = self.DISCHARGE_MONTHLY.index.year
         self.DISCHARGE_MONTHLY['month'] = self.DISCHARGE_MONTHLY.index.month
-        self.DISCHARGE_MONTHLY['water_year'] = self.DISCHARGE_MONTHLY.index.year.where(self.DISCHARGE_MONTHLY.index.month < 4, self.DISCHARGE_MONTHLY.index.year + 1)
+        self.DISCHARGE_MONTHLY['water_year'] = self.DISCHARGE_MONTHLY.index.year.where(
+            self.DISCHARGE_MONTHLY.index.month < 4, self.DISCHARGE_MONTHLY.index.year + 1
+        )
         self.DISCHARGE_MONTHLY.index = self.DISCHARGE_MONTHLY.index.map(lambda t: t.replace(day=1))
         return self.DISCHARGE_MONTHLY
 
     def estado_mensual(self):
-        # Climatologia
-        DISCHARGE_SELECTION = self.DISCHARGE_MONTHLY[(self.DISCHARGE_MONTHLY['year'] >= 1981) & (self.DISCHARGE_MONTHLY['year'] <= 2010)]
-        DISCHARGE_AVERAGE = DISCHARGE_SELECTION.groupby(DISCHARGE_SELECTION.month).mean()
-        DISCHARGE_AVERAGE = DISCHARGE_AVERAGE.reindex(columns=['Caudal'])
-        # Calcular indicadores
-        self.DISCHARGE_MONTHLY['average_percentage'] = np.nan
-        self.DISCHARGE_MONTHLY['rank_average'] = np.nan
-        self.DISCHARGE_MONTHLY['non_missing'] = np.nan
+        # Climatologia 1981-2010
+        ref_mask = (self.DISCHARGE_MONTHLY['year'] >= 1981) & (self.DISCHARGE_MONTHLY['year'] <= 2010)
+        clim_mean = self.DISCHARGE_MONTHLY.loc[ref_mask].groupby('month')['Caudal'].mean()
 
-        for i in range(len(self.DISCHARGE_MONTHLY)):
-            # Extract the current month 
-            m = self.DISCHARGE_MONTHLY.month[i]
-            # Extract the current year
-            y = self.DISCHARGE_MONTHLY.year[i]
-            self.DISCHARGE_MONTHLY.loc[self.DISCHARGE_MONTHLY.eval('month==@m & year==@y'),'rank_average']  = self.DISCHARGE_MONTHLY.query('month==@m')['Caudal'].rank()
-            self.DISCHARGE_MONTHLY.loc[self.DISCHARGE_MONTHLY.eval('month==@m & year==@y'),'non_missing']  = self.DISCHARGE_MONTHLY.query('month==@m')["Caudal"].notnull().sum()
-            self.DISCHARGE_MONTHLY.loc[self.DISCHARGE_MONTHLY.eval('month==@m & year==@y'),'average_percentage'] = (self.DISCHARGE_MONTHLY['Caudal'][i] - DISCHARGE_AVERAGE.query('month == @m')["Caudal"].item()) / DISCHARGE_AVERAGE.query('month == @m')["Caudal"].item()
+        # Vectorizacion por mes
+        self.DISCHARGE_MONTHLY['rank_average'] = self.DISCHARGE_MONTHLY.groupby('month')['Caudal'].rank()
+        self.DISCHARGE_MONTHLY['non_missing'] = self.DISCHARGE_MONTHLY.groupby('month')['Caudal'].transform(lambda s: s.notna().sum())
+        
+        # Mapeo de la media climatológica y cálculo de anomalía porcentual
+        self.DISCHARGE_MONTHLY['mean'] = self.DISCHARGE_MONTHLY['month'].map(clim_mean)
+        self.DISCHARGE_MONTHLY['average_percentage'] = (self.DISCHARGE_MONTHLY['Caudal'] - self.DISCHARGE_MONTHLY['mean']) / self.DISCHARGE_MONTHLY['mean']
 
-        # Percentile position using the Weibull (alphap = 0.0 , betap = 0.0) or Cunnane (alphap = 0.4 , betap = 0.4) plotting position formula
-        alphap = 0.4
-        betap = 0.4
+        # Formula de Cunnane (alphap = 0.4, betap = 0.4)
+        alphap, betap = 0.4, 0.4
         self.DISCHARGE_MONTHLY['percentile'] = (self.DISCHARGE_MONTHLY['rank_average'] - alphap) / (self.DISCHARGE_MONTHLY['non_missing'] + 1 - alphap - betap)
 
-        criteria = [self.DISCHARGE_MONTHLY['percentile'].between(0.90,1.00),
-            self.DISCHARGE_MONTHLY['percentile'].between(0.75,0.90),
-            self.DISCHARGE_MONTHLY['percentile'].between(0.25,0.75),
-            self.DISCHARGE_MONTHLY['percentile'].between(0.10,0.25),
-            self.DISCHARGE_MONTHLY['percentile'].between(0.00,0.10)]
+        criteria = [
+            self.DISCHARGE_MONTHLY['percentile'].between(0.90, 1.00),
+            self.DISCHARGE_MONTHLY['percentile'].between(0.75, 0.90),
+            self.DISCHARGE_MONTHLY['percentile'].between(0.25, 0.75),
+            self.DISCHARGE_MONTHLY['percentile'].between(0.10, 0.25),
+            self.DISCHARGE_MONTHLY['percentile'].between(0.00, 0.10)
+        ]
 
-        self.DISCHARGE_MONTHLY['percentile_range'] = np.select(criteria,self.values,None)
-        self.DISCHARGE_MONTHLY['flowcat'] = np.select(criteria,self.flow_cat,pd.NA)
+        self.DISCHARGE_MONTHLY['percentile_range'] = np.select(criteria, self.values, default=None)
+        self.DISCHARGE_MONTHLY['flowcat'] = np.select(criteria, self.flow_cat, default=np.nan)
 
         return self.DISCHARGE_MONTHLY
-    
+
     def estado_trimestral(self):
-        # Agregar caudales
-        DISCHARGE_THREE_MONTHS = pd.DataFrame(self.DISCHARGE_MONTHLY['Caudal'].rolling(3).apply(lambda x: x.mean() if x.isnull().sum()*100/len(x) < 0.5 else np.nan))
-        # Agregar columnas
+        # Media móvil de 3 meses
+        DISCHARGE_THREE_MONTHS = pd.DataFrame(
+            self.DISCHARGE_MONTHLY['Caudal'].rolling(3).apply(lambda x: x.mean() if x.isnull().sum() * 100 / len(x) < 0.5 else np.nan),
+            index=self.DISCHARGE_MONTHLY.index
+        )
         DISCHARGE_THREE_MONTHS['startMonth'] = (DISCHARGE_THREE_MONTHS.index - pd.DateOffset(months=2)).month
         DISCHARGE_THREE_MONTHS['endMonth'] = DISCHARGE_THREE_MONTHS.index.month
         DISCHARGE_THREE_MONTHS['year'] = DISCHARGE_THREE_MONTHS.index.year
-        DISCHARGE_THREE_MONTHS.index = DISCHARGE_THREE_MONTHS.index.map(lambda t: t.replace(day=1))
-        # Climatologia
-        DISCHARGE_SELECTION_THREE_MONTH = DISCHARGE_THREE_MONTHS[(DISCHARGE_THREE_MONTHS['year'] >= 1981) & (DISCHARGE_THREE_MONTHS['year'] < 2010)]
-        DISCHARGE_AVERAGE_THREE_MONTH = DISCHARGE_SELECTION_THREE_MONTH.groupby(DISCHARGE_SELECTION_THREE_MONTH.startMonth).mean()
-        DISCHARGE_AVERAGE_THREE_MONTH = DISCHARGE_AVERAGE_THREE_MONTH.reindex(columns=['Caudal'])
-        # Calcular indicadores
-        DISCHARGE_THREE_MONTHS['average_percentage'] = np.nan
-        DISCHARGE_THREE_MONTHS['rank_average'] = np.nan
-        DISCHARGE_THREE_MONTHS['non_missing'] = np.nan
 
-        for i in range(len(DISCHARGE_THREE_MONTHS)):
-            # Extract the current month 
-            m = DISCHARGE_THREE_MONTHS.startMonth[i]
-            # Extract the current year
-            y = DISCHARGE_THREE_MONTHS.year[i]
-            DISCHARGE_THREE_MONTHS.loc[DISCHARGE_THREE_MONTHS.eval('startMonth==@m & year==@y'),'rank_average']  = DISCHARGE_THREE_MONTHS.query('startMonth==@m')['Caudal'].rank()
-            DISCHARGE_THREE_MONTHS.loc[DISCHARGE_THREE_MONTHS.eval('startMonth==@m & year==@y'),'non_missing']  = DISCHARGE_THREE_MONTHS.query('startMonth==@m')["Caudal"].notnull().sum()
-            DISCHARGE_THREE_MONTHS.loc[DISCHARGE_THREE_MONTHS.eval('startMonth==@m & year==@y'),'average_percentage'] = (DISCHARGE_THREE_MONTHS['Caudal'][i] - DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["Caudal"].item()) / DISCHARGE_AVERAGE_THREE_MONTH.query('startMonth == @m')["Caudal"].item()
+        ref_mask = (DISCHARGE_THREE_MONTHS['year'] >= 1981) & (DISCHARGE_THREE_MONTHS['year'] <= 2010)
+        clim_mean = DISCHARGE_THREE_MONTHS.loc[ref_mask].groupby('startMonth')['Caudal'].mean()
 
-        alphap = 0.4
-        betap = 0.4
+        DISCHARGE_THREE_MONTHS['rank_average'] = DISCHARGE_THREE_MONTHS.groupby('startMonth')['Caudal'].rank()
+        DISCHARGE_THREE_MONTHS['non_missing'] = DISCHARGE_THREE_MONTHS.groupby('startMonth')['Caudal'].transform(lambda s: s.notna().sum())
+        DISCHARGE_THREE_MONTHS['mean'] = DISCHARGE_THREE_MONTHS['startMonth'].map(clim_mean)
+        DISCHARGE_THREE_MONTHS['average_percentage'] = (DISCHARGE_THREE_MONTHS['Caudal'] - DISCHARGE_THREE_MONTHS['mean']) / DISCHARGE_THREE_MONTHS['mean']
+
+        alphap, betap = 0.4, 0.4
         DISCHARGE_THREE_MONTHS['percentile'] = (DISCHARGE_THREE_MONTHS['rank_average'] - alphap) / (DISCHARGE_THREE_MONTHS['non_missing'] + 1 - alphap - betap)
 
-        criteria_three_months = [DISCHARGE_THREE_MONTHS['percentile'].between(0.90,1.00),
-            DISCHARGE_THREE_MONTHS['percentile'].between(0.75,0.90),
-            DISCHARGE_THREE_MONTHS['percentile'].between(0.25,0.75),
-            DISCHARGE_THREE_MONTHS['percentile'].between(0.10,0.25),
-            DISCHARGE_THREE_MONTHS['percentile'].between(0.00,0.10)]
+        criteria_three_months = [
+            DISCHARGE_THREE_MONTHS['percentile'].between(0.90, 1.00),
+            DISCHARGE_THREE_MONTHS['percentile'].between(0.75, 0.90),
+            DISCHARGE_THREE_MONTHS['percentile'].between(0.25, 0.75),
+            DISCHARGE_THREE_MONTHS['percentile'].between(0.10, 0.25),
+            DISCHARGE_THREE_MONTHS['percentile'].between(0.00, 0.10)
+        ]
 
-        DISCHARGE_THREE_MONTHS['percentile_range'] = np.select(criteria_three_months,self.values,None)
-        DISCHARGE_THREE_MONTHS['flowcat'] = np.select(criteria_three_months,self.flow_cat,pd.NA)
+        DISCHARGE_THREE_MONTHS['percentile_range'] = np.select(criteria_three_months, self.values, default=None)
+        DISCHARGE_THREE_MONTHS['flowcat'] = np.select(criteria_three_months, self.flow_cat, default=np.nan)
 
-        row_labels = {1:'JFM',
-             2:'FMA',
-             3:'MAM',
-             4:'AMJ',
-             5:'MJJ',
-             6:'JJA',
-             7:'JAS',
-             8:'ASO',
-             9:'SON',
-             10:'OND',
-             11:'NDE',
-             12:'DEF'}
-        
-        DISCHARGE_THREE_MONTHS['period'] = DISCHARGE_THREE_MONTHS['startMonth'].replace(row_labels) 
+        row_labels = {1:'JFM', 2:'FMA', 3:'MAM', 4:'AMJ', 5:'MJJ', 6:'JJA',
+                      7:'JAS', 8:'ASO', 9:'SON', 10:'OND', 11:'NDE', 12:'DEF'}
+        DISCHARGE_THREE_MONTHS['period'] = DISCHARGE_THREE_MONTHS['startMonth'].map(row_labels)
         return DISCHARGE_THREE_MONTHS
-    
+
     def estado_anual(self):
-        # Agrgar caudales
-        DISCHARGE_TWELVE_MONTHS = pd.DataFrame(self.DISCHARGE_MONTHLY['Caudal'].rolling(12).apply(lambda x: x.mean() if x.isnull().sum()*100/len(x) < 0.5 else np.nan))
-        DISCHARGE_TWELVE_MONTHS['startMonth'] = (DISCHARGE_TWELVE_MONTHS.index - pd.DateOffset(months=2)).month
+        DISCHARGE_TWELVE_MONTHS = pd.DataFrame(
+            self.DISCHARGE_MONTHLY['Caudal'].rolling(12).apply(lambda x: x.mean() if x.isnull().sum() * 100 / len(x) < 0.5 else np.nan),
+            index=self.DISCHARGE_MONTHLY.index
+        )
+        DISCHARGE_TWELVE_MONTHS['startMonth'] = (DISCHARGE_TWELVE_MONTHS.index - pd.DateOffset(months=11)).month
         DISCHARGE_TWELVE_MONTHS['endMonth'] = DISCHARGE_TWELVE_MONTHS.index.month
         DISCHARGE_TWELVE_MONTHS['year'] = DISCHARGE_TWELVE_MONTHS.index.year
-        DISCHARGE_TWELVE_MONTHS.index = DISCHARGE_TWELVE_MONTHS.index.map(lambda t: t.replace(day=1))
-        # Climatologia
-        DISCHARGE_SELECTION_TWELVE_MONTH = DISCHARGE_TWELVE_MONTHS[(DISCHARGE_TWELVE_MONTHS['year'] >= 1981) & (DISCHARGE_TWELVE_MONTHS['year'] < 2010)]
-        DISCHARGE_AVERAGE_TWELVE_MONTH = DISCHARGE_SELECTION_TWELVE_MONTH.groupby(DISCHARGE_SELECTION_TWELVE_MONTH.startMonth).mean()
-        DISCHARGE_AVERAGE_TWELVE_MONTH = DISCHARGE_AVERAGE_TWELVE_MONTH.reindex(columns=['Caudal'])
-        # Calcular indice
-        DISCHARGE_TWELVE_MONTHS['average_percentage'] = np.nan
-        DISCHARGE_TWELVE_MONTHS['rank_average'] = np.nan
-        DISCHARGE_TWELVE_MONTHS['non_missing'] = np.nan
 
-        for i in range(len(DISCHARGE_TWELVE_MONTHS)):
-            # Extract the current month 
-            m = DISCHARGE_TWELVE_MONTHS.startMonth[i]
-            # Extract the current year
-            y = DISCHARGE_TWELVE_MONTHS.year[i]
-            DISCHARGE_TWELVE_MONTHS.loc[DISCHARGE_TWELVE_MONTHS.eval('startMonth==@m & year==@y'),'rank_average']  = DISCHARGE_TWELVE_MONTHS.query('startMonth==@m')['Caudal'].rank()
-            DISCHARGE_TWELVE_MONTHS.loc[DISCHARGE_TWELVE_MONTHS.eval('startMonth==@m & year==@y'),'non_missing']  = DISCHARGE_TWELVE_MONTHS.query('startMonth==@m')["Caudal"].notnull().sum()
-            DISCHARGE_TWELVE_MONTHS.loc[DISCHARGE_TWELVE_MONTHS.eval('startMonth==@m & year==@y'),'average_percentage'] = (DISCHARGE_TWELVE_MONTHS['Caudal'][i] - DISCHARGE_AVERAGE_TWELVE_MONTH.query('startMonth == @m')["Caudal"].item()) / DISCHARGE_AVERAGE_TWELVE_MONTH.query('startMonth == @m')["Caudal"].item()
-    
-        alphap = 0.4
-        betap = 0.4
+        ref_mask = (DISCHARGE_TWELVE_MONTHS['year'] >= 1981) & (DISCHARGE_TWELVE_MONTHS['year'] <= 2010)
+        clim_mean = DISCHARGE_TWELVE_MONTHS.loc[ref_mask].groupby('startMonth')['Caudal'].mean()
+
+        DISCHARGE_TWELVE_MONTHS['rank_average'] = DISCHARGE_TWELVE_MONTHS.groupby('startMonth')['Caudal'].rank()
+        DISCHARGE_TWELVE_MONTHS['non_missing'] = DISCHARGE_TWELVE_MONTHS.groupby('startMonth')['Caudal'].transform(lambda s: s.notna().sum())
+        DISCHARGE_TWELVE_MONTHS['mean'] = DISCHARGE_TWELVE_MONTHS['startMonth'].map(clim_mean)
+        DISCHARGE_TWELVE_MONTHS['average_percentage'] = (DISCHARGE_TWELVE_MONTHS['Caudal'] - DISCHARGE_TWELVE_MONTHS['mean']) / DISCHARGE_TWELVE_MONTHS['mean']
+
+        alphap, betap = 0.4, 0.4
         DISCHARGE_TWELVE_MONTHS['percentile'] = (DISCHARGE_TWELVE_MONTHS['rank_average'] - alphap) / (DISCHARGE_TWELVE_MONTHS['non_missing'] + 1 - alphap - betap)
 
-        criteria_twelve_months = [DISCHARGE_TWELVE_MONTHS['percentile'].between(0.90,1.00),
-            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.75,0.90),
-            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.25,0.75),
-            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.10,0.25),
-            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.00,0.10)]
+        criteria_twelve_months = [
+            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.90, 1.00),
+            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.75, 0.90),
+            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.25, 0.75),
+            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.10, 0.25),
+            DISCHARGE_TWELVE_MONTHS['percentile'].between(0.00, 0.10)
+        ]
 
-        DISCHARGE_TWELVE_MONTHS['percentile_range'] = np.select(criteria_twelve_months,self.values,None)
-        DISCHARGE_TWELVE_MONTHS['flowcat'] = np.select(criteria_twelve_months,self.flow_cat,pd.NA)
+        DISCHARGE_TWELVE_MONTHS['percentile_range'] = np.select(criteria_twelve_months, self.values, default=None)
+        DISCHARGE_TWELVE_MONTHS['flowcat'] = np.select(criteria_twelve_months, self.flow_cat, default=np.nan)
         return DISCHARGE_TWELVE_MONTHS
 
 # %%
@@ -195,7 +173,7 @@ allbasins_n2 = pd.read_csv(f'./waterbalance/cuencas_nombres.csv')
 # %%
 values = ['High flow','Above normal','Normal range','Below normal','Low flow']
 flow_cat = [5,4,3,2,1]
-for columna, datos in ALL_BASIN.iteritems():
+for columna, datos in ALL_BASIN.items():
     # print(columna)
     # Create model instance 
     hydro_status = EstadoHidrologico(station_name = columna,values=values,flow_cat=flow_cat)

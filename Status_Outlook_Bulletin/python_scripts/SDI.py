@@ -80,7 +80,7 @@ def process_discharge_to_monthly(discharge_daily, max_pct_missing=50):
     discharge_daily.columns = ['Caudal']
     
     # Convert daily to monthly (mean with missing data threshold)
-    df = discharge_daily.resample('M', closed="right").apply(
+    df = discharge_daily.resample('ME', closed="right").apply(
         lambda x: x.mean() if x.isnull().sum()*100/len(x) < max_pct_missing else np.nan
     )
     
@@ -124,7 +124,7 @@ def process_sdi_for_station(station_name, k, data_folder, m=4, max_pct_missing=5
     discharge_daily.index.name = 'Fecha'
     discharge_daily.columns = ['Caudal']
     
-    df = discharge_daily.resample('M', closed="right").apply(
+    df = discharge_daily.resample('ME', closed="right").apply(
         lambda x: x.mean() if x.isnull().sum()*100/len(x) < max_pct_missing else np.nan
     )
     df = df.reset_index()

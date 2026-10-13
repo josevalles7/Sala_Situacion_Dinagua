@@ -54,7 +54,7 @@ class WaterBalanceModel:
 ALL_BASIN = pd.read_csv(f'./waterbalance/balance_hidrico_regional/output_modelo/cuenca_nivel2.csv',index_col="Codigo")
 
 # %%
-for columna, datos in ALL_BASIN.iteritems():
+for columna, datos in ALL_BASIN.items():
     # print(columna)
     # Create model instance based on WaterBalanceModel Class
     model_instance = WaterBalanceModel(columna, 'Escorrentia_total')

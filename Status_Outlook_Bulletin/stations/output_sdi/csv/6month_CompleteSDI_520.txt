@@ -555,3 +555,4 @@ Fecha,Año_hidrologico,Escala,SDI,LogSDI,GammaSDI
 2026-06-30,2026-2027,Jan-Jun,,,
 2026-07-31,2026-2027,Feb-Jul,,,
 2026-08-31,2026-2027,Mar-Aug,,,
+2026-09-30,2026-2027,Apr-Sep,,,
