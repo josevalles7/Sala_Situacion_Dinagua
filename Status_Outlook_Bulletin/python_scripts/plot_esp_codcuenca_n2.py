@@ -242,7 +242,7 @@ ax.set_ylim(0,discharge_max_plot)
 # ax.set_ylim(0,500)
 
 ## To add labels get unique dates, sort them, convert to format you like and plot
-ax.set_xticklabels(pd.concat([discharge_plot.date, pd.Series(concat_df.date.unique())]).sort_values().reset_index(drop=True).dt.strftime('%b-%y'), rotation=90 )
+ax.set_xticklabels(pd.concat([discharge_plot.date, pd.Series(concat_df.date.unique())]).sort_values().reset_index(drop=True).dt.strftime('%b-%y').str.upper(), rotation=90 )
 
 ## Set x and y labels
 ax.set_xlabel('Mes-Año',fontsize=14);
@@ -282,12 +282,12 @@ ax4.set_title(f'Pronóstico hidrológico para los próximos meses en la subcuenc
 ax4.set_ylim(0,discharge_max_plot)
 # ax4.set_ylim(0,500)
 ax4.legend(loc='best',title='Estado Hidrológico',fancybox=True, title_fontproperties={'weight':'bold'})
-ax4.set_ylabel('Discharge (m$^3$/s)');
+ax4.set_ylabel('Caudal (m$^3$/s)');
 
 ax4.axvline(x = stats_fcst['date'].iloc[0], color = 'r',label = 'now', linestyle=':', linewidth=2, mfc='white', mec='k');
 
 ax4.xaxis.set_major_locator(mdates.MonthLocator(interval=1))   #to get a tick every 1 month
-ax4.xaxis.set_major_formatter(mdates.DateFormatter('%b-%Y'))   #optional formatting 
+ax4.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: mdates.num2date(x).strftime('%b-%y').upper()))
 plt.xticks(rotation=0);
 plt.savefig('./waterbalance/output_png/02_percentile_outlook.png', dpi=300, bbox_inches='tight')
 plt.close()
@@ -308,12 +308,12 @@ ax2.fill_between(df_stats['date'], df_stats['90th_percentile'], 3000,color='#2C7
 ax2.set_ylim(0,discharge_max_plot)
 # ax2.set_ylim(0,500)
 ax2.legend(loc='best',title='Estado Hidrológico',fancybox=True, title_fontproperties={'weight':'bold'})
-ax2.set_ylabel('Discharge (m$^3$/s)');
+ax2.set_ylabel('Caudal (m$^3$/s)');
 
 ax2.axvline(x = stats_fcst['date'].iloc[0], color = 'r',label = 'now', linestyle=':', linewidth=2, mfc='white', mec='k');
 
 ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=1))   #to get a tick every 1 month
-ax2.xaxis.set_major_formatter(mdates.DateFormatter('%b-%Y'))   #optional formatting 
+ax2.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: mdates.num2date(x).strftime('%b-%y').upper()))
 plt.xticks(rotation=0);
 plt.savefig('./waterbalance/output_png/03_spaguetti_outlook.png', dpi=300, bbox_inches='tight')
 plt.close()
@@ -367,14 +367,14 @@ a5 = ax5.fill_between(df_stats['date'], df_stats['90th_percentile'], 3000, color
 # ax5.set_ylim(0, 300)
 ax5.set_ylim(0,discharge_max_plot)
 legend1 = ax5.legend(handles=[a1, a2, a3, a4, a5], loc='upper left', title='Estado Hidrológico', fancybox=True, title_fontproperties={'weight': 'bold'})
-ax5.set_ylabel('Discharge (m$^3$/s)')
+ax5.set_ylabel('Caudal (m$^3$/s)')
 
 # Línea vertical para indicar la fecha actual o t0
 ax5.axvline(x=stats_fcst['date'].iloc[0], color='r', label='now', linestyle=':', linewidth=2, mfc='white', mec='k')
 
 # Configuración del eje X
 ax5.xaxis.set_major_locator(mdates.MonthLocator(interval=1))  # Intervalo de 1 mes
-ax5.xaxis.set_major_formatter(mdates.DateFormatter('%b-%y'))  # Formato de fecha
+ax5.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: mdates.num2date(x).strftime('%b-%y').upper()))
 
 # Crear leyenda para "Años Análogos"
 legend2 = ax5.legend(handles=analogue_handles, loc='upper right', title='Años Análogos', fancybox=True, title_fontproperties={'weight': 'bold'})
