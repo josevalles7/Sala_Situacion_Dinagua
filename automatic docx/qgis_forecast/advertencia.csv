@@ -9,9 +9,9 @@ RÍO URUGUAY entre Río Daymán y Río Queguay Grande,1,16,NO
 RÍO QUEGUAY GRANDE,1,17,NO
 RÍO URUGUAY entre Río Queguay Grande y Río Negro,1,18,NO
 RÍO URUGUAY entre Río Negro y Río de la Plata,1,19,NO
-RÍO URUGUAY hasta Bella Unión,1,111,ALTO
-RIO URUGUAY desde Salto Grande hasta RÍO NEGRO,1,112,MEDIO
-RIO URUGUAY desde RÍO NEGRO hasta RÍO DE LA PLATA,1,113,MEDIO
+RÍO URUGUAY hasta Bella Unión,1,111,NO
+RIO URUGUAY desde Salto Grande hasta RÍO NEGRO,1,112,NO
+RIO URUGUAY desde RÍO NEGRO hasta RÍO DE LA PLATA,1,113,NO
 RÍO DE LA PLATA entre Río Uruguay y Río San Juan,2,20,NO
 RÍO SAN JUAN,2,21,NO
 RÍO DE LA PLATA entre Río San Juan y Río Rosario,2,22,NO
