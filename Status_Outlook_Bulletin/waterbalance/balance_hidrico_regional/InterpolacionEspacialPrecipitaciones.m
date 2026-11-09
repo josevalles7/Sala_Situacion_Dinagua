@@ -12,8 +12,8 @@
 
 clear
 
-ncuen=load('Cuencas.txt');
-cuenca=load('CuencasOrden3.txt');
+ncuen=load('Cuencas.txt');%vector
+cuenca=load('CuencasOrden3.txt');%Matriz
 datos=load('Pluviometros.txt');
 
 
@@ -64,6 +64,7 @@ end
 cont2=1;
 MATCAL(1:3,:)=MAT(1:3,:);
 
+
 for t=1:length(ncuen)
     M2=MAT(4:length(MAT(:,1)),find(MAT(1,:)==ncuen(t)));
     Pcuen(:,cont2)=mean(M2,2);
@@ -74,7 +75,16 @@ end
 toc
 Pcuen=[ncuen';Pcuen];
 Pcuen=[datos(3:length(datos(:,1)),1:2) Pcuen];
-                
+
+
+% --- eliminar cuenca 470 ---
+col470 = find(Pcuen(1,:) == 470);
+if ~isempty(col470)
+    Pcuen(:, col470) = [];
+    ncuen(col470 - 2) = [];
+end
+% ----------------------------
+
 % save Pmedias.csv Pcuen -ascii
 csvwrite('Pmedias.csv',Pcuen)
                 

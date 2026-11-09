@@ -431,6 +431,64 @@ df_inia_p_renamed = df_inia_p.rename(columns={"Precipitacion total (mm)": "Preci
 # Stack both sources into a single dataframe
 df_final = pd.concat([df_resultado, df_inia_p_renamed, df_ema], ignore_index=True)
 
+# Listas con el orden deseado
+orden_precip = [
+    "Aigua",
+    "Artigas",
+    "Barriga Negra",
+    "Bernabé Rivera",
+    "Casupa_fr",
+    "Cerro Chato",
+    "Conchillas",
+    "Cuchilla de Navarro",
+    "Cuchilla del Carmen",
+    "Egaña",
+    "Chuy",
+    "Fraile Muerto",
+    "Colonia - Aeropuerto Internacional de Laguna de los Patos",
+    "Melo",
+    "Mercedes",
+    "Molles (Carlos Reyles)",
+    "Paysandú",
+    "San Gregorio (Pintos)",
+    "Prado",
+    "P. de Maciel",
+    "Rivera - Aeropuerto Internacional Óscar D. Gestido",
+    "Rocha",
+    "Salto - Aeropuerto Internacional de Nueva Hespérides",
+    "Sequeira",
+    "Tomás Gomensoro",
+    "Tranqueras",
+    "Pueblo Biassini",
+    "Vichadero",
+    "INIA Las Brujas",
+    "INIA La Estanzuela",
+    "INIA Salto Grande",
+    "INIA Tacuarembó - La Magnolia",
+    "INIA Treinta y Tres - Paso de la Laguna",
+    "Young",
+    "Paso de los Toros G3",
+    "Florida",
+    "Young G3",
+    "INIA Tacuarembó - Glencoe"
+]
+
+orden_et = [
+    "INIA Las Brujas",
+    "INIA La Estanzuela",
+    "INIA Salto Grande",
+    "INIA Tacuarembó - La Magnolia",
+    "INIA Treinta y Tres - Paso de la Laguna",
+    "INIA Tacuarembó - Glencoe"
+]
+
+# Ordenar precipitación
+df_final["Estacion"] = pd.Categorical(df_final["Estacion"], categories=orden_precip, ordered=True)
+df_final = df_final.sort_values("Estacion").reset_index(drop=True)
+
+# Ordenar evapotranspiración
+df_inia_e["Estacion"] = pd.Categorical(df_inia_e["Estacion"], categories=orden_et, ordered=True)
+df_inia_e = df_inia_e.sort_values("Estacion").reset_index(drop=True)
 
 # %%
 df_final.to_csv("PRECIP_Mensuales_boletines.csv", index=False)

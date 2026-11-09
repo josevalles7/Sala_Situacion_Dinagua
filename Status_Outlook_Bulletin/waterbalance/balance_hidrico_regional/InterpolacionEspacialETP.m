@@ -9,8 +9,8 @@
 % ncuen vector con los codigos de cada subcuenca
 
 clear
-ncuen=load('Cuencas.txt');
-cuenca=load('CuencasOrden3.txt');
+ncuen=load('Cuencas.txt');%vector
+cuenca=load('CuencasOrden3.txt');%Matriz
 datos=load('ETP.txt');
 
 
@@ -71,6 +71,14 @@ end
 toc
 Pcuen=[ncuen';Pcuen];
 Pcuen=[datos(3:length(datos(:,1)),1:2) Pcuen];
+
+% --- eliminar cuenca 470 ---
+col470 = find(Pcuen(1,:) == 470);
+if ~isempty(col470)
+    Pcuen(:, col470) = [];
+    ncuen(col470 - 2) = [];
+end
+% ----------------------------
                 
 % save ETPmedias.csv Pcuen -ascii
 csvwrite('ETPmedias.csv',Pcuen)                

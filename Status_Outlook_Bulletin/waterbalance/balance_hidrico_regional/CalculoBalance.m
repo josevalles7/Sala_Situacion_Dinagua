@@ -16,33 +16,39 @@ ETP1(:,1:2)=[];
 
 for i=1:length(AD)
 
-[ETR1(:,i) QC1(:,i) I H(:,i) V Asup(:,i) Asub(:,i)]=TemezRegional(AD(i),P1(:,i),ETP1(:,i));
+[ETR1(:,i) QC1(:,i) I H(:,i) V(:,i) Asup(:,i) Asub(:,i)]=TemezRegional(AD(i),P1(:,i),ETP1(:,i));
 
 end
 
 ETR1=[fechas ETR1];
 QC1=[fechas QC1];
 H=[fechas H];
+V=[fechas V];
 Asup = [fechas Asup];
 Asub = [fechas Asub];
 
 ETR1=[codigos ; ETR1];
 QC1=[codigos ; QC1];
 H=[codigos ; H];
+V=[codigos ; V];
 
-% Inicio: Agregados verasun
-% Crear carpeta de salida si no existe
-outdir = 'output_modelo';
+% Inicio: Agregados jvalles
+Asup = [codigos; Asup];
+Asub = [codigos;Asub];
+% fin: Agregados jvalles
 
-if ~exist(outdir, 'dir')
-    mkdir(outdir);
-end
+% save ETR.csv ETR1 -ascii
+csvwrite('ETR.csv',ETR1)
+% save Escorrentia.csv QC1 -ascii
+csvwrite('Escorrentia_total.csv',QC1)
+% save HumedadSuelo.csv H -ascii
+csvwrite('HumedadSuelo.csv',H)
+csvwrite('VolumenAcuifero.csv',V)
 
-% Guardar salidas en la carpeta output_modelo
-csvwrite(fullfile(outdir, 'ETR.csv'), ETR1)
-csvwrite(fullfile(outdir, 'Escorrentia_total.csv'), QC1)
-csvwrite(fullfile(outdir, 'HumedadSuelo.csv'), H)
-csvwrite(fullfile(outdir, 'Escorrentia_sup.csv'), Asup)
-csvwrite(fullfile(outdir, 'Escorrentia_sub.csv'), Asub)
+% Inicio: Agregados jvalles
+csvwrite('Escorrentia_sup.csv',Asup)
+csvwrite('Escorrentia_sub.csv',Asub)
+% fin: Agregados jvalles
 
-clear
+
+%clear
